@@ -86,4 +86,17 @@ public class Job {
    public void setCreatedAt(Timestamp createdAt) {
       this.createdAt = createdAt;
    }
+
+   @Override
+   public String toString() {
+      return "Job{" +
+              "id=" + id +
+              ", title='" + title + '\'' +
+              ", description='" + description + '\'' +
+              ", location='" + location + '\'' +
+              ", salary=" + salary +
+              ", applied=" + applied +
+              ", createdAt=" + createdAt +
+              '}';
+   }
 }
