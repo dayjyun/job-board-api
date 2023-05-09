@@ -2,15 +2,15 @@
 
 # Endpoints
 ## Users
-| Request Type | URL                  | Functionality                                       | Access  |
-|--------------|----------------------|-----------------------------------------------------|---------|
-| POST         | /api/auth/register   | User creates account                                | Public  |
-| POST         | /api/auth/login      | User logs into account                              | Public  |
-| GET          | /api/users/{id}      | Returns user account details                        | Private |
-| GET          | /api/myProfile       | Returns logged-in user's details                    | Private |
-| PUT          | /api/myProfile       | Edit user account                                   | Private |
-| DELETE       | /api/myProfile       | Delete user account                                 | Private |
-| GET          | /api/myProfile/jobs  | Returns a list of jobs the user applied for         | Private |
+| Request Type | URL                 | Functionality                                       | Access  |
+|--------------|---------------------|-----------------------------------------------------|---------|
+| POST         | /api/auth/register  | User creates account                                | Public  |
+| POST         | /api/auth/login     | User logs into account                              | Public  |
+| GET          | /api/users/{userId} | Returns user account details                        | Private |
+| GET          | /api/myProfile      | Returns logged-in user's details                    | Private |
+| PUT          | /api/myProfile      | Edit user account                                   | Private |
+| DELETE       | /api/myProfile      | Delete user account                                 | Private |
+| GET          | /api/myProfile/jobs | Returns a list of jobs the user applied for         | Private |
 
 ## Business
 | Request Type | URL                          | Functionality                                       | Access  |
