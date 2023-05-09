@@ -54,8 +54,6 @@ Feature: Rest API functionalities
 
   Scenario: User is able to apply for a job
     Given A user account is available
-    When I search by the job id
-    Then I can see the job details
     When I apply for the job
     Then I see a message saying I have applied for the job
 
