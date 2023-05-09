@@ -52,4 +52,10 @@ Feature: Rest API functionalities
     When A business is not available
     Then I see a message saying business is not available
 
+  Scenario: User is able to delete business
+    Given A business is available
+    When I search by business id
+    Then I can delete my business
+    When A business is not available
+    Then I see a message saying business is not available
 
