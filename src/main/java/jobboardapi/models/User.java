@@ -1,14 +1,31 @@
 package jobboardapi.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
+   @Column
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
-
+   @Column
+   @NotNull
    private String name;
 
-
+   @Column(unique = true)
+   @NotNull
    private String email;
+
+   @Column
+   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
    private String password;
+
+   @Column
    private String resume;
 
    public User() {}

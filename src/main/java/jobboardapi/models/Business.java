@@ -3,7 +3,7 @@ package jobboardapi.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="businesses")
+@Table(name = "businesses")
 public class Business {
    @Column
    @Id
