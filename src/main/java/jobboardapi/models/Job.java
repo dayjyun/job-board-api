@@ -115,6 +115,22 @@ public class Job {
       this.createdAt = createdAt;
    }
 
+   public User getUser() {
+      return user;
+   }
+
+   public void setUser(User user) {
+      this.user = user;
+   }
+
+   public Business getBusiness() {
+      return business;
+   }
+
+   public void setBusiness(Business business) {
+      this.business = business;
+   }
+
    @Override
    public String toString() {
       return "Job{" +
