@@ -21,3 +21,11 @@ Feature: Rest API functionalities
     Given A user account is available
     When I search by my user id
     Then I can delete my account
+
+  Scenario: User is able to see all jobs applied for
+    Given A user account is available
+    When I search by my user id
+    Then I can see a list of jobs
+    When No jobs have been applied for
+    Then I see a message saying no jobs have been applied for
+
