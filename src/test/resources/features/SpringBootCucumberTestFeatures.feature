@@ -7,4 +7,7 @@ Feature: Rest API functionalities
 #    When I remove book from my reading list
 #    Then The book is removed
 
-  #test
+  Scenario: User able to view account
+    Given A user account is available
+    When I search by my user id
+    Then I can see my account details
