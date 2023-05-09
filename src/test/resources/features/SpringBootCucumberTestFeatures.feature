@@ -51,3 +51,11 @@ Feature: Rest API functionalities
     Then I can see a list of applicants for my job
     When I have no jobs listed
     Then I see a message saying I have no jobs listed
+
+  Scenario: User is able to apply for a job
+    Given A user account is available
+    When I search by the job id
+    Then I can see the job details
+    When I apply for the job
+    Then I see a message saying I have applied for the job
+
