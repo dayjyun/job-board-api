@@ -2,14 +2,15 @@
 
 # Endpoints
 ## Users
-| Request Type | URL                      | Functionality                                       | Access  |
-|--------------|--------------------------|-----------------------------------------------------|---------|
-| POST         | /auth/register           | User creates account                                | Public  |
-| POST         | /auth/login              | User logs into account                              | Public  |
-| GET          | /users/{id}              | Returns user account details                        | Private |
-| PUT          | /users/{id}              | Edit user account                                   | Private |
-| DELETE       | /users/{id}              | Delete user account                                 | Private |
-| GET          | /users/{id}/jobs         | Returns a list of jobs the user applied for         | Private |
+| Request Type | URL              | Functionality                                       | Access  |
+|--------------|------------------|-----------------------------------------------------|---------|
+| POST         | /auth/register   | User creates account                                | Public  |
+| POST         | /auth/login      | User logs into account                              | Public  |
+| GET          | /users/{id}      | Returns user account details                        | Private |
+| GET          | /myProfile       | Returns logged-in user's details                    | Private |
+| PUT          | /myProfile       | Edit user account                                   | Private |
+| DELETE       | /myProfile       | Delete user account                                 | Private |
+| GET          | /users/{id}/jobs | Returns a list of jobs the user applied for         | Private |
 
 ## Business
 | Request Type | URL                      | Functionality                                       | Access  |
