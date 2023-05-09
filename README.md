@@ -27,8 +27,8 @@
 | DELETE       | /api/businesses/{businessId}/jobs/{jobId} | Delete job listing from the business                | Private |
 
 ## Jobs
-| Request Type | URL                       | Functionality                                       | Access  |
-|--------------|---------------------------|-----------------------------------------------------|---------|
-| GET          | /api/jobs                 | Returns all jobs in the job board                   | Public  |
-| GET          | /api/jobs/{1}/applicants  | Returns a list of all applicants for the job        | Private |
-| POST         | /api/jobs/{1}/applicants  | User applies for job                                | Private |
+| Request Type | URL                          | Functionality                                       | Access  |
+|--------------|------------------------------|-----------------------------------------------------|---------|
+| GET          | /api/jobs                    | Returns all jobs in the job board                   | Public  |
+| GET          | /api/jobs/{jobId}/applicants | Returns a list of all applicants for the job        | Private |
+| POST         | /api/jobs/{jobId}/applicants | User applies for job                                | Private |
