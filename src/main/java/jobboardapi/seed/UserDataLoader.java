@@ -19,9 +19,9 @@ public class UserDataLoader implements CommandLineRunner {
 
     private void loadUserData() {
         if (userRepository.count() == 0) {
-            User user1 = new User(1L, "DeShe", "deshe@gmail.com", "password1", "resume1");
-            User user2 = new User(2L, "Kevin", "kevin@gmail.com", "password2", "resume2");
-            User user3 = new User(3L, "Kim", "kim@gmail.com", "password3", "resume3");
+            User user1 = new User(1L, "DeShe", "deshe@gmail.com", "pw", "resume1");
+            User user2 = new User(2L, "Kevin", "kevin@gmail.com", "pw", "resume2");
+            User user3 = new User(3L, "Kim", "kim@gmail.com", "pw", "resume3");
             userRepository.save(user1);
             userRepository.save(user2);
             userRepository.save(user3);
