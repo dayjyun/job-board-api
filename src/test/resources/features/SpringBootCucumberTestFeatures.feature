@@ -7,7 +7,12 @@ Feature: Rest API functionalities
 #    When I remove book from my reading list
 #    Then The book is removed
 
-  Scenario: User able to view account
+  Scenario: User is able to view account details
     Given A user account is available
     When I search by my user id
     Then I can see my account details
+
+  Scenario: User is able to edit account details
+    Given A user account is available
+    When I search by my user id
+    Then I can edit my account details
