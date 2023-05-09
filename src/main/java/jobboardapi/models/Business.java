@@ -12,4 +12,28 @@ public class Business {
       this.name = name;
       this.headquarters = headquarters;
    }
+
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
+   }
+
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public String getHeadquarters() {
+      return headquarters;
+   }
+
+   public void setHeadquarters(String headquarters) {
+      this.headquarters = headquarters;
+   }
 }
