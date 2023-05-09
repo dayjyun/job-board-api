@@ -2,6 +2,7 @@ package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -16,12 +17,14 @@ public class Job {
    private Long id;
 
    @Column
+   @NotNull
    private String title;
 
    @Column
    private String description;
 
    @Column
+   @NotNull
    private String location;
 
    @Column
