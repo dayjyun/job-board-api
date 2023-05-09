@@ -1,5 +1,7 @@
 package jobboardapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,12 @@ public class Business {
 
    @Column
    private String headquarters;
+
+   // many businesses can belong to one user
+   @ManyToOne
+   @JoinColumn(name = "user_id")
+   @JsonIgnore // excludes user details when displaying business details
+   private User user;
 
    public Business() {}
 
