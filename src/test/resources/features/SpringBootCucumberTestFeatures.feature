@@ -39,3 +39,7 @@ Feature: Rest API functionalities
     Given A user account is available
     When I create a business
     Then I can see my business details
+
+  Scenario: User is able to view business details
+    When I search by business id
+    Then I can see a business's details
