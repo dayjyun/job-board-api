@@ -28,8 +28,8 @@ public class Business {
    private User user;
 
    // one business can have many job listings
-   @OneToMany(mappedBy = "job", orphanRemoval = true)
-   @LazyCollection(LazyCollectionOption.FALSE)
+   @OneToMany(mappedBy = "job", orphanRemoval = true) // orphanRemoval removes the job from the database if we deleted it from a business
+   @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
    private List<Job> jobList;
 
    public Business() {}
