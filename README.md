@@ -22,13 +22,13 @@
 | DELETE       | /api/businesses/{businessId}              | Delete a business                                   | Private |
 | GET          | /api/businesses/{businessId}/jobs         | Returns a list of all job listings for the business | Public  |
 | POST         | /api/businesses/{businessId}/jobs         | Create a new job listing for the business           | Private |
-| GET          | /api/businesses/{businessId}/jobs/{jobId} | Shows job listing from the business                 | Public  |
-| PUT          | /api/businesses/{businessId}/jobs/{jobId} | Update job listing from the business                | Private |
-| DELETE       | /api/businesses/{businessId}/jobs/{jobId} | Delete job listing from the business                | Private |
 
 ## Jobs
-| Request Type | URL                          | Functionality                                       | Access  |
-|--------------|------------------------------|-----------------------------------------------------|---------|
-| GET          | /api/jobs                    | Returns all jobs in the job board                   | Public  |
-| GET          | /api/jobs/{jobId}/applicants | Returns a list of all applicants for the job        | Private |
-| POST         | /api/jobs/{jobId}/applicants | User applies for job                                | Private |
+| Request Type | URL                          | Functionality                                | Access  |
+|--------------|------------------------------|----------------------------------------------|---------|
+| GET          | /api/jobs                    | Returns all jobs in the job board            | Public  |
+| GET          | /api/jobs/{jobId}            | Returns job listing details                  | Public  |
+| PUT          | /api/jobs{jobId}             | Update job listing details                   | Private |
+| DELETE       | /api/jobs/{jobId}            | Delete job listing                           | Private |
+| GET          | /api/jobs/{jobId}/applicants | Returns a list of all applicants for the job | Private |
+| POST         | /api/jobs/{jobId}/applicants | User applies for job                         | Private |
