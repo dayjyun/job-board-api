@@ -6,3 +6,5 @@ Feature: Rest API functionalities
 #    Then The book is added
 #    When I remove book from my reading list
 #    Then The book is removed
+
+  #test
