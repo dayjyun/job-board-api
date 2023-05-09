@@ -1,8 +1,19 @@
 package jobboardapi.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="businesses")
 public class Business {
+   @Column
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+
+   @Column
    private String name;
+
+   @Column
    private String headquarters;
 
    public Business() {}
