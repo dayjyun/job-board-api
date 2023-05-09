@@ -9,7 +9,7 @@ Feature: Rest API functionalities
 
   Scenario: User is able to view account details
     Given A user account is available
-    When I search by my user id
+    When I search go to my profile
     Then I can see my account details
 
   Scenario: User is able to edit account details
