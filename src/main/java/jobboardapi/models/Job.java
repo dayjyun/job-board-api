@@ -3,15 +3,30 @@ package jobboardapi.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "jobs")
 public class Job {
+   @Column
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+
+   @Column
    private String title;
+
+   @Column
    private String description;
+
+   @Column
    private String location;
+
+   @Column
    private double salary;
+
+   @Column
    private boolean applied;
 
    @Column
