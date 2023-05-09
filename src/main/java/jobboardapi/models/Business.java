@@ -64,6 +64,22 @@ public class Business {
       this.headquarters = headquarters;
    }
 
+   public User getUser() {
+      return user;
+   }
+
+   public void setUser(User user) {
+      this.user = user;
+   }
+
+   public List<Job> getJobList() {
+      return jobList;
+   }
+
+   public void setJobList(List<Job> jobList) {
+      this.jobList = jobList;
+   }
+
    @Override
    public String toString() {
       return "Business{" +
