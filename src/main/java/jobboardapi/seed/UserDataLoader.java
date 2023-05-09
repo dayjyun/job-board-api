@@ -1,4 +1,2 @@
-package jobboardapi.seed;
-
-public class UserDataLoader {
+package jobboardapi.seed;public class UserDataLoader {
 }
