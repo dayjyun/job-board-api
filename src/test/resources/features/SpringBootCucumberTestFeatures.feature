@@ -44,3 +44,10 @@ Feature: Rest API functionalities
     Given A list of jobs are available
     When I search for jobs
     Then I can see a list of jobs
+
+  Scenario: User is able to see a list of all applicants for their job
+    Given A user account is available
+    When I search by my job id
+    Then I can see a list of applicants for my job
+    When I have no jobs listed
+    Then I see a message saying I have no jobs listed
