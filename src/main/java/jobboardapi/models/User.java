@@ -36,6 +36,11 @@ public class User {
    @LazyCollection(LazyCollectionOption.FALSE) // all businesses will be eagerly loaded (business data is retrieved together from the database)
    private List<Business> businessList;
 
+   // one user can have many jobs
+   @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the job from database if we deleted it from a user
+   @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
+   private List<Job> jobList;
+
    public User() {}
 
    public User(Long id, String name, String email, String password, String resume) {
