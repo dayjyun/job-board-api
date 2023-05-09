@@ -36,4 +36,13 @@ public class Business {
    public void setHeadquarters(String headquarters) {
       this.headquarters = headquarters;
    }
+
+   @Override
+   public String toString() {
+      return "Business{" +
+              "id=" + id +
+              ", name='" + name + '\'' +
+              ", headquarters='" + headquarters + '\'' +
+              '}';
+   }
 }
