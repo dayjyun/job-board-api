@@ -77,3 +77,8 @@ Feature: Rest API functionalities
     Given A job listing is available
     When I search by job id
     Then I can edit the job listing details
+
+  Scenario: User with business is able to delete job listing
+    Given A job listing is available
+    When I search by job id
+    Then I can delete the job listing
