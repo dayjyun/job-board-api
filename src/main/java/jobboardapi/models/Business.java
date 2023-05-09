@@ -1,6 +1,11 @@
 package jobboardapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "businesses")
@@ -10,11 +15,22 @@ public class Business {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
-   @Column
+   @Column(unique = true)
    private String name;
 
    @Column
    private String headquarters;
+
+   // many businesses can belong to one user
+   @ManyToOne
+   @JoinColumn(name = "user_id")
+   @JsonIgnore // excludes user details when displaying business details
+   private User user;
+
+   // one business can have many job listings
+   @OneToMany(mappedBy = "job", orphanRemoval = true) // orphanRemoval removes the job from the database if we deleted it from a business
+   @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
+   private List<Job> jobList;
 
    public Business() {}
 
@@ -46,6 +62,22 @@ public class Business {
 
    public void setHeadquarters(String headquarters) {
       this.headquarters = headquarters;
+   }
+
+   public User getUser() {
+      return user;
+   }
+
+   public void setUser(User user) {
+      this.user = user;
+   }
+
+   public List<Job> getJobList() {
+      return jobList;
+   }
+
+   public void setJobList(List<Job> jobList) {
+      this.jobList = jobList;
    }
 
    @Override

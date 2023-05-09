@@ -2,8 +2,11 @@ package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +30,16 @@ public class User {
 
    @Column
    private String resume;
+
+   // one user can have many businesses
+   @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the business from database if we deleted it from a user
+   @LazyCollection(LazyCollectionOption.FALSE) // all businesses will be eagerly loaded (business data is retrieved together from the database)
+   private List<Business> businessList;
+
+   // one user can apply to jobs
+   @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the job from database if we deleted it from a user
+   @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
+   private List<Job> jobList;
 
    public User() {}
 
@@ -76,6 +89,22 @@ public class User {
 
    public void setResume(String resume) {
       this.resume = resume;
+   }
+
+   public List<Business> getBusinessList() {
+      return businessList;
+   }
+
+   public void setBusinessList(List<Business> businessList) {
+      this.businessList = businessList;
+   }
+
+   public List<Job> getJobList() {
+      return jobList;
+   }
+
+   public void setJobList(List<Job> jobList) {
+      this.jobList = jobList;
    }
 
    @Override

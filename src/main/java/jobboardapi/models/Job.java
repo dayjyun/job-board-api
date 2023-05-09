@@ -1,6 +1,8 @@
 package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -15,12 +17,14 @@ public class Job {
    private Long id;
 
    @Column
+   @NotNull
    private String title;
 
    @Column
    private String description;
 
    @Column
+   @NotNull
    private String location;
 
    @Column
@@ -33,6 +37,18 @@ public class Job {
    @CreationTimestamp
    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH-mm-ss")
    private Timestamp createdAt;
+
+   // many job applications can belong to one user
+   @ManyToOne
+   @JoinColumn(name = "user_id")
+   @JsonIgnore // excludes user details when displaying job details
+   private User user;
+
+   // many job listings can belong to one business
+   @ManyToOne
+   @JoinColumn(name = "business_id")
+   @JsonIgnore // excludes business details when displaying job details
+   private Business business;
 
    public Job() {}
 
@@ -100,6 +116,22 @@ public class Job {
 
    public void setCreatedAt(Timestamp createdAt) {
       this.createdAt = createdAt;
+   }
+
+   public User getUser() {
+      return user;
+   }
+
+   public void setUser(User user) {
+      this.user = user;
+   }
+
+   public Business getBusiness() {
+      return business;
+   }
+
+   public void setBusiness(Business business) {
+      this.business = business;
    }
 
    @Override
