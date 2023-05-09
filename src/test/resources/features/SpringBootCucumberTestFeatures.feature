@@ -39,3 +39,8 @@ Feature: Rest API functionalities
     Given A user account is available
     When I create a business
     Then I can see my business details
+
+  Scenario: User is able to see a list of all jobs
+    Given A list of jobs are available
+    When I search for jobs
+    Then I can see a list of jobs
