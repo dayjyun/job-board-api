@@ -1,8 +1,11 @@
 package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "businesses")
@@ -23,6 +26,11 @@ public class Business {
    @JoinColumn(name = "user_id")
    @JsonIgnore // excludes user details when displaying business details
    private User user;
+
+   // one business can have many job listings
+   @OneToMany(mappedBy = "job", orphanRemoval = true)
+   @LazyCollection(LazyCollectionOption.FALSE)
+   private List<Job> jobList;
 
    public Business() {}
 
