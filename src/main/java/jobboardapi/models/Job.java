@@ -1,6 +1,7 @@
 package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -33,6 +34,12 @@ public class Job {
    @CreationTimestamp
    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH-mm-ss")
    private Timestamp createdAt;
+
+   // many job applications can belong to one user
+   @ManyToOne
+   @JoinColumn(name = "user_id")
+   @JsonIgnore // excludes user details when displaying job details
+   private User user;
 
    public Job() {}
 
