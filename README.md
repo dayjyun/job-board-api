@@ -12,19 +12,19 @@
 | DELETE       | /api/myProfile      | Delete user account                                 | Private |
 | GET          | /api/myProfile/jobs | Returns a list of jobs the user applied for         | Private |
 
-## Business
-| Request Type | URL                          | Functionality                                       | Access  |
-|--------------|------------------------------|-----------------------------------------------------|---------|
-| GET          | /api/businesses              | Returns a list of all businesses                    | Public  |
-| POST         | /api/businesses              | Create a business                                   | Private |
-| GET          | /api/businesses/{1}          | Returns business details                            | Public  |
-| PUT          | /api/businesses/{1}          | Update business details                             | Private |
-| DELETE       | /api/businesses/{1}          | Delete a business                                   | Private |
-| GET          | /api/businesses/{1}/jobs     | Returns a list of all job listings for the business | Public  |
-| POST         | /api/businesses/{1}/jobs     | Create a new job listing for the business           | Private |
-| GET          | /api/businesses/{1}/jobs/{1} | Shows job listing from the business                 | Public  |
-| PUT          | /api/businesses/{1}/jobs/{1} | Update job listing from the business                | Private |
-| DELETE       | /api/businesses/{1}/jobs/{1} | Delete job listing from the business                | Private |
+## Businesses
+| Request Type | URL                                       | Functionality                                       | Access  |
+|--------------|-------------------------------------------|-----------------------------------------------------|---------|
+| GET          | /api/businesses                           | Returns a list of all businesses                    | Public  |
+| POST         | /api/businesses                           | Create a business                                   | Private |
+| GET          | /api/businesses/{businessId}              | Returns business details                            | Public  |
+| PUT          | /api/businesses/{businessId}              | Update business details                             | Private |
+| DELETE       | /api/businesses/{businessId}              | Delete a business                                   | Private |
+| GET          | /api/businesses/{businessId}/jobs         | Returns a list of all job listings for the business | Public  |
+| POST         | /api/businesses/{businessId}/jobs         | Create a new job listing for the business           | Private |
+| GET          | /api/businesses/{businessId}/jobs/{jobId} | Shows job listing from the business                 | Public  |
+| PUT          | /api/businesses/{businessId}/jobs/{jobId} | Update job listing from the business                | Private |
+| DELETE       | /api/businesses/{businessId}/jobs/{jobId} | Delete job listing from the business                | Private |
 
 ## Jobs
 | Request Type | URL                       | Functionality                                       | Access  |
