@@ -57,3 +57,7 @@ Feature: Rest API functionalities
     When I apply for the job
     Then I see a message saying I have applied for the job
 
+  Scenario: User is able to view another user's account details
+    Given A user account is available
+    When I search for another user's id
+    Then I can see the user's accound details
