@@ -59,3 +59,7 @@ Feature: Rest API functionalities
     When A business is not available
     Then I see a message saying business is not available
 
+  Scenario: User is able to see a list of job listings for a business
+    Given A list of jobs is available
+    When I search for job listings within a business
+    Then I can see a list of jobs for a business
