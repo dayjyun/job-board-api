@@ -29,7 +29,6 @@ Feature: Rest API functionalities
     When No jobs have been applied for
     Then I see a message saying no jobs have been applied for
 
-
   Scenario: User is able to see a list of all businesses
     Given A list of businesses are available
     When I search for businesses
@@ -68,3 +67,8 @@ Feature: Rest API functionalities
     Given A business is available
     When I create a job listing
     Then I can see the job listing's details
+
+  Scenario: User is able to see a specific job listing for a business
+    Given A job listing is available
+    When I search by job id
+    Then I can see job listing details
