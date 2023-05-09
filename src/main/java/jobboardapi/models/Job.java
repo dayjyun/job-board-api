@@ -41,6 +41,12 @@ public class Job {
    @JsonIgnore // excludes user details when displaying job details
    private User user;
 
+   // many job listings can belong to one business
+   @ManyToOne
+   @JoinColumn(name = "business_id")
+   @JsonIgnore // excludes business details when displaying job details
+   private Business business;
+
    public Job() {}
 
    public Job(Long id, String title, String description, String location, double salary, boolean applied, Timestamp createdAt) {
