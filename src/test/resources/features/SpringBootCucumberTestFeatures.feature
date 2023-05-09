@@ -16,3 +16,8 @@ Feature: Rest API functionalities
     Given A user account is available
     When I search by my user id
     Then I can edit my account details
+
+  Scenario: User is able to delete account
+    Given A user account is available
+    When I search by my user id
+    Then I can delete my account
