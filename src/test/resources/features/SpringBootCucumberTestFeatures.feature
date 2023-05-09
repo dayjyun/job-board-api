@@ -63,3 +63,8 @@ Feature: Rest API functionalities
     Given A list of jobs is available
     When I search for job listings within a business
     Then I can see a list of jobs for a business
+
+  Scenario: User with business is able to create a job listing
+    Given A business is available
+    When I create a job listing
+    Then I can see the job listing's details
