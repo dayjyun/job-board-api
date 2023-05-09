@@ -60,4 +60,15 @@ public class User {
    public void setResume(String resume) {
       this.resume = resume;
    }
+
+   @Override
+   public String toString() {
+      return "User{" +
+              "id=" + id +
+              ", name='" + name + '\'' +
+              ", email='" + email + '\'' +
+              ", password='" + password + '\'' +
+              ", resume='" + resume + '\'' +
+              '}';
+   }
 }
