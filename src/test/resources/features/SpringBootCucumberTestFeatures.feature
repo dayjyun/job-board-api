@@ -66,7 +66,12 @@ Feature: Rest API functionalities
     When I create a job listing
     Then I can see the job listing's details
 
-  Scenario: User is able to see a specific job listing for a business
+  Scenario: User is able to see a list of all jobs
+    Given A list of jobs are available
+    When I search for jobs
+    Then I can see a list of jobs
+
+  Scenario: User is able to see a specific job listing
     Given A job listing is available
     When I search by job id
     Then I can see job listing details
@@ -81,11 +86,6 @@ Feature: Rest API functionalities
     When I search by job id
     Then I can delete the job listing
 
-  Scenario: User is able to see a list of all jobs
-    Given A list of jobs are available
-    When I search for jobs
-    Then I can see a list of jobs
-
   Scenario: User is able to see a list of all applicants for their job
     Given A user account is available
     When I search by my job id
@@ -97,4 +97,3 @@ Feature: Rest API functionalities
     Given A user account is available
     When I apply for the job
     Then I see a message saying I have applied for the job
-
