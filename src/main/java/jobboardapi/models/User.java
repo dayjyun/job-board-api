@@ -91,6 +91,22 @@ public class User {
       this.resume = resume;
    }
 
+   public List<Business> getBusinessList() {
+      return businessList;
+   }
+
+   public void setBusinessList(List<Business> businessList) {
+      this.businessList = businessList;
+   }
+
+   public List<Job> getJobList() {
+      return jobList;
+   }
+
+   public void setJobList(List<Job> jobList) {
+      this.jobList = jobList;
+   }
+
    @Override
    public String toString() {
       return "User{" +
