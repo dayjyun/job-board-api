@@ -3,6 +3,8 @@ package definitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.json.JSONException;
+import org.json.JSONObject;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
@@ -32,6 +34,7 @@ public class SpringBootCucumberTestDefinitions {
    private static Response response;
    private static ResponseEntity<String> responseEntity;
    private static List<?> list;
+   private static RequestSpecification request;
 
    private Business newBusiness;
    private static final String newBusinessName = "New Business Name";
@@ -118,4 +121,61 @@ public class SpringBootCucumberTestDefinitions {
     public void iCanSeeMyNewBusinessSDetails() {
         Assert.assertEquals(201, response.getStatusCode());
     }
+  
+     /**
+    * Test Scenario: User is able to edit business details Path: PUT http://localhost:8080/api/businesses/{businessId}
+    * aBusinessIsAvailable updates the request body
+    * iSearchByBusinessId updates the Business details
+    * iCanEditMyBusinessDetails confirms a successful update
+    */
+   @Given("I can search for a business ID")
+   public void aBusinessIsAvailable() {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given();
+   }
+
+   @When("I edit my business details")
+   public void iSearchByBusinessId() throws JSONException {
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("name", "Updated name");
+      requestBody.put("headquarters", "Updated headquarters");
+      request.header("Content-Type", "application/json");
+      response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/businesses/1");
+   }
+
+   @Then("I see the business is updated")
+   public void iCanEditMyBusinessDetails() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+//   @Given("A business account is available")
+//   public void aBusinessAccountIsAvailable() {
+//      RestAssured.baseURI = BASE_URL;
+//      request = RestAssured.given();
+//      response = request.get(BASE_URL + port + "/api/businesses/1");
+//   }
+//
+//   @When("I search for a business account")
+//   public void iSearchForABusinessAccount() {
+//      Assert.assertNotNull(String.valueOf(response));
+//   }
+//
+//   @Then("I can see the business account's details")
+//   public void iCanSeeTheBusinessAccountSDetails() {
+//      Assert.assertEquals(200, response.getStatusCode());
+//   }
+//
+//   @When("I edit the business details")
+//   public void iEditTheBusinessDetails() throws JSONException {
+//      JSONObject requestBody = new JSONObject();
+//      requestBody.put("name", "Updated name");
+//      requestBody.put("headquarters", "Updated headquarters");
+//      request.header("Content-Type", "application/json");
+//      response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/businesses/1");
+//   }
+//
+//   @Then("I can see the business is updated")
+//   public void iCanSeeTheBusinessIsUpdated() {
+//      Assert.assertEquals(200, response.getStatusCode());
+//   }
 }

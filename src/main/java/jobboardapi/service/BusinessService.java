@@ -28,7 +28,7 @@ public class BusinessService {
         return businessRepository.findAll();
     }
 
-    /**
+     /**
      * getBusinessById retrieves the business by the business id, if the business id exists.
      * If the business id does not exist, we throw the NotFoundException
      * @param businessId is what we're searching by
@@ -40,6 +40,22 @@ public class BusinessService {
             return business;
         } else {
             throw new NotFoundException("Business not found");
+        }
+    }
+  
+     /**
+     * updateBusiness updates the business by searching for a business's ID
+     * @param businessId is our target business ID
+     * @param businessBody updated business details
+     * @return An Optional of a Business object
+     */
+    public Business updateBusiness(Long businessId, Business businessBody) {
+        Optional<Business> business = businessRepository.findById(businessId);
+        if(business.isPresent()) {
+            Business updatedBusiness = businessRepository.findById(businessId).get();
+            updatedBusiness.setName(businessBody.getName());
+            updatedBusiness.setHeadquarters(businessBody.getHeadquarters());
+            return businessRepository.save(updatedBusiness);
         }
     }
 }
