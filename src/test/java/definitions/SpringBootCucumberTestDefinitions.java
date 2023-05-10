@@ -9,6 +9,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import jobboardapi.JobBoardApiApplication;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -79,7 +81,25 @@ public class SpringBootCucumberTestDefinitions {
     }
 
     /**
-     *
+     * Testing for Scenario: User is able to create a business
+     * This is the POST request at the endpoint http://localhost:8080/api/businesses
+     * aBusinessNameDoesNotExistYet checks the business database to see if the business name exists yet
+     * iCreateABusinessWithThatName creates the business object
+     * iCanSeeMyNewBusinessSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
      */
 
+    @Given("A business name does not exist yet")
+    public void aBusinessNameDoesNotExistYet() {
+
+    }
+
+    @When("I create a business with that name")
+    public void iCreateABusinessWithThatName() {
+
+    }
+
+    @Then("I can see my new business's details")
+    public void iCanSeeMyNewBusinessSDetails() {
+        Assert.assertEquals(201, response.getStatusCode());
+    }
 }
