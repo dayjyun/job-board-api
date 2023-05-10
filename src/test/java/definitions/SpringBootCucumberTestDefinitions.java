@@ -31,6 +31,8 @@ public class SpringBootCucumberTestDefinitions {
    @LocalServerPort
    String port;
 
+    //   Scenario: User is able to view another user's account details
+    //   @GetMapping(path = "/{userId}")
     @Given("A user account is available")
     public void aUserAccountIsAvailable() {
         RestAssured.baseURI = BASE_URL;
@@ -49,6 +51,7 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertEquals(200, response.getStatusCode());
     }
 
+    // Scenario: User is able to see a list of all businesses
     @Given("A list of businesses are available")
     public void aListOfBusinessesAreAvailable() {
     }
