@@ -31,12 +31,12 @@ Feature: Rest API functionalities
     Given A list of businesses are available
     When I search for businesses
     Then I can see a list of businesses
-#
-#  Scenario: User is able to create a business
-#    Given A user account is available
-#    When I create a business
-#    Then I can see my business details
-#
+
+  Scenario: User is able to create a business
+    Given A business name does not exist yet
+    When I create a business with that name
+    Then I can see my new business's details
+
 #  Scenario: User is able to view business details
 #    Given A business is available
 #    When I search by business id

@@ -1,6 +1,5 @@
 package definitions;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,10 +10,11 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import jobboardapi.JobBoardApiApplication;
 import jobboardapi.models.Business;
-import jobboardapi.models.User;
+import jobboardapi.repository.BusinessRepository;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpMethod;
@@ -23,8 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Map;
-
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = JobBoardApiApplication.class)
@@ -34,6 +32,12 @@ public class SpringBootCucumberTestDefinitions {
    private static Response response;
    private static ResponseEntity<String> responseEntity;
    private static List<?> list;
+
+   private Business newBusiness;
+   private static final String newBusinessName = "New Business Name";
+
+   @Autowired
+   private BusinessRepository businessRepository;
 
    @LocalServerPort
    String port;
@@ -83,5 +87,35 @@ public class SpringBootCucumberTestDefinitions {
     @Then("I can see a list of businesses")
     public void iCanSeeAListOfBusinesses() {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    /**
+     * Testing for Scenario: User is able to create a business
+     * This is the POST request at the endpoint http://localhost:8080/api/businesses
+     * aBusinessNameDoesNotExistYet checks the business database to see if the business name exists yet
+     * iCreateABusinessWithThatName creates the business JSON object and posts it to the endpoint
+     * iCanSeeMyNewBusinessSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
+     */
+    @Given("A business name does not exist yet")
+    public void aBusinessNameDoesNotExistYet() {
+        Business existingBusiness = businessRepository.findByName(newBusinessName);
+        Assert.assertNull(existingBusiness);
+    }
+
+    @When("I create a business with that name")
+    public void iCreateABusinessWithThatName() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("name", newBusinessName);
+        requestBody.put("headquarters", "New Business Headquarters");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses");
+        System.out.println(requestBody);
+    }
+
+    @Then("I can see my new business's details")
+    public void iCanSeeMyNewBusinessSDetails() {
+        Assert.assertEquals(201, response.getStatusCode());
     }
 }
