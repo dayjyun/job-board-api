@@ -19,6 +19,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * getUserById retrieves the user by the user id, if the user id exists.
+     * If the user id does not exist, we throw the NotFoundException
+     * @param userId is what we're searching by
+     * @return the optional of the user
+     */
     public Optional<User> getUserById(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()) {
