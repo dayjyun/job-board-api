@@ -2,6 +2,7 @@ package definitions;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
@@ -27,9 +28,6 @@ public class SpringBootCucumberTestDefinitions {
    private static final String BASE_URL = "http://localhost:";
    private static Response response;
 
-   private final Logger logger = LoggerFactory.getLogger(SpringBootCucumberTestDefinitions.class);
-
-
    @LocalServerPort
    String port;
 
@@ -37,18 +35,17 @@ public class SpringBootCucumberTestDefinitions {
     public void aUserAccountIsAvailable() {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
-
-        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/users/1", HttpMethod.GET, null, String.class);
-
-        User user = JsonPath.from(String.valueOf(response.getBody())).get();
-
-        System.out.println(user);
+        response = request.get(BASE_URL + port + "/api/users/16");
+        System.out.println(response.getBody().asString());
     }
 
     @When("I search for another user's id")
     public void iSearchForAnotherUserSId() {
-        logger.info(String.valueOf(response));
+        Assert.assertNotNull(String.valueOf(response));
+    }
 
+    @Then("I can see the user's account details")
+    public void iCanSeeTheUserSAccountDetails() {
         Assert.assertEquals(200, response.getStatusCode());
     }
 }

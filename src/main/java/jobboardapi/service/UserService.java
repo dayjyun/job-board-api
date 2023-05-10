@@ -1,6 +1,7 @@
 package jobboardapi.service;
 
 
+import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.User;
 import jobboardapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class UserService {
     }
 
     public Optional<User> getUserById(Long userId) {
-        return userRepository.findById(userId);
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isPresent()) {
+            return user;
+        } else {
+            throw new NotFoundException("User not found");
+        }
     }
 }

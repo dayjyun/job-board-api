@@ -2,8 +2,8 @@ Feature: Rest API functionalities
 
   Scenario: User is able to view another user's account details
     Given A user account is available
-#    When I search for another user's id
-#    Then I can see the user's account details
+    When I search for another user's id
+    Then I can see the user's account details
 
 #  Scenario: User is able to view account details
 #    Given A user account is available
