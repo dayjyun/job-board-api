@@ -4,10 +4,12 @@ import jobboardapi.models.Business;
 import jobboardapi.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/businesses")
@@ -21,5 +23,10 @@ public class BusinessController {
     @GetMapping(path = "")
     public List<Business> getAllBusinesses(){
         return businessService.getAllBusinesses();
+    }
+
+    @GetMapping(path = "/{businessId}")
+    public Optional<Business> getBusinessById(@PathVariable Long businessId) {
+        return businessService.getBusinessById(businessId);
     }
 }

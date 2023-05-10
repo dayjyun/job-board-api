@@ -37,10 +37,10 @@ Feature: Rest API functionalities
 #    When I create a business
 #    Then I can see my business details
 #
-#  Scenario: User is able to view business details
-#    Given A business is available
-#    When I search by business id
-#    Then I can see a business's details
+  Scenario: User is able to view business details
+    Given A business is available
+    When I search by business id
+    Then I can see a business's details
 #
 #  Scenario: User is able to edit business details
 #    Given A business is available

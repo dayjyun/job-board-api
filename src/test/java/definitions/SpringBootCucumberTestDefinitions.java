@@ -84,4 +84,21 @@ public class SpringBootCucumberTestDefinitions {
     public void iCanSeeAListOfBusinesses() {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
+
+    @Given("A business is available")
+    public void aBusinessIsAvailable() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        response = request.get(BASE_URL + port + "/api/businesses/1");
+    }
+
+    @When("I search by business id")
+    public void iSearchByBusinessId() {
+        Assert.assertNotNull(String.valueOf(response));
+    }
+
+    @Then("I can see a business's details")
+    public void iCanSeeABusinessSDetails() {
+        Assert.assertEquals(200, response.getStatusCode());
+    }
 }
