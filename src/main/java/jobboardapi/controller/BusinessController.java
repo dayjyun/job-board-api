@@ -23,7 +23,7 @@ public class BusinessController {
     }
 
     @PutMapping("/{businessId}")
-    public Optional<Business> updateBusiness(@PathVariable Long businessId, @RequestBody Business businessBody) {
+    public Business updateBusiness(@PathVariable Long businessId, @RequestBody Business businessBody) {
         return businessService.updateBusiness(businessId, businessBody);
     }
 }

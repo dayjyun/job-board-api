@@ -27,13 +27,13 @@ public class BusinessService {
         return businessRepository.findAll();
     }
 
-    public Optional<Business> updateBusiness(Long businessId, Business businessBody) {
+    public Business updateBusiness(Long businessId, Business businessBody) {
         Optional<Business> business = businessRepository.findById(businessId);
         if(business.isPresent()) {
-            Business updatedBusiness = businessRepository.findById(businessId)
+            Business updatedBusiness = businessRepository.findById(businessId).get();
             updatedBusiness.setName(businessBody.getName());
             updatedBusiness.setHeadquarters(businessBody.getHeadquarters());
-            return Optional.of(businessRepository.save(updatedBusiness));
+            return businessRepository.save(updatedBusiness);
         } else {
             throw new NotFoundException("Business not found");
         }
