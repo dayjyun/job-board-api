@@ -3,11 +3,10 @@ package jobboardapi.controller;
 import jobboardapi.models.Business;
 import jobboardapi.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/businesses")
@@ -21,5 +20,10 @@ public class BusinessController {
     @GetMapping(path = "")
     public List<Business> getAllBusinesses(){
         return businessService.getAllBusinesses();
+    }
+
+    @PutMapping("/{businessId}")
+    public Optional<Business> updateBusiness(@PathVariable Long businessId, @RequestBody Business businessBody) {
+        return businessService.updateBusiness(businessId, businessBody);
     }
 }

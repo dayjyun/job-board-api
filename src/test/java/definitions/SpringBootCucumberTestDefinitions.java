@@ -38,50 +38,72 @@ public class SpringBootCucumberTestDefinitions {
    @LocalServerPort
    String port;
 
-     /**
-     * Testing for Scenario: User is able to view another user's account details
-     * This is the GET request at the endpoint http://localhost:8080/api/users/{userId}
-     * aUserAccountIsAvailable gets the user object from the specified endpoint
-     * iSearchForAnotherUserSId checks that the user object is not null
-     * iCanSeeTheUserSAccountDetails makes sure that the HTTP status is 200 when we successfully find the user object
-     */
-    @Given("A user account is available")
-    public void aUserAccountIsAvailable() {
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
-        response = request.get(BASE_URL + port + "/api/users/1");
-    }
+   /**
+    * Testing for Scenario: User is able to view another user's account details This is the GET request at the endpoint
+    * http://localhost:8080/api/users/{userId} aUserAccountIsAvailable gets the user object from the specified endpoint
+    * iSearchForAnotherUserSId checks that the user object is not null iCanSeeTheUserSAccountDetails makes sure that the HTTP status is 200
+    * when we successfully find the user object
+    */
+   @Given("A user account is available")
+   public void aUserAccountIsAvailable() {
+      RestAssured.baseURI = BASE_URL;
+      RequestSpecification request = RestAssured.given();
+      response = request.get(BASE_URL + port + "/api/users/1");
+   }
 
-    @When("I search for another user's id")
-    public void iSearchForAnotherUserSId() {
-        Assert.assertNotNull(String.valueOf(response));
-    }
+   @When("I search for another user's id")
+   public void iSearchForAnotherUserSId() {
+      Assert.assertNotNull(String.valueOf(response));
+   }
 
-    @Then("I can see the user's account details")
-    public void iCanSeeTheUserSAccountDetails() {
-        Assert.assertEquals(200, response.getStatusCode());
-    }
+   @Then("I can see the user's account details")
+   public void iCanSeeTheUserSAccountDetails() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 
-    /**
-     * Testing for Scenario: User is able to see a list of all businesses
-     * This is the GET request at the endpoint http://localhost:8080/api/businesses
-     * aListOfBusinessesAreAvailable gets the list of all businesses from the database referenced by the endpoint
-     * iSearchForBusinesses checks that there is a list of businesses containing at least one business
-     * iCanSeeAListOfBusinesses makes sure that the HTTP status is 200 when we successfully find the list of businesses
-     */
-    @Given("A list of businesses are available")
-    public void aListOfBusinessesAreAvailable() {
-        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses", HttpMethod.GET, null, String.class);
-        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
-    }
+   /**
+    * Testing for Scenario: User is able to see a list of all businesses This is the GET request at the endpoint
+    * http://localhost:8080/api/businesses aListOfBusinessesAreAvailable gets the list of all businesses from the database referenced by the
+    * endpoint iSearchForBusinesses checks that there is a list of businesses containing at least one business iCanSeeAListOfBusinesses
+    * makes sure that the HTTP status is 200 when we successfully find the list of businesses
+    */
+   @Given("A list of businesses are available")
+   public void aListOfBusinessesAreAvailable() {
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses", HttpMethod.GET, null, String.class);
+      list = JsonPath.from(String.valueOf(responseEntity.getBody()))
+                     .get();
+   }
 
-    @When("I search for businesses")
-    public void iSearchForBusinesses() {
-        Assert.assertTrue(list.size() > 0);
-    }
+   @When("I search for businesses")
+   public void iSearchForBusinesses() {
+      Assert.assertTrue(list.size() > 0);
+   }
 
-    @Then("I can see a list of businesses")
-    public void iCanSeeAListOfBusinesses() {
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
+   @Then("I can see a list of businesses")
+   public void iCanSeeAListOfBusinesses() {
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+   }
+
+   /**
+    * Test Scenario: User is able to edit business details
+    * Path: PUT http://localhost:8080/api/businesses/{businessId}
+    * aBusinessIsAvailable
+    * iSearchByBusinessId
+    * iCanEditMyBusinessDetails
+    */
+   @Given("A business is available")
+   public void aBusinessIsAvailable() {
+
+   }
+
+   @When("I search by business id")
+   public void iSearchByBusinessId() {
+
+   }
+
+   @Then("I can edit my business details")
+   public void iCanEditMyBusinessDetails() {
+
+   }
+
 }
