@@ -3,10 +3,10 @@ package jobboardapi.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
+
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "jobs")
@@ -33,11 +33,6 @@ public class Job {
    @Column
    private boolean applied;
 
-   @Column
-   @CreationTimestamp
-   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH-mm-ss")
-   private Timestamp createdAt;
-
    // many job applications can belong to one user
    @ManyToOne
    @JoinColumn(name = "user_id")
@@ -52,14 +47,13 @@ public class Job {
 
    public Job() {}
 
-   public Job(Long id, String title, String description, String location, double salary, boolean applied, Timestamp createdAt) {
+   public Job(Long id, String title, String description, String location, double salary, boolean applied) {
       this.id = id;
       this.title = title;
       this.description = description;
       this.location = location;
       this.salary = salary;
       this.applied = applied;
-      this.createdAt = createdAt;
    }
 
    public Long getId() {
@@ -110,13 +104,6 @@ public class Job {
       this.applied = applied;
    }
 
-   public Timestamp getCreatedAt() {
-      return createdAt;
-   }
-
-   public void setCreatedAt(Timestamp createdAt) {
-      this.createdAt = createdAt;
-   }
 
    public User getUser() {
       return user;
@@ -143,7 +130,6 @@ public class Job {
               ", location='" + location + '\'' +
               ", salary=" + salary +
               ", applied=" + applied +
-              ", createdAt=" + createdAt +
               '}';
    }
 }
