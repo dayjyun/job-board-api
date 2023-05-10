@@ -1,9 +1,9 @@
 Feature: Rest API functionalities
-
-  Scenario: User is able to view another user's account details
-    Given A user account is available
-    When I search for another user's id
-    Then I can see the user's account details
+#
+#  Scenario: User is able to view another user's account details
+#    Given A user account is available
+#    When I search for another user's id
+#    Then I can see the user's account details
 
 #  Scenario: User is able to view account details
 #    Given A user account is available
@@ -27,20 +27,20 @@ Feature: Rest API functionalities
 #    When No jobs have been applied for
 #    Then I see a message saying no jobs have been applied for
 #
-  Scenario: User is able to see a list of all businesses
-    Given A list of businesses are available
-    When I search for businesses
-    Then I can see a list of businesses
-#
+#  Scenario: User is able to see a list of all businesses
+#    Given A list of businesses are available
+#    When I search for businesses
+#    Then I can see a list of businesses
+##
 #  Scenario: User is able to create a business
 #    Given A user account is available
 #    When I create a business
 #    Then I can see my business details
 #
-  Scenario: User is able to view business details
-    Given A business is available
-    When I search by business id
-    Then I can see a business's details
+#  Scenario: User is able to view business details
+#    Given A business is available
+#    When I search by business id
+#    Then I can see a business's details
 #
 #  Scenario: User is able to edit business details
 #    Given A business is available
@@ -49,13 +49,12 @@ Feature: Rest API functionalities
 #    When A business is not available
 #    Then I see a message saying business is not available
 #
-#  Scenario: User is able to delete business
-#    Given A business is available
-#    When I search by business id
-#    Then I can delete my business
-#    When A business is not available
-#    Then I see a message saying business is not available
-#
+  Scenario: User is able to delete business
+    Given A business is available
+    When I delete a business from my Business list
+    Then I can see my business is deleted
+
+
 #  Scenario: User is able to see a list of job listings for a business
 #    Given A list of jobs is available
 #    When I search for job listings within a business

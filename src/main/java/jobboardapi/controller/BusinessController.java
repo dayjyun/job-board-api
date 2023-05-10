@@ -3,10 +3,7 @@ package jobboardapi.controller;
 import jobboardapi.models.Business;
 import jobboardapi.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,5 +25,10 @@ public class BusinessController {
     @GetMapping(path = "/{businessId}")
     public Optional<Business> getBusinessById(@PathVariable Long businessId) {
         return businessService.getBusinessById(businessId);
+    }
+
+    @DeleteMapping(path = "/{businessId}")
+    public Business deleteBusiness(@PathVariable Long businessId) {
+        return businessService.deleteBusiness(businessId);
     }
 }

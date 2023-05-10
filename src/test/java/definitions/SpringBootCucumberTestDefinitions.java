@@ -85,11 +85,19 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
+    /**
+     * Testing for Scenario: User is able to view business details
+     * This is the GET request at the endpoint http://localhost:8080/api/businesses/{businessId}
+     * aBusinessIsAvailable gets the business object from the specified endpoint
+     * iSearchByBusinessId checks that the business object is not null
+     * iCanSeeABusinessSDetails makes sure that the HTTP status is 200 when we successfully find the business object
+     */
     @Given("A business is available")
     public void aBusinessIsAvailable() {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         response = request.get(BASE_URL + port + "/api/businesses/1");
+        System.out.println(response.getBody().asString());
     }
 
     @When("I search by business id")
@@ -101,4 +109,26 @@ public class SpringBootCucumberTestDefinitions {
     public void iCanSeeABusinessSDetails() {
         Assert.assertEquals(200, response.getStatusCode());
     }
+
+    /**
+     * Testing for Scenario: User is able to delete business
+     * This is the DELETE request at the endpoint http://localhost:8080/api/businesses/{businessId}
+     * iDeleteBusinessFromMyBusinessList gets the business from the specified endpoint and sends the delete request to delete the business
+     * iCanSeeMyBusinessIsDeleted makes sure that the HTTP status is 200 when we successfully delete the business object
+     */
+    @When("I delete a business from my Business list")
+    public void iDeleteBusinessFromMyBusinessList() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        response = request.delete(BASE_URL + port + "/api/businesses/4");
+
+        System.out.println(response.getBody().asString());
+    }
+
+    @Then("I can see my business is deleted")
+    public void iCanSeeMyBusinessIsDeleted() {
+        Assert.assertEquals(200, response.getStatusCode());
+    }
+
 }

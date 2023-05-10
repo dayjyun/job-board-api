@@ -35,4 +35,14 @@ public class BusinessService {
             throw new NotFoundException("Business not found");
         }
     }
+
+    public Business deleteBusiness(Long businessId) {
+      Optional<Business> business = businessRepository.findById(businessId);
+      if (business.isPresent()) {
+          businessRepository.deleteById(businessId);
+          return business.get();
+      } else {
+          throw new NotFoundException("Business not found");
+      }
+    }
 }
