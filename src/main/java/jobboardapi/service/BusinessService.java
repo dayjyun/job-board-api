@@ -17,6 +17,10 @@ public class BusinessService {
         this.businessRepository = businessRepository;
     }
 
+    /**
+     * getAllBusinesses retrieves the list of all businesses from the business repository
+     * @return a list of businesses
+     */
     public List<Business> getAllBusinesses(){
         return businessRepository.findAll();
     }

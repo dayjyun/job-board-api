@@ -16,6 +16,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // User Story: Returns user account details
+    // http://localhost:8080/api/users/{userId}
     @GetMapping(path = "/{userId}")
     public Optional<User> getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);

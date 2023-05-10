@@ -38,8 +38,13 @@ public class SpringBootCucumberTestDefinitions {
    @LocalServerPort
    String port;
 
-    //   Scenario: User is able to view another user's account details
-    //   @GetMapping(path = "/{userId}") http://localhost:8080/api/users/{userId}
+     /**
+     * Testing for Scenario: User is able to view another user's account details
+     * This is the GET request at the endpoint http://localhost:8080/api/users/{userId}
+     * aUserAccountIsAvailable gets the user object from the specified endpoint
+     * iSearchForAnotherUserSId checks that the user object is not null
+     * iCanSeeTheUserSAccountDetails makes sure that the HTTP status is 200 when we successfully find the user object
+     */
     @Given("A user account is available")
     public void aUserAccountIsAvailable() {
         RestAssured.baseURI = BASE_URL;
@@ -57,8 +62,13 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertEquals(200, response.getStatusCode());
     }
 
-    // Scenario: User is able to see a list of all businesses
-    // @GetMapping(path = "") http://localhost:8080/api/businesses
+    /**
+     * Testing for Scenario: User is able to see a list of all businesses
+     * This is the GET request at the endpoint http://localhost:8080/api/businesses
+     * aListOfBusinessesAreAvailable gets the list of all businesses from the database referenced by the endpoint
+     * iSearchForBusinesses checks that there is a list of businesses containing at least one business
+     * iCanSeeAListOfBusinesses makes sure that the HTTP status is 200 when we successfully find the list of businesses
+     */
     @Given("A list of businesses are available")
     public void aListOfBusinessesAreAvailable() {
         responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses", HttpMethod.GET, null, String.class);
@@ -72,7 +82,6 @@ public class SpringBootCucumberTestDefinitions {
 
     @Then("I can see a list of businesses")
     public void iCanSeeAListOfBusinesses() {
-        Assert.assertNotNull(list);
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 }

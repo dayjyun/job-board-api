@@ -16,6 +16,8 @@ public class BusinessController {
     @Autowired
     private BusinessService businessService;
 
+    // User Story: Returns a list of all businesses
+    // http://localhost:8080/api/businesses
     @GetMapping(path = "")
     public List<Business> getAllBusinesses(){
         return businessService.getAllBusinesses();
