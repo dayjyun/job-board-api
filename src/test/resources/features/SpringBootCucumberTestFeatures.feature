@@ -27,8 +27,8 @@ Feature: Rest API functionalities
 #    When No jobs have been applied for
 #    Then I see a message saying no jobs have been applied for
 #
-#  Scenario: User is able to see a list of all businesses
-#    Given A list of businesses are available
+  Scenario: User is able to see a list of all businesses
+    Given A list of businesses are available
 #    When I search for businesses
 #    Then I can see a list of businesses
 #

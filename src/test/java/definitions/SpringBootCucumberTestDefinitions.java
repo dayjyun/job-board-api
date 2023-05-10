@@ -35,7 +35,7 @@ public class SpringBootCucumberTestDefinitions {
     public void aUserAccountIsAvailable() {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
-        response = request.get(BASE_URL + port + "/api/users/16");
+        response = request.get(BASE_URL + port + "/api/users/1");
         System.out.println(response.getBody().asString());
     }
 
@@ -47,5 +47,9 @@ public class SpringBootCucumberTestDefinitions {
     @Then("I can see the user's account details")
     public void iCanSeeTheUserSAccountDetails() {
         Assert.assertEquals(200, response.getStatusCode());
+    }
+
+    @Given("A list of businesses are available")
+    public void aListOfBusinessesAreAvailable() {
     }
 }
