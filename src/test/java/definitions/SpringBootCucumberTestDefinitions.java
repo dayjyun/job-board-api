@@ -10,6 +10,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import jobboardapi.JobBoardApiApplication;
+import jobboardapi.models.Business;
 import jobboardapi.models.User;
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -21,24 +22,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.Map;
+
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = JobBoardApiApplication.class)
 public class SpringBootCucumberTestDefinitions {
+
    private static final String BASE_URL = "http://localhost:";
    private static Response response;
+   private static ResponseEntity<String> responseEntity;
+   private static List<?> list;
 
    @LocalServerPort
    String port;
 
     //   Scenario: User is able to view another user's account details
-    //   @GetMapping(path = "/{userId}")
+    //   @GetMapping(path = "/{userId}") http://localhost:8080/api/users/{userId}
     @Given("A user account is available")
     public void aUserAccountIsAvailable() {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         response = request.get(BASE_URL + port + "/api/users/1");
-        System.out.println(response.getBody().asString());
     }
 
     @When("I search for another user's id")
@@ -52,7 +58,21 @@ public class SpringBootCucumberTestDefinitions {
     }
 
     // Scenario: User is able to see a list of all businesses
+    // @GetMapping(path = "") http://localhost:8080/api/businesses
     @Given("A list of businesses are available")
     public void aListOfBusinessesAreAvailable() {
+        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses", HttpMethod.GET, null, String.class);
+        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+    }
+
+    @When("I search for businesses")
+    public void iSearchForBusinesses() {
+        Assert.assertTrue(list.size() > 0);
+    }
+
+    @Then("I can see a list of businesses")
+    public void iCanSeeAListOfBusinesses() {
+        Assert.assertNotNull(list);
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 }
