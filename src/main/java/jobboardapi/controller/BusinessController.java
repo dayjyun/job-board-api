@@ -22,6 +22,8 @@ public class BusinessController {
         return businessService.getAllBusinesses();
     }
 
+    // User Story: I want to update my business's detail
+    // http://localhost:8080/api/businesses/{businessId}
     @PutMapping("/{businessId}")
     public Business updateBusiness(@PathVariable Long businessId, @RequestBody Business businessBody) {
         return businessService.updateBusiness(businessId, businessBody);

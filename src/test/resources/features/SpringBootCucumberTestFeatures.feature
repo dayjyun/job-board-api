@@ -43,11 +43,14 @@ Feature: Rest API functionalities
 #    Then I can see a business's details
 #
   Scenario: User is able to edit business details
-    Given A business is available
-    When I search by business id
-    Then I can edit my business details
-#    When A business is not available
-#    Then I see a message saying business is not available
+    Given I can search for a business ID
+    When I edit my business details
+    Then I see the business is updated
+#    Given A business account is available
+#    When I search for a business account
+#    Then I can see the business account's details
+#    When I edit the business details
+#    Then I can see the business is updated
 #
 #  Scenario: User is able to delete business
 #    Given A business is available

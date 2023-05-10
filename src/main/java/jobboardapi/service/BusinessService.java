@@ -27,6 +27,12 @@ public class BusinessService {
         return businessRepository.findAll();
     }
 
+    /**
+     * updateBusiness updates the business by searching for a business's ID
+     * @param businessId is our target business ID
+     * @param businessBody updated business details
+     * @return An Optional of a Business object
+     */
     public Business updateBusiness(Long businessId, Business businessBody) {
         Optional<Business> business = businessRepository.findById(businessId);
         if(business.isPresent()) {
