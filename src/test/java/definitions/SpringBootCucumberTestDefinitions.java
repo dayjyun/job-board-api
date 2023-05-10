@@ -1,6 +1,5 @@
 package definitions;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,11 +9,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import jobboardapi.JobBoardApiApplication;
-import jobboardapi.models.Business;
-import jobboardapi.models.User;
 import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpMethod;
@@ -23,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Map;
-
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = JobBoardApiApplication.class)
@@ -84,4 +77,9 @@ public class SpringBootCucumberTestDefinitions {
     public void iCanSeeAListOfBusinesses() {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
+
+    /**
+     *
+     */
+
 }
