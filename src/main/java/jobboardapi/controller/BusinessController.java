@@ -3,9 +3,7 @@ package jobboardapi.controller;
 import jobboardapi.models.Business;
 import jobboardapi.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +19,12 @@ public class BusinessController {
     @GetMapping(path = "")
     public List<Business> getAllBusinesses(){
         return businessService.getAllBusinesses();
+    }
+
+    // User Story: Update business details
+    // http://localhost:8080/api/businesses/{businessId}
+    @PostMapping(path = "/{businessId}")
+    public Business updateBusinessById(@PathVariable Long businessId){
+        return businessService.getBusinessById(businessId);
     }
 }
