@@ -76,11 +76,11 @@ Feature: Rest API functionalities
     Given A job listing is available
     When I search by job id
     Then I can see job listing details
-##
-#  Scenario: User with business is able to edit job listing details
-#    Given A job listing is available
-#    When I search by job id
-#    Then I can edit the job listing details
+
+  Scenario: User with business is able to edit job listing details
+    Given I can search for a job ID
+    When I edit my job details
+    Then I see the job is updated
 #
 #  Scenario: User with business is able to delete job listing
 #    Given A job listing is available

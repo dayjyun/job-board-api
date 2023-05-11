@@ -269,6 +269,28 @@ public class SpringBootCucumberTestDefinitions {
     * Test Scenario: User with business is able to edit job listing details
     */
 
+   @Given("I can search for a job ID")
+   public void iCanSearchForAJobID() {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given();
+   }
+
+   @When("I edit my job details")
+   public void iEditMyJobDetails() throws JSONException {
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("title", "Updated job title");
+      requestBody.put("description", "Updated job description");
+      requestBody.put("location", "Updated job location");
+      requestBody.put("salary", "Updated job salary");
+      requestBody.put("applied", "Updated job applied section");
+      request.header("Content-Type", "application/json");
+      response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/jobs/1");
+   }
+
+   @Then("I see the job is updated")
+   public void iSeeTheJobIsUpdated() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 
    /**
     * Test Scenario: User with business is able to delete job listing
