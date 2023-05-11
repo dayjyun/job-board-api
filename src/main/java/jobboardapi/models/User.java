@@ -2,12 +2,12 @@ package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -19,11 +19,11 @@ public class User {
    private Long id;
 
    @Column
-   @NotNull
+   @NotNull(message = "User name may not be null")
    private String name;
 
    @Column(unique = true)
-   @NotNull
+   @NotNull(message = "User email may not be null")
    private String email;
 
    @Column

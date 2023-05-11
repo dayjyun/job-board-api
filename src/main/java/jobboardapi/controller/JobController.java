@@ -5,8 +5,9 @@ import jobboardapi.models.User;
 import jobboardapi.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.rmi.AlreadyBoundException;
+import javax.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class JobController {
     // User Story: I want to update my job listing
     // http://localhost:8080/api/jobs/{jobId}
     @PutMapping(path = "/{jobId}")
-    public Job updateJobListing(@PathVariable Long jobId, @RequestBody Job jobBody) {
+    public Job updateJobListing(@PathVariable Long jobId, @RequestBody @Valid Job jobBody) {
         return jobService.updateJobListing(jobId, jobBody);
     }
 

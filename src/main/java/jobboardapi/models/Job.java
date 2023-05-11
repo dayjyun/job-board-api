@@ -5,12 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-
-
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
-
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "jobs")
@@ -21,14 +19,14 @@ public class Job {
    private Long id;
 
    @Column
-   @NotNull
+   @NotNull(message = "Job title may not be null")
    private String title;
 
    @Column
    private String description;
 
    @Column
-   @NotNull
+   @NotNull(message = "Job location may not be null")
    private String location;
 
    @Column
