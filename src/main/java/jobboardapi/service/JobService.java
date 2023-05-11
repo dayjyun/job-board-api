@@ -1,5 +1,6 @@
 package jobboardapi.service;
 
+import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.Job;
 import jobboardapi.models.User;
@@ -119,14 +120,14 @@ public class JobService {
      *
      */
 //     I want to update the job listing boolean to true
-    public Optional<Job> applyForJobListing(Long jobId, User userBody) throws AlreadyBoundException {
+    public Optional<Job> applyForJobListing(Long jobId, User userBody) {
         Optional<Job> jobListing = jobRepository.findById(jobId);
         if(jobListing.isPresent()){
 //            User user = userRepository.findUserByEmail(userBody.getEmail());
 //            Optional<User> user = jobRepository.findByUserEmail(userBody.getEmail());
             Optional<User> user = jobRepository.findByUserId(userBody.getId());
             if(user.isPresent()) {
-                throw new AlreadyBoundException("Application already submitted");
+                throw new AlreadyExistsException("Application already submitted");
             } else {
                 jobListing.get().setApplied(true);
                 jobListing.get().getApplicantsList().add(userBody);
