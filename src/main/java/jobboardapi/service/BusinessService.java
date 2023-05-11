@@ -33,7 +33,12 @@ public class BusinessService {
      * @return a list of businesses
      */
     public List<Business> getAllBusinesses(){
-        return businessRepository.findAll();
+       List<Business> allBusinesses = businessRepository.findAll();
+        if(allBusinesses.size() > 0) {
+           return allBusinesses;
+        } else {
+           throw new NotFoundException("Not businesses found");
+        }
     }
 
     /**

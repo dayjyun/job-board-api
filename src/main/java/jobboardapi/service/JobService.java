@@ -36,7 +36,12 @@ public class JobService {
      * @return a list of jobs
      */
     public List<Job> getAllJobListings() {
-        return jobRepository.findAll();
+        List<Job> allJobsList =  jobRepository.findAll();
+        if(allJobsList.size() > 0) {
+            return allJobsList;
+        } else {
+            throw new NotFoundException("No jobs found");
+        }
     }
 
     /**
@@ -98,7 +103,7 @@ public class JobService {
      * If the job id does not exist, a NotFoundException is thrown
      * If the user list is empty, a NotFoundException is thrown
      * @param jobId is the id for the job the user wants to check the applicants for
-     * @return a list of applicants for the targetted job
+     * @return a list of applicants for the targeted job
      */
     public List<User> getListOfApplicants(Long jobId) {
         Optional<Job> jobListing = jobRepository.findById(jobId);
@@ -119,24 +124,40 @@ public class JobService {
     /**
      *
      */
-//     I want to update the job listing boolean to true
     public Optional<Job> applyForJobListing(Long jobId, User userBody) {
         Optional<Job> jobListing = jobRepository.findById(jobId);
         if(jobListing.isPresent()){
 //            User user = userRepository.findUserByEmail(userBody.getEmail());
 //            Optional<User> user = jobRepository.findByUserEmail(userBody.getEmail());
-            Optional<User> user = jobRepository.findByUserId(userBody.getId());
+//            Optional<User> user = jobRepository.findByUserId(userBody.getId());
+//            Optional<User> user = jobRepository.findJobByIdAndAndUserId(jobId, userBody.getId());
+            Optional<User> user = userRepository.findUserByIdAndJobId(jobId, userBody.getId());
             if(user.isPresent()) {
                 throw new AlreadyExistsException("Application already submitted");
             } else {
                 jobListing.get().setApplied(true);
                 jobListing.get().getApplicantsList().add(userBody);
-//                jobListing.get().setApplicantsList(userBody);
                 jobRepository.save(jobListing.get());
                 return jobListing;
             }
         } else {
             throw new NotFoundException("Job listing not found");
         }
+//        if(jobListing.isPresent()) {
+//            Job job = jobListing.get();
+//            List<User> applicantsList = job.getApplicantsList();
+//            Optional<User> user = applicantsList.stream().filter(applicant -> applicant.getId().equals(userBody.getId())).findFirst();
+//
+//            if(user.isPresent()) {
+//                throw new AlreadyExistsException("Application already submitted");
+//            } else {
+//                job.setApplied(true);
+//                applicantsList.add(userBody);
+//                jobRepository.save(job);
+//                return jobListing;
+//            }
+//        } else {
+//            throw new NotFoundException("Job listing not found");
+//        }
     }
 }
