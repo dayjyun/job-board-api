@@ -30,7 +30,7 @@ public class JobService {
 
     /**
      * getJobListingById retrieves the job by the job id, if the job id exists
-     * If the job id does not exist, we throw the NotFoundException
+     * If the job id does not exist, a NotFoundException is thrown
      * @param jobId is what we're searching by
      * @return the optional of the job
      */
@@ -45,7 +45,7 @@ public class JobService {
 
     /**
      * updateJobListing updates the job by searching for a job's ID
-     * If the job id is does not exist, we throw the NotFoundException
+     * If the job id is does not exist, a NotFoundException is thrown
      * @param jobId is our target job ID
      * @param jobBody updated job details
      * @return the updated Job object
@@ -67,9 +67,10 @@ public class JobService {
 
     /**
      * deleteJobListing checks if a job id is present in the job database
-     * If the job id does not exist, Not
-     * @param jobId
-     * @return
+     * If the job id does not exist, a NotFoundException is thrown
+     * If the job id exists, the job is deleted from the database, and the deleted job's details are returned.
+     * @param jobId is the id for the job the user wants to delete
+     * @return the deleted job's details
      */
     public Job deleteJobListing(Long jobId) {
         Optional<Job> jobListing = jobRepository.findById(jobId);

@@ -83,7 +83,7 @@ public class BusinessService {
      * deleteBusiness checks if a business id is present in the business database.
      * If the business id does not exist, a NotFoundException is thrown.
      * If the business id exists, the business is deleted from the database, and the deleted business's details are returned.
-     * @param businessId is the business the user wants to delete
+     * @param businessId is the id for business the user wants to delete
      * @return the deleted business's details
      */
     public Business deleteBusiness(Long businessId) {
