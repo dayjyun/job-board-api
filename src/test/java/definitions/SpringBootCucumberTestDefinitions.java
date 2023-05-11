@@ -24,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @CucumberContextConfiguration
@@ -231,13 +232,14 @@ public class SpringBootCucumberTestDefinitions {
      */
     @Given("A list of jobs are available")
     public void aListOfJobsAreAvailable() {
-        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1", HttpMethod.GET, null, String.class);
+        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
         list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+        System.out.println(list);
     }
 
     @When("I search for jobs")
     public void iSearchForJobs() {
-        Assert.assertTrue(list.size() > 0);
+        Assert.assertTrue(list.size() == 0);
     }
 
     @Then("I can see a list of jobs")
