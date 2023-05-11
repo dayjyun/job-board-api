@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class BusinessController {
     // http://localhost:8080/api/businesses
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    public Business createBusiness(@RequestBody Business businessObject) {
+    public Business createBusiness(@RequestBody @Valid Business businessObject) {
         return businessService.createBusiness(businessObject);
     }
 
@@ -42,7 +43,7 @@ public class BusinessController {
     // User Story: I want to update my business's detail
     // http://localhost:8080/api/businesses/{businessId}
     @PutMapping(path = "/{businessId}")
-    public Business updateBusiness(@PathVariable Long businessId, @RequestBody Business businessBody) {
+    public Business updateBusiness(@PathVariable Long businessId, @RequestBody @Valid Business businessBody) {
         return businessService.updateBusiness(businessId, businessBody);
     }
 
@@ -64,7 +65,7 @@ public class BusinessController {
     // http://localhost:8080/api/businesses/{businessId}/jobs
     @PostMapping(path = "/{businessId}/jobs")
     @ResponseStatus(HttpStatus.CREATED)
-    public Job createJobForBusinessId(@PathVariable Long businessId, @RequestBody Job jobObject) {
+    public Job createJobForBusinessId(@PathVariable Long businessId, @RequestBody @Valid Job jobObject) {
         return businessService.createJobForBusinessId(businessId, jobObject);
     }
 }
