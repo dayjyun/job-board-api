@@ -36,6 +36,8 @@ public class JobController {
         return jobService.updateJobListing(jobId, jobBody);
     }
 
+    // User Story: I want to delete a job listing from the job board
+    // http://localhost:8080/api/jobs/{jobId}
     @DeleteMapping(path = "/{jobId}")
     public Job deleteJobListing(@PathVariable Long jobId) {
         return jobService.deleteJobListing(jobId);
