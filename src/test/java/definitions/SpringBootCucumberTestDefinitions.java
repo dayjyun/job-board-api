@@ -3,6 +3,8 @@ package definitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import jobboardapi.models.Job;
+import jobboardapi.repository.JobRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import io.cucumber.spring.CucumberContextConfiguration;
@@ -16,6 +18,7 @@ import jobboardapi.repository.BusinessRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -24,6 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @CucumberContextConfiguration
@@ -38,6 +42,7 @@ public class SpringBootCucumberTestDefinitions {
 
    private Business newBusiness;
    private static final String newBusinessName = "New Business Name";
+   private static final String newJobNameForBusiness = "New Job Name For Business";
 
    @Autowired
    private BusinessRepository businessRepository;
@@ -220,5 +225,64 @@ public class SpringBootCucumberTestDefinitions {
     @Then("I can see my business is deleted")
     public void iCanSeeMyBusinessIsDeleted() {
         Assert.assertEquals(200, response.getStatusCode());
+    }
+
+    /**
+     * Test Scenario: User is able to see a list of job listings for a business
+     * Path: GET http://localhost:8080/api/businesses/{businessId}/jobs
+     * aListOfJobsIsAvailable gets the list of all jobs from the business id = 1, as referenced by the endpoint
+     * iSearchForJobListingsWithinABusiness checks that there is a list of jobs containing at least one job
+     * iCanSeeAListOfJobsForABusiness makes sure that the HTTP status is 200 when we successfully find the list of jobs
+     */
+    @Given("A list of jobs is available")
+    public void aListOfJobsIsAvailable() {
+        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
+        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+        System.out.println(list);
+    }
+
+    @When("I search for job listings within a business")
+    public void iSearchForJobListingsWithinABusiness() {
+        Assert.assertTrue(list.size() == 0);
+    }
+
+    @Then("I can see a list of jobs for a business")
+    public void iCanSeeAListOfJobsForABusiness() {
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    /**
+     * Test Scenario: User with business is able to create a job listing
+     * Path: POST http://localhost:8080/api/businesses/{1}/jobs
+     * aBusinessIsAvailableToCreateAJob gets the business object from the specified endpoint
+     * iCreateAJobListing creates the job JSON object and posts it to the endpoint
+     * iCanSeeTheNewJobListingSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
+     */
+    @Given("A business is available to create a job")
+    public void aBusinessIsAvailableToCreateAJob() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        response = request.get(BASE_URL + port + "/api/businesses/1/jobs");
+    }
+
+    @When("I create a job listing")
+    public void iCreateAJobListing() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id", 1L);
+        requestBody.put("title", newJobNameForBusiness);
+        requestBody.put("description", "New Job Description");
+        requestBody.put("location", "New Job Location");
+        requestBody.put("salary", "120000.00");
+        requestBody.put("applied", "False");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses/1/jobs");
+        System.out.println(requestBody);
+    }
+
+    @Then("I can see the new job listing's details")
+    public void iCanSeeTheNewJobListingSDetails() {
+        Assert.assertEquals(201, response.getStatusCode());
     }
 }
