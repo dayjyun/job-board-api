@@ -55,7 +55,7 @@ public class BusinessService {
 
      /**
      * getBusinessById retrieves the business by the business id, if the business id exists.
-     * If the business id does not exist, we throw the NotFoundException
+     * If the business id does not exist, a NotFoundException is thrown
      * @param businessId is what we're searching by
      * @return the optional of the business
      */
@@ -69,10 +69,11 @@ public class BusinessService {
     }
   
   /**
-     * updateBusiness updates the business by searching for a business's ID and throws the NotFoundException if the business ID does not exist.
+     * updateBusiness updates the business by searching for a business's ID
+     * If the business id does not exist, a NotFoundException is thrown
      * @param businessId is our target business ID
      * @param businessBody updated business details
-     * @return An Optional of a Business object
+     * @return the updated Business object
      */
     public Business updateBusiness(Long businessId, Business businessBody) {
         Optional<Business> business = businessRepository.findById(businessId);
@@ -88,9 +89,9 @@ public class BusinessService {
 
     /**
      * deleteBusiness checks if a business id is present in the business database.
-     * If the business id does not exist, NotFoundException is thrown.
+     * If the business id does not exist, a NotFoundException is thrown.
      * If the business id exists, the business is deleted from the database, and the deleted business's details are returned.
-     * @param businessId is the business the user wants to delete
+     * @param businessId is the id for business the user wants to delete
      * @return the deleted business's details
      */
     public Business deleteBusiness(Long businessId) {

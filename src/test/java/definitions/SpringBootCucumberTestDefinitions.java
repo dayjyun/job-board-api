@@ -15,8 +15,6 @@ import io.restassured.specification.RequestSpecification;
 import jobboardapi.JobBoardApiApplication;
 import jobboardapi.models.Business;
 import jobboardapi.repository.BusinessRepository;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Assert;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,9 +151,9 @@ public class SpringBootCucumberTestDefinitions {
     /**
     * Test Scenario: User is able to edit business details
       * Path: PUT http://localhost:8080/api/businesses/{businessId}
-    * aBusinessIsAvailable updates the request body
-    * iSearchByBusinessId updates the Business details
-    * iCanEditMyBusinessDetails confirms a successful update
+    * aBusinessIsAvailable sets request URL path for the business
+    * iSearchByBusinessId updates the business details
+    * iCanEditMyBusinessDetails confirms a successful update for the business
     */
    @Given("I can search for a business ID")
    public void aBusinessIsAvailablePUT() {
@@ -217,7 +215,7 @@ public class SpringBootCucumberTestDefinitions {
     @When("I delete a business from my Business list")
     public void iDeleteBusinessFromMyBusinessList() {
         RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
+        request = RestAssured.given();
         request.header("Content-Type", "application/json");
         response = request.delete(BASE_URL + port + "/api/businesses/3");
     }
@@ -226,8 +224,8 @@ public class SpringBootCucumberTestDefinitions {
     public void iCanSeeMyBusinessIsDeleted() {
         Assert.assertEquals(200, response.getStatusCode());
     }
-
-    /**
+  
+      /**
      * Test Scenario: User is able to see a list of job listings for a business
      * Path: GET http://localhost:8080/api/businesses/{businessId}/jobs
      * aListOfJobsIsAvailable gets the list of all jobs from the business id = 1, as referenced by the endpoint
@@ -285,4 +283,128 @@ public class SpringBootCucumberTestDefinitions {
     public void iCanSeeTheNewJobListingSDetails() {
         Assert.assertEquals(201, response.getStatusCode());
     }
+
+   /**
+    * Test Scenario: User is able to see a list of all jobs
+    * Path: GET http://localhost:8080/api/jobs
+    * aListOfJobsIsAvailable gets the list of all jobs from the database referenced by the endpoint
+    * iSearchForJobListingsWithinABusiness checks that there is a list of jobs containing at least on job
+    * iCanSeeAListOfJobsForABusiness makes sure the HTTP status is 200 when we successfully find the list of jobs
+    */
+   @Given("A list of jobs are available")
+   public void aListOfJobsIsAvailable() {
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/jobs", HttpMethod.GET, null, String.class);
+      list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+   }
+
+   @When("I search for jobs")
+   public void iSearchForJobListingsWithinABusiness() {
+      Assert.assertTrue(list.size() > 0);
+   }
+
+   @Then("I can see a list of jobs")
+   public void iCanSeeAListOfJobsForABusiness() {
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+   }
+
+   /**
+    * Test Scenario: User is able to see a specific job listing for a business
+    * Path: GET http://localhost:8080/api/jobs/{jobId}
+    * aJobListingIsAvailable gets the job object from the specified endpoint
+    * iSearchByJobId checks that the job object is not null
+    * iCanSearchForAJobID makes sure that the HTTP status is 200 when we successfully find the job object
+    */
+   @Given("A job listing is available")
+   public void aJobListingIsAvailable() {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given();
+      response = request.get(BASE_URL + port + "/api/jobs/1");
+   }
+
+   @When("I search by job id")
+   public void iSearchByJobId() {
+      Assert.assertNotNull(String.valueOf(response));
+   }
+
+   @Then("I can see job listing details")
+   public void iCanSeeJobListingDetails() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Test Scenario: User with business is able to edit job listing details
+    * Path: PUT http://localhost:8080/api/jobs/{jobId}
+    * iCanSearchForAJobID sets request URL path for the job
+    * iEditMyJobDetails updates the job details
+    * iSeeTheJobIsUpdated confirms a successful update for the job
+    */
+
+   @Given("I can search for a job ID")
+   public void iCanSearchForAJobID() {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given();
+   }
+
+   @When("I edit my job details")
+   public void iEditMyJobDetails() throws JSONException {
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("title", "Updated job title");
+      requestBody.put("description", "Updated job description");
+      requestBody.put("location", "Updated job location");
+      requestBody.put("salary", 0.00);
+      requestBody.put("applied", true);
+      request.header("Content-Type", "application/json");
+      response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/jobs/1");
+   }
+
+   @Then("I see the job is updated")
+   public void iSeeTheJobIsUpdated() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Test Scenario: User with business is able to delete job listing
+    * Path: DELETE http://localhost:8080/api/jobs/{jobId}
+    * iDeleteAJobFromMyJobList gets the job from the specified endpoint and sends the delete request to delete the job
+    * iCanSeeMyJobListingIsDeleted makes sure that the HTTP status is 200 when we successfully delete the job object
+    */
+   @When("I delete a job from my Job list")
+   public void iDeleteAJobFromMyJobList() {
+      request.header("Content-Type", "application/json");
+      response = request.delete(BASE_URL + port + "/api/businesses/1");
+   }
+
+   @Then("I can see my job listing is deleted")
+   public void iCanSeeMyJobListingIsDeleted() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Test Scenario: User is able to see a list of all applicants for their job
+    */
+   @Given("A list of applicants is available")
+   public void aListOfApplicantsIsAvailable() {
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/jobs/1/applicants", HttpMethod.GET, null, String.class);
+      list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+      System.out.println("GIVEN "+list);
+      System.out.println("GIVEN "+ responseEntity);
+   }
+
+   @When("I view the list of applicants")
+   public void iViewTheListOfApplicants() {
+      System.out.println("WHEN " + list);
+      System.out.println("WHEN " + responseEntity);
+//      Assert.assertEquals(0, list.size());
+      Assert.assertTrue(list.size() > 0);
+   }
+
+   @Then("I can see the list of applicants")
+   public void iCanSeeTheListOfApplicants() {
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+   }
+
+   /**
+    * Test Scenario: User is able to apply for a job
+    */
+
 }

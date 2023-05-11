@@ -1,9 +1,9 @@
 Feature: Rest API functionalities
 #
-#  Scenario: User is able to view another user's account details
-#    Given A user account is available
-#    When I search for another user's id
-#    Then I can see the user's account details
+  Scenario: User is able to view another user's account details
+    Given A user account is available
+    When I search for another user's id
+    Then I can see the user's account details
 
 #  Scenario: User is able to view account details
 #    Given A user account is available
@@ -26,7 +26,6 @@ Feature: Rest API functionalities
 #    Then I can see a list of jobs
 #    When No jobs have been applied for
 #    Then I see a message saying no jobs have been applied for
-#
 
   Scenario: User is able to see a list of all businesses
     Given A list of businesses are available
@@ -38,11 +37,11 @@ Feature: Rest API functionalities
     When I create a business with that name
     Then I can see my new business's details
 
-#  Scenario: User is able to view business details
-#    Given A business is available
-#    When I search by business id
-#    Then I can see a business's details
-#
+  Scenario: User is able to view business details
+    Given A business is available
+    When I search by business id
+    Then I can see a business's details
+
   Scenario: User is able to edit business details
     Given I can search for a business ID
     When I edit my business details
@@ -52,44 +51,46 @@ Feature: Rest API functionalities
 #    Then I can see the business account's details
 #    When I edit the business details
 #    Then I can see the business is updated
-#
+
   Scenario: User is able to delete business
     Given A business is available
     When I delete a business from my Business list
     Then I can see my business is deleted
-
-  Scenario: User is able to see a list of job listings for a business
+    
+ Scenario: User is able to see a list of job listings for a business
     Given A list of jobs is available
     When I search for job listings within a business
     Then I can see a list of jobs for a business
 
-  Scenario: User with business is able to create a job listing
-    Given A business is available to create a job
-    When I create a job listing
-    Then I can see the new job listing's details
+ Scenario: User with business is able to create a job listing
+   Given A business is available to create a job
+   When I create a job listing
+   Then I can see the new job listing's details
 
-#  Scenario: User is able to see a specific job listing for a business
-#    Given A job listing is available
-#    When I search by job id
-#    Then I can see job listing details
-#
-#  Scenario: User with business is able to edit job listing details
-#    Given A job listing is available
-#    When I search by job id
-#    Then I can edit the job listing details
-#
-#  Scenario: User with business is able to delete job listing
-#    Given A job listing is available
-#    When I search by job id
-#    Then I can delete the job listing
-#
+  Scenario: User is able to see a list of all jobs
+    Given A list of jobs are available
+    When I search for jobs
+    Then I can see a list of jobs
 
-#  Scenario: User is able to see a list of all jobs
-#    Given A list of jobs is available
-#    When I search for jobs
-#    Then I can see a list of jobs
-#
-#  Scenario: User is able to see a list of all applicants for their job
+  Scenario: User is able to see a specific job listing for a business
+    Given A job listing is available
+    When I search by job id
+    Then I can see job listing details
+
+  Scenario: User with business is able to edit job listing details
+    Given I can search for a job ID
+    When I edit my job details
+    Then I see the job is updated
+
+  Scenario: User with business is able to delete job listing
+    Given A job listing is available
+    When I delete a job from my Job list
+    Then I can see my job listing is deleted
+
+  Scenario: User is able to see a list of all applicants for their job
+    Given A list of applicants is available
+    When I view the list of applicants
+    Then I can see the list of applicants
 #    Given A user account is available
 #    When I search by my job id
 #    Then I can see a list of applicants for my job
