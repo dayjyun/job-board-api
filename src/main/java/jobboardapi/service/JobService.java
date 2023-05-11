@@ -65,6 +65,12 @@ public class JobService {
         }
     }
 
+    /**
+     * deleteJobListing checks if a job id is present in the job database
+     * If the job id does not exist, Not
+     * @param jobId
+     * @return
+     */
     public Job deleteJobListing(Long jobId) {
         Optional<Job> jobListing = jobRepository.findById(jobId);
         if(jobListing.isPresent()) {
