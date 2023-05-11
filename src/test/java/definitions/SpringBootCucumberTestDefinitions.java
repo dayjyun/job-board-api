@@ -253,23 +253,24 @@ public class SpringBootCucumberTestDefinitions {
 
     /**
      * Test Scenario: User with business is able to create a job listing
-     * Path: POST http://localhost:8080/api//businesses/{1}/jobs
-     * aJobTitleForTheBusinessDoesNotExistYet checks the business database to see if the job title exists yet for the business's job list
-     * iCreateAJobListingWithThatTitle creates the job JSON object and posts it to the endpoint
+     * Path: POST http://localhost:8080/api/businesses/{1}/jobs
+     * aBusinessIsAvailableToCreateAJob gets the business object from the specified endpoint
+     * iCreateAJobListing creates the job JSON object and posts it to the endpoint
      * iCanSeeTheNewJobListingSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
      */
-    @Given("A job title for the business does not exist yet")
-    public void aJobTitleForTheBusinessDoesNotExistYet() {
-        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
-        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get("title");
-        Assert.assertFalse(list.contains(newJobNameForBusiness));
+    @Given("A business is available to create a job")
+    public void aBusinessIsAvailableToCreateAJob() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        response = request.get(BASE_URL + port + "/api/businesses/1/jobs");
     }
 
-    @When("I create a job listing with that title")
-    public void iCreateAJobListingWithThatTitle() throws JSONException {
+    @When("I create a job listing")
+    public void iCreateAJobListing() throws JSONException {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
+        requestBody.put("id", 1L);
         requestBody.put("title", newJobNameForBusiness);
         requestBody.put("description", "New Job Description");
         requestBody.put("location", "New Job Location");

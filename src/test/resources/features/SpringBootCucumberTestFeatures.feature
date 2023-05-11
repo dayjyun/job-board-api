@@ -64,8 +64,8 @@ Feature: Rest API functionalities
     Then I can see a list of jobs for a business
 
   Scenario: User with business is able to create a job listing
-    Given A job title for the business does not exist yet
-    When I create a job listing with that title
+    Given A business is available to create a job
+    When I create a job listing
     Then I can see the new job listing's details
 
 #  Scenario: User is able to see a specific job listing for a business

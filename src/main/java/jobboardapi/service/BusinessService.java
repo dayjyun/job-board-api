@@ -5,6 +5,7 @@ import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.Business;
 import jobboardapi.models.Job;
 import jobboardapi.repository.BusinessRepository;
+import jobboardapi.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,16 @@ import java.util.Optional;
 public class BusinessService {
 
     private BusinessRepository businessRepository;
+    private JobRepository jobRepository;
 
     @Autowired
     public void setBusinessRepository(BusinessRepository businessRepository) {
         this.businessRepository = businessRepository;
+    }
+
+    @Autowired
+    public void setJobRepository(JobRepository jobRepository) {
+        this.jobRepository = jobRepository;
     }
 
     /**
@@ -125,12 +132,10 @@ public class BusinessService {
     public Job createJobForBusinessId(Long businessId, Job jobObject){
         Optional<Business> business = businessRepository.findById(businessId);
         if (business.isPresent()) {
-            if (!business.get().getJobList().contains(jobObject.getTitle())){
-                business.get().getJobList().add(jobObject);
-                return jobObject;
-            } else {
-                throw new AlreadyExistsException("The job title for this business already exists");
-            }
+//            Business updatedBusiness = businessRepository.findById(businessId).get();
+//            updatedBusiness.getJobList().add(jobObject);
+            jobObject.setBusiness(business.get());
+            return jobRepository.save(jobObject);
         } else {
             throw new NotFoundException("Business not found");
         }
