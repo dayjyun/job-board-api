@@ -91,6 +91,13 @@ public class JobService {
         }
     }
 
+    /**
+     * getListOfApplicants retrieves the list of all users that have applied to the job listing
+     * If the job id does not exist, a NotFoundException is thrown
+     * If the user list is empty, a NotFoundException is thrown
+     * @param jobId is the id for the job the user wants to check the applicants for
+     * @return a list of applicants for the targetted job
+     */
     public List<User> getListOfApplicants(Long jobId) {
         Optional<Job> jobListing = jobRepository.findById(jobId);
         if(jobListing.isPresent()) {
