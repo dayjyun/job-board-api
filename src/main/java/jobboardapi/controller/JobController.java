@@ -3,10 +3,7 @@ package jobboardapi.controller;
 import jobboardapi.models.Job;
 import jobboardapi.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,5 +27,12 @@ public class JobController {
     @GetMapping(path = "/{jobId}")
     public Optional<Job> getJobListingById(@PathVariable Long jobId) {
         return jobService.getJobListingById(jobId);
+    }
+
+    // User Story: I want to update my job listing
+    // http://localhost:8080/api/jobs/{jobId}
+    @PutMapping(path = "/{jobId}")
+    public Job updateJobListing(@PathVariable Long jobId, @RequestBody Job jobBody) {
+        return jobService.updateJobListing(jobId, jobBody);
     }
 }

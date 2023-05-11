@@ -41,4 +41,19 @@ public class JobService {
             throw new NotFoundException("Job not found");
         }
     }
+
+    public Job updateJobListing(Long jobId, Job jobBody){
+        Optional<Job> job = jobRepository.findById(jobId);
+        if(job.isPresent()) {
+            Job updatedJobListing = jobRepository.findById(jobId).get();
+            updatedJobListing.setTitle(jobBody.getTitle());
+            updatedJobListing.setDescription(jobBody.getDescription());
+            updatedJobListing.setLocation(jobBody.getLocation());
+            updatedJobListing.setSalary(jobBody.getSalary());
+            updatedJobListing.setApplied(jobBody.isApplied());
+            return jobRepository.save(updatedJobListing);
+        } else {
+            throw new NotFoundException("Job not found");
+        }
+    }
 }
