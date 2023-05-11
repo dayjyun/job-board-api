@@ -1,10 +1,14 @@
 package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.NotNull;
+import net.bytebuddy.utility.nullability.NeverNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.List;
 
 @Entity
@@ -16,6 +20,7 @@ public class Business {
    private Long id;
 
    @Column(unique = true)
+   @NotNull(message = "Business name may not be null")
    private String name;
 
    @Column

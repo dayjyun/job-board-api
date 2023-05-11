@@ -2,10 +2,10 @@ package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -17,14 +17,14 @@ public class Job {
    private Long id;
 
    @Column
-   @NotNull
+   @NotNull(message = "Job title may not be null")
    private String title;
 
    @Column
    private String description;
 
    @Column
-   @NotNull
+   @NotNull(message = "Job location may not be null")
    private String location;
 
    @Column
