@@ -381,6 +381,10 @@ public class SpringBootCucumberTestDefinitions {
 
    /**
     * Test Scenario: User is able to see a list of all applicants for their job
+    * Path: GET http://localhost:8080/api/jobs/1/applicants
+    * aListOfApplicantsIsAvailable gets the list of all Users from the database referenced by the endpoint
+    * iViewTheListOfApplicants checks that there is a list of jobs containing at least on job
+    * iCanSeeTheListOfApplicants makes sure the HTTP status is 200 when we successfully find the list of jobs
     */
    @Given("A list of applicants is available")
    public void aListOfApplicantsIsAvailable() {
