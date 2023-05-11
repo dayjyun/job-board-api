@@ -1,6 +1,7 @@
 package jobboardapi.controller;
 
 import jobboardapi.models.Business;
+import jobboardapi.models.Job;
 import jobboardapi.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,5 +51,12 @@ public class BusinessController {
     @DeleteMapping(path = "/{businessId}")
     public Business deleteBusiness(@PathVariable Long businessId) {
         return businessService.deleteBusiness(businessId);
+    }
+
+    // User Story: I want to see a list of all job listings for a specific business
+    // http://localhost:8080/api/businesses/{businessId}/jobs
+    @GetMapping(path = "/{businessId}/jobs")
+    public List<Job> getJobByBusinessId(@PathVariable Long businessId) {
+        return businessService.getJobByBusinessId(businessId);
     }
 }
