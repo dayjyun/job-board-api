@@ -61,10 +61,11 @@ public class BusinessService {
     }
   
   /**
-     * updateBusiness updates the business by searching for a business's ID and throws the NotFoundException if the business ID does not exist.
+     * updateBusiness updates the business by searching for a business's ID
+     * If the business id does not exist, we throw the NotFoundException
      * @param businessId is our target business ID
      * @param businessBody updated business details
-     * @return An Optional of a Business object
+     * @return the updated Business object
      */
     public Business updateBusiness(Long businessId, Business businessBody) {
         Optional<Business> business = businessRepository.findById(businessId);

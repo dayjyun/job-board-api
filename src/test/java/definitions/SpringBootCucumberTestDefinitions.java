@@ -306,7 +306,7 @@ public class SpringBootCucumberTestDefinitions {
    @When("I delete a job from my Job list")
    public void iDeleteAJobFromMyJobList() {
       request.header("Content-Type", "application/json");
-      response = request.delete(BASE_URL + port + "/api/businesses/10");
+      response = request.delete(BASE_URL + port + "/api/businesses/1");
    }
 
    @Then("I can see my job listing is deleted")

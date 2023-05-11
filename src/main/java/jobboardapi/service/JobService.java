@@ -42,6 +42,13 @@ public class JobService {
         }
     }
 
+    /**
+     * updateJobListing updates the job by searching for a job's ID
+     * If the job id is does not exist, we throw the NotFoundException
+     * @param jobId is our target job ID
+     * @param jobBody updated job details
+     * @return the updated Job object
+     */
     public Job updateJobListing(Long jobId, Job jobBody){
         Optional<Job> job = jobRepository.findById(jobId);
         if(job.isPresent()) {

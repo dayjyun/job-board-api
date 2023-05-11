@@ -86,7 +86,7 @@ Feature: Rest API functionalities
     Given A job listing is available
     When I delete a job from my Job list
     Then I can see my job listing is deleted
-#
+
 #  Scenario: User is able to see a list of all applicants for their job
 #    Given A user account is available
 #    When I search by my job id
