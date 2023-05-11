@@ -3,6 +3,7 @@ package jobboardapi.service;
 import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.Business;
+import jobboardapi.models.Job;
 import jobboardapi.repository.BusinessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,5 +94,14 @@ public class BusinessService {
       } else {
           throw new NotFoundException("Business not found");
       }
+    }
+
+    public List<Job> getJobByBusinessId(Long businessId){
+        Optional<Business> business = businessRepository.findById(businessId);
+        if (business.isPresent()) {
+            return business.get().getJobList();
+        } else {
+            throw new NotFoundException("Business not found");
+        }
     }
 }
