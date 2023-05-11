@@ -244,4 +244,28 @@ public class SpringBootCucumberTestDefinitions {
    public void iCanSeeAListOfJobsForABusiness() {
       Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
+
+   /**
+    * Test Scenario: User is able to see a specific job listing for a business
+    */
+
+
+   /**
+    * Test Scenario: User with business is able to edit job listing details
+    */
+
+
+   /**
+    * Test Scenario: User with business is able to delete job listing
+    */
+
+
+   /**
+    * Test Scenario: User is able to see a list of all applicants for their job
+    */
+
+
+   /**
+    * Test Scenario: User is able to apply for a job
+    */
 }
