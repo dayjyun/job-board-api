@@ -246,4 +246,25 @@ public class SpringBootCucumberTestDefinitions {
     public void iCanSeeAListOfJobsForABusiness() {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
+
+    /**
+     * Test Scenario: User with business is able to create a job listing
+     * Path: POST http://localhost:8080/api//businesses/{1}/jobs
+     * aJobNameForTheBusinessDoesNotExistYet checks the business database to see if the job name exists yet for the business's job list
+     * iCreateAJobListingWithThatName creates the job JSON object and posts it to the endpoint
+     * iCanSeeTheNewJobListingSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
+     */
+    @Given("A job name for the business does not exist yet")
+    public void aJobNameForTheBusinessDoesNotExistYet() {
+    }
+
+
+    @When("I create a job listing with that name")
+    public void iCreateAJobListingWithThatName() {
+
+    }
+
+    @Then("I can see the new job listing's details")
+    public void iCanSeeTheNewJobListingSDetails() {
+    }
 }
