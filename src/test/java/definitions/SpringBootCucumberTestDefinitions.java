@@ -146,9 +146,9 @@ public class SpringBootCucumberTestDefinitions {
     /**
     * Test Scenario: User is able to edit business details
       * Path: PUT http://localhost:8080/api/businesses/{businessId}
-    * aBusinessIsAvailable updates the request body
-    * iSearchByBusinessId updates the Business details
-    * iCanEditMyBusinessDetails confirms a successful update
+    * aBusinessIsAvailable sets request URL path for the business
+    * iSearchByBusinessId updates the business details
+    * iCanEditMyBusinessDetails confirms a successful update for the business
     */
    @Given("I can search for a business ID")
    public void aBusinessIsAvailablePUT() {
@@ -271,6 +271,10 @@ public class SpringBootCucumberTestDefinitions {
 
    /**
     * Test Scenario: User with business is able to edit job listing details
+    * Path: PUT http://localhost:8080/api/jobs/{jobId}
+    * iCanSearchForAJobID sets request URL path for the job
+    * iEditMyJobDetails updates the job details
+    * iSeeTheJobIsUpdated confirms a successful update for the job
     */
 
    @Given("I can search for a job ID")
