@@ -1,5 +1,6 @@
 package jobboardapi.service;
 
+import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.Business;
 import jobboardapi.models.User;
@@ -42,9 +43,19 @@ public class BusinessService {
             throw new NotFoundException("Business not found");
         }
     }
-  
+
+    public Business createBusiness(Business businessObject){
+        Business business = businessRepository.findByName(businessObject.getName());
+        if (business != null) {
+            throw new AlreadyExistsException("Business with the name " + businessObject.getName() + " already exists.");
+        } else {
+            businessRepository.save(businessObject);
+            return businessObject;
+        }
+    }
+
      /**
-     * updateBusiness updates the business by searching for a business's ID
+     * updateBusiness updates the business by searching for a business's ID and throws the NotFoundException if the business ID does not exist.
      * @param businessId is our target business ID
      * @param businessBody updated business details
      * @return An Optional of a Business object
@@ -56,6 +67,8 @@ public class BusinessService {
             updatedBusiness.setName(businessBody.getName());
             updatedBusiness.setHeadquarters(businessBody.getHeadquarters());
             return businessRepository.save(updatedBusiness);
+        } else {
+            throw new NotFoundException("Business not found");
         }
     }
 }

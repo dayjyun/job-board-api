@@ -46,8 +46,8 @@ public class SpringBootCucumberTestDefinitions {
    String port;
 
      /**
-     * Testing for Scenario: User is able to view another user's account details
-     * This is the GET request at the endpoint http://localhost:8080/api/users/{userId}
+     * Test Scenario: User is able to view another user's account details
+     * Path: GET http://localhost:8080/api/users/{userId}
      * aUserAccountIsAvailable gets the user object from the specified endpoint
      * iSearchForAnotherUserSId checks that the user object is not null
      * iCanSeeTheUserSAccountDetails makes sure that the HTTP status is 200 when we successfully find the user object
@@ -70,8 +70,8 @@ public class SpringBootCucumberTestDefinitions {
     }
 
     /**
-     * Testing for Scenario: User is able to see a list of all businesses
-     * This is the GET request at the endpoint http://localhost:8080/api/businesses
+     * Test Scenario: User is able to see a list of all businesses
+     * Path: GET http://localhost:8080/api/businesses
      * aListOfBusinessesAreAvailable gets the list of all businesses from the database referenced by the endpoint
      * iSearchForBusinesses checks that there is a list of businesses containing at least one business
      * iCanSeeAListOfBusinesses makes sure that the HTTP status is 200 when we successfully find the list of businesses
@@ -93,8 +93,8 @@ public class SpringBootCucumberTestDefinitions {
     }
 
     /**
-     * Testing for Scenario: User is able to create a business
-     * This is the POST request at the endpoint http://localhost:8080/api/businesses
+     * Test Scenario: User is able to create a business
+     * Path: POST http://localhost:8080/api/businesses
      * aBusinessNameDoesNotExistYet checks the business database to see if the business name exists yet
      * iCreateABusinessWithThatName creates the business JSON object and posts it to the endpoint
      * iCanSeeMyNewBusinessSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
@@ -123,7 +123,8 @@ public class SpringBootCucumberTestDefinitions {
     }
   
      /**
-    * Test Scenario: User is able to edit business details Path: PUT http://localhost:8080/api/businesses/{businessId}
+    * Test Scenario: User is able to edit business details
+      * Path: PUT http://localhost:8080/api/businesses/{businessId}
     * aBusinessIsAvailable updates the request body
     * iSearchByBusinessId updates the Business details
     * iCanEditMyBusinessDetails confirms a successful update

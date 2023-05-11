@@ -36,20 +36,14 @@ public class BusinessController {
     // http://localhost:8080/api/businesses
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    public Business createBusiness(@RequestBody Business businessObject){
-        Business business = businessRepository.findByName(businessObject.getName());
-        if (business != null){
-            throw new AlreadyExistsException("Business with the name " + businessObject.getName() + " already exists.");
-        } else {
-            businessRepository.save(businessObject);
-            return businessObject;
-        }
+    public Business createBusiness(@RequestBody Business businessObject) {
+        return businessService.createBusiness(businessObject);
+    }
   
     // User Story: I want to update my business's detail
     // http://localhost:8080/api/businesses/{businessId}
     @PutMapping("/{businessId}")
     public Business updateBusiness(@PathVariable Long businessId, @RequestBody Business businessBody) {
         return businessService.updateBusiness(businessId, businessBody);
-
     }
 }
