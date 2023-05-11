@@ -254,19 +254,19 @@ public class SpringBootCucumberTestDefinitions {
     /**
      * Test Scenario: User with business is able to create a job listing
      * Path: POST http://localhost:8080/api//businesses/{1}/jobs
-     * aJobNameForTheBusinessDoesNotExistYet checks the business database to see if the job name exists yet for the business's job list
-     * iCreateAJobListingWithThatName creates the job JSON object and posts it to the endpoint
+     * aJobTitleForTheBusinessDoesNotExistYet checks the business database to see if the job title exists yet for the business's job list
+     * iCreateAJobListingWithThatTitle creates the job JSON object and posts it to the endpoint
      * iCanSeeTheNewJobListingSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
      */
-    @Given("A job name for the business does not exist yet")
-    public void aJobNameForTheBusinessDoesNotExistYet() {
+    @Given("A job title for the business does not exist yet")
+    public void aJobTitleForTheBusinessDoesNotExistYet() {
         responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
-        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get("name");
+        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get("title");
         Assert.assertFalse(list.contains(newJobNameForBusiness));
     }
 
-    @When("I create a job listing with that name")
-    public void iCreateAJobListingWithThatName() throws JSONException {
+    @When("I create a job listing with that title")
+    public void iCreateAJobListingWithThatTitle() throws JSONException {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
@@ -277,6 +277,7 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("applied", "False");
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses/1/jobs");
+        System.out.println(requestBody);
     }
 
     @Then("I can see the new job listing's details")

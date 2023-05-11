@@ -59,4 +59,12 @@ public class BusinessController {
     public List<Job> getJobByBusinessId(@PathVariable Long businessId) {
         return businessService.getJobByBusinessId(businessId);
     }
+
+    // User Story: Create a new job listing for the business
+    // http://localhost:8080/api/businesses/{businessId}/jobs
+    @PostMapping(path = "/{businessId}/jobs")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Job createJobForBusinessId(@PathVariable Long businessId, @RequestBody Job jobObject) {
+        return businessService.createJobForBusinessId(businessId, jobObject);
+    }
 }
