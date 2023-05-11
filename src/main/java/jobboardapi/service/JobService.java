@@ -36,7 +36,12 @@ public class JobService {
      * @return a list of jobs
      */
     public List<Job> getAllJobListings() {
-        return jobRepository.findAll();
+        List<Job> allJobsList =  jobRepository.findAll();
+        if(allJobsList.size() > 0) {
+            return allJobsList;
+        } else {
+            throw new NotFoundException("No jobs found");
+        }
     }
 
     /**
