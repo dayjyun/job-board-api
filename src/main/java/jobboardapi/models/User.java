@@ -58,7 +58,7 @@ public class User {
       this.email = email;
       this.password = password;
       this.resume = resume;
-      this.jobList = new ArrayList<>();
+//      this.jobList = new ArrayList<>();
    }
 
    public Long getId() {

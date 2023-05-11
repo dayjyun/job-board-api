@@ -61,7 +61,7 @@ public class Job {
       this.location = location;
       this.salary = salary;
       this.applied = applied;
-      this.applicantsList = new ArrayList<>();
+//      this.applicantsList = new ArrayList<>();
    }
 
    public Long getId() {
