@@ -411,4 +411,21 @@ public class SpringBootCucumberTestDefinitions {
     * Test Scenario: User is able to apply for a job
     */
 
+   @When("I apply for the job")
+   public void iApplyForTheJob() throws JSONException {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given();
+      JSONObject requestBody = new JSONObject();
+      // Current logged-in user's id
+      requestBody.put("name", "Logged-in user's name");
+      requestBody.put("email", "logged-in user's email");
+      requestBody.put("resume", "logged-in user's resume");
+      request.header("Content-Type", "application/json");
+      response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/jobs/1/applicants");
+   }
+
+   @Then("I see a message saying I have applied for the job")
+   public void iSeeAMessageSayingIHaveAppliedForTheJob() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 }
