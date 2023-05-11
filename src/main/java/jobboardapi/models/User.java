@@ -47,7 +47,7 @@ public class User {
    // many users (applicants) applied to one job
    @ManyToOne
    @JoinColumn(name = "job_id")
-//   @JsonIgnore
+   @JsonIgnore
    private Job job;
 
    public User() {}

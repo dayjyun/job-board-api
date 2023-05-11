@@ -52,7 +52,7 @@ public class Job {
 
    // Job should have a list of users who applied to the job listing
    // one job can have many applicants (users)
-   @OneToMany(mappedBy = "jobs", orphanRemoval = true)
+   @OneToMany(mappedBy = "job", orphanRemoval = true)
    @LazyCollection(LazyCollectionOption.FALSE)
    private List<User> applicantsList;
 

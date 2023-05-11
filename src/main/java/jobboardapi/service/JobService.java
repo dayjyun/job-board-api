@@ -102,11 +102,10 @@ public class JobService {
     public List<User> getListOfApplicants(Long jobId) {
         Optional<Job> jobListing = jobRepository.findById(jobId);
         if(jobListing.isPresent()) {
-            // Update jobRepository to search for list of applicants
-            // Should no longer search through userRepository.
-            List<User> userList = userRepository.findAll();
-            if(userList.size() > 0) {
-                return userList;
+            List<User> applicantsList = jobListing.get()
+                                                  .getApplicantsList();
+            if(applicantsList.size() > 0) {
+                return applicantsList;
             } else {
                 // Return a message instead of throwing an exception
                 throw new NotFoundException("No applicants found");
@@ -120,22 +119,23 @@ public class JobService {
      *
      */
     // I want to update the job listing boolean to true
-    public Job applyForJobListing(Long jobId, User userBody) throws AlreadyBoundException {
-        Optional<Job> jobListing = jobRepository.findById(jobId);
-        if(jobListing.isPresent()){
-            Optional<User> user = userRepository.findUserByEmail(userBody.getEmail());
-            if(user.isPresent()) {
-                throw new AlreadyBoundException("Application already exists");
-            } else {
-                jobListing.get().setApplied(true);
-                /*
-                A user has a job list (jobs they applied for)
-                GET the job list from the user
-                Create and updated job listing
-                Set everything for the updated job listing to be the same as the original job listing but set applied = true
-                Add updated job listing to the user's job list
-                 */
-            }
-        }
-    }
+//    public Job applyForJobListing(Long jobId, User userBody) throws AlreadyBoundException {
+//        Optional<Job> jobListing = jobRepository.findById(jobId);
+//        if(jobListing.isPresent()){
+//            User user = userRepository.findUserByEmail(userBody.getEmail());
+//            if(user.getEmail().equals(userBody.getEmail())) {
+//                throw new AlreadyBoundException("Application already submitted");
+//            } else {
+//                jobListing.get().setApplied(true);
+//                jobListing.get().setApplicantsList(user);
+//                /*
+//                A user has a job list (jobs they applied for)
+//                GET the job list from the user
+//                Create and updated job listing
+//                Set everything for the updated job listing to be the same as the original job listing but set applied = true
+//                Add updated job listing to the user's job list
+//                 */
+//            }
+//        }
+//    }
 }
