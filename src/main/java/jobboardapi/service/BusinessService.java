@@ -3,7 +3,9 @@ package jobboardapi.service;
 import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.Business;
+import jobboardapi.models.Job;
 import jobboardapi.repository.BusinessRepository;
+import jobboardapi.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,16 @@ import java.util.Optional;
 public class BusinessService {
 
     private BusinessRepository businessRepository;
+    private JobRepository jobRepository;
 
     @Autowired
     public void setBusinessRepository(BusinessRepository businessRepository) {
         this.businessRepository = businessRepository;
+    }
+
+    @Autowired
+    public void setJobRepository(JobRepository jobRepository) {
+        this.jobRepository = jobRepository;
     }
 
     /**
@@ -94,5 +102,41 @@ public class BusinessService {
       } else {
           throw new NotFoundException("Business not found");
       }
+    }
+
+    /**
+     * getJobByBusinessId retrieves a list of jobs by the business id, if the business id exists.
+     * If the business id does not exist, we throw the NotFoundException
+     * @param businessId is what we're searching by
+     * @return a list of jobs for the business
+     */
+    public List<Job> getJobByBusinessId(Long businessId){
+        Optional<Business> business = businessRepository.findById(businessId);
+        if (business.isPresent()) {
+            return business.get().getJobList();
+        } else {
+            throw new NotFoundException("Business not found");
+        }
+    }
+
+    /**
+     * createJobForBusinessId checks for the business id in the business database.
+     * If the business id does not exist, the NotFoundException is thrown.
+     * If the business id exists, then it checks to see if the job title exists in the business's job list.
+     * If the job title exists, the AlreadyExistsException is thrown.
+     * If the job title does not exist, the job object is added to the business's job list,
+     * and the user sees the new job's details.
+     * @param businessId is the business the user is creating a job for
+     * @param jobObject is the new job the user is creating
+     * @return the job object's information
+     */
+    public Job createJobForBusinessId(Long businessId, Job jobObject){
+        Optional<Business> business = businessRepository.findById(businessId);
+        if (business.isPresent()) {
+            jobObject.setBusiness(business.get());
+            return jobRepository.save(jobObject);
+        } else {
+            throw new NotFoundException("Business not found");
+        }
     }
 }
