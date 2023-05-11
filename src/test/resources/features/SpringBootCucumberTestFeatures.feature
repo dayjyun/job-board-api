@@ -27,27 +27,31 @@ Feature: Rest API functionalities
 #    When No jobs have been applied for
 #    Then I see a message saying no jobs have been applied for
 #
-#  Scenario: User is able to see a list of all businesses
-#    Given A list of businesses are available
-#    When I search for businesses
-#    Then I can see a list of businesses
-##
-#  Scenario: User is able to create a business
-#    Given A user account is available
-#    When I create a business
-#    Then I can see my business details
-#
+
+  Scenario: User is able to see a list of all businesses
+    Given A list of businesses are available
+    When I search for businesses
+    Then I can see a list of businesses
+
+  Scenario: User is able to create a business
+    Given A business name does not exist yet
+    When I create a business with that name
+    Then I can see my new business's details
+
 #  Scenario: User is able to view business details
 #    Given A business is available
 #    When I search by business id
 #    Then I can see a business's details
 #
-#  Scenario: User is able to edit business details
-#    Given A business is available
-#    When I search by business id
-#    Then I can edit my business details
-#    When A business is not available
-#    Then I see a message saying business is not available
+  Scenario: User is able to edit business details
+    Given I can search for a business ID
+    When I edit my business details
+    Then I see the business is updated
+#    Given A business account is available
+#    When I search for a business account
+#    Then I can see the business account's details
+#    When I edit the business details
+#    Then I can see the business is updated
 #
   Scenario: User is able to delete business
     Given A business is available
