@@ -210,7 +210,7 @@ public class SpringBootCucumberTestDefinitions {
     @When("I delete a business from my Business list")
     public void iDeleteBusinessFromMyBusinessList() {
         RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
+        request = RestAssured.given();
         request.header("Content-Type", "application/json");
         response = request.delete(BASE_URL + port + "/api/businesses/3");
     }
@@ -303,7 +303,16 @@ public class SpringBootCucumberTestDefinitions {
    /**
     * Test Scenario: User with business is able to delete job listing
     */
+   @When("I delete a job from my Job list")
+   public void iDeleteAJobFromMyJobList() {
+      request.header("Content-Type", "application/json");
+      response = request.delete(BASE_URL + port + "/api/businesses/10");
+   }
 
+   @Then("I can see my job listing is deleted")
+   public void iCanSeeMyJobListingIsDeleted() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 
    /**
     * Test Scenario: User is able to see a list of all applicants for their job

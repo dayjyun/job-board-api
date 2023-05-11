@@ -51,7 +51,7 @@ Feature: Rest API functionalities
 #    Then I can see the business account's details
 #    When I edit the business details
 #    Then I can see the business is updated
-#
+
   Scenario: User is able to delete business
     Given A business is available
     When I delete a business from my Business list
@@ -66,7 +66,7 @@ Feature: Rest API functionalities
 #    Given A business is available
 #    When I create a job listing
 #    Then I can see the job listing's details
-#
+
   Scenario: User is able to see a list of all jobs
     Given A list of jobs are available
     When I search for jobs
@@ -81,11 +81,11 @@ Feature: Rest API functionalities
     Given I can search for a job ID
     When I edit my job details
     Then I see the job is updated
-#
-#  Scenario: User with business is able to delete job listing
-#    Given A job listing is available
-#    When I search by job id
-#    Then I can delete the job listing
+
+  Scenario: User with business is able to delete job listing
+    Given A job listing is available
+    When I delete a job from my Job list
+    Then I can see my job listing is deleted
 #
 #  Scenario: User is able to see a list of all applicants for their job
 #    Given A user account is available
