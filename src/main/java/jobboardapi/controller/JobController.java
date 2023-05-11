@@ -50,4 +50,9 @@ public class JobController {
     public List<User> getListOfApplicants(@PathVariable Long jobId) {
         return jobService.getListOfApplicants(jobId);
     }
+
+    @PostMapping(path = "/{jobId}/applicants")
+    public Job applyForJobListing(@PathVariable Long jobId, @RequestBody User userBody) {
+        return jobService.applyForJobListing(jobId, userBody);
+    }
 }

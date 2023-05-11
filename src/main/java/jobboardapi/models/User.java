@@ -37,6 +37,7 @@ public class User {
    private List<Business> businessList;
 
    // one user can apply to jobs
+   // Current logged-in user can see the list of jobs they applied for
    @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the job from database if we deleted it from a user
    @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
    private List<Job> jobList;

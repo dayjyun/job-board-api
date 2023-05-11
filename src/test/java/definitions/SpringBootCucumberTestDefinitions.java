@@ -352,7 +352,7 @@ public class SpringBootCucumberTestDefinitions {
       requestBody.put("description", "Updated job description");
       requestBody.put("location", "Updated job location");
       requestBody.put("salary", 0.00);
-      requestBody.put("applied", true);
+//      requestBody.put("applied", true);
       request.header("Content-Type", "application/json");
       response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/jobs/1");
    }
