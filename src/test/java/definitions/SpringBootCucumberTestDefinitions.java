@@ -3,6 +3,8 @@ package definitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import jobboardapi.models.Job;
+import jobboardapi.repository.JobRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import io.cucumber.spring.CucumberContextConfiguration;
@@ -16,6 +18,7 @@ import jobboardapi.repository.BusinessRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -39,6 +42,7 @@ public class SpringBootCucumberTestDefinitions {
 
    private Business newBusiness;
    private static final String newBusinessName = "New Business Name";
+   private static final String newJobNameForBusiness = "New Job Name For Business";
 
    @Autowired
    private BusinessRepository businessRepository;
@@ -256,15 +260,27 @@ public class SpringBootCucumberTestDefinitions {
      */
     @Given("A job name for the business does not exist yet")
     public void aJobNameForTheBusinessDoesNotExistYet() {
+        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
+        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get("name");
+        Assert.assertFalse(list.contains(newJobNameForBusiness));
     }
 
-
     @When("I create a job listing with that name")
-    public void iCreateAJobListingWithThatName() {
-
+    public void iCreateAJobListingWithThatName() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("title", newJobNameForBusiness);
+        requestBody.put("description", "New Job Description");
+        requestBody.put("location", "New Job Location");
+        requestBody.put("salary", "120000.00");
+        requestBody.put("applied", "False");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses/1/jobs");
     }
 
     @Then("I can see the new job listing's details")
     public void iCanSeeTheNewJobListingSDetails() {
+        Assert.assertEquals(201, response.getStatusCode());
     }
 }
