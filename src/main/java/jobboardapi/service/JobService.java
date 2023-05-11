@@ -118,24 +118,24 @@ public class JobService {
     /**
      *
      */
-    // I want to update the job listing boolean to true
-//    public Job applyForJobListing(Long jobId, User userBody) throws AlreadyBoundException {
-//        Optional<Job> jobListing = jobRepository.findById(jobId);
-//        if(jobListing.isPresent()){
+//     I want to update the job listing boolean to true
+    public Optional<Job> applyForJobListing(Long jobId, User userBody) throws AlreadyBoundException {
+        Optional<Job> jobListing = jobRepository.findById(jobId);
+        if(jobListing.isPresent()){
 //            User user = userRepository.findUserByEmail(userBody.getEmail());
-//            if(user.getEmail().equals(userBody.getEmail())) {
-//                throw new AlreadyBoundException("Application already submitted");
-//            } else {
-//                jobListing.get().setApplied(true);
-//                jobListing.get().setApplicantsList(user);
-//                /*
-//                A user has a job list (jobs they applied for)
-//                GET the job list from the user
-//                Create and updated job listing
-//                Set everything for the updated job listing to be the same as the original job listing but set applied = true
-//                Add updated job listing to the user's job list
-//                 */
-//            }
-//        }
-//    }
+//            Optional<User> user = jobRepository.findByUserEmail(userBody.getEmail());
+            Optional<User> user = jobRepository.findByUserId(userBody.getId());
+            if(user.isPresent()) {
+                throw new AlreadyBoundException("Application already submitted");
+            } else {
+                jobListing.get().setApplied(true);
+                jobListing.get().getApplicantsList().add(userBody);
+//                jobListing.get().setApplicantsList(userBody);
+                jobRepository.save(jobListing.get());
+                return jobListing;
+            }
+        } else {
+            throw new NotFoundException("Job listing not found");
+        }
+    }
 }

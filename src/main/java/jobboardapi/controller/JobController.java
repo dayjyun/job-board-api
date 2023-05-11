@@ -6,6 +6,7 @@ import jobboardapi.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.rmi.AlreadyBoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,8 +52,8 @@ public class JobController {
         return jobService.getListOfApplicants(jobId);
     }
 
-//    @PostMapping(path = "/{jobId}/applicants")
-//    public Job applyForJobListing(@PathVariable Long jobId, @RequestBody User userBody) {
-//        return jobService.applyForJobListing(jobId, userBody);
-//    }
+    @PostMapping(path = "/{jobId}/applicants")
+    public Optional<Job> applyForJobListing(@PathVariable Long jobId, @RequestBody User userBody) throws AlreadyBoundException {
+        return jobService.applyForJobListing(jobId, userBody);
+    }
 }
