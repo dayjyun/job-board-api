@@ -28,7 +28,10 @@ public class JobService {
     }
 
     /**
-     *
+     * getJobListingById retrieves the job by the job id, if the job id exists
+     * If the job id does not exist, we throw the NotFoundException
+     * @param jobId is what we're searching by
+     * @return the optional of the job
      */
     public Optional<Job> getJobListingById(Long jobId) {
         Optional<Job> job = jobRepository.findById(jobId);
