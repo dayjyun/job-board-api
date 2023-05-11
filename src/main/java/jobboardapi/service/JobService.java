@@ -2,7 +2,9 @@ package jobboardapi.service;
 
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.Job;
+import jobboardapi.models.User;
 import jobboardapi.repository.JobRepository;
+import jobboardapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,13 @@ public class JobService {
     @Autowired
     public void setJobRepository(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
+    }
+
+    private UserRepository userRepository;
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     /**
@@ -77,6 +86,23 @@ public class JobService {
         if(jobListing.isPresent()) {
             jobRepository.deleteById(jobId);
             return jobListing.get();
+        } else {
+            throw new NotFoundException("Job listing not found");
+        }
+    }
+
+    public List<User> getListOfApplicants(Long jobId) {
+        Optional<Job> jobListing = jobRepository.findById(jobId);
+        if(jobListing.isPresent()) {
+            // Update jobRepository to search for list of applicants
+            // Should no longer search through userRepository.
+            List<User> userList = userRepository.findAll();
+            if(userList.size() > 0) {
+                return userList;
+            } else {
+                // Return a message instead of throwing an exception
+                throw new NotFoundException("No applicants found");
+            }
         } else {
             throw new NotFoundException("Job listing not found");
         }

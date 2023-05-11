@@ -1,6 +1,7 @@
 package jobboardapi.controller;
 
 import jobboardapi.models.Job;
+import jobboardapi.models.User;
 import jobboardapi.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,8 @@ public class JobController {
         return jobService.deleteJobListing(jobId);
     }
 
-//    @GetMapping(path = '/{jobId}/applicants')
-//    public List<User>
+    @GetMapping(path = "/{jobId}/applicants")
+    public List<User> getListOfApplicants(@PathVariable Long jobId) {
+        return jobService.getListOfApplicants(jobId);
+    }
 }

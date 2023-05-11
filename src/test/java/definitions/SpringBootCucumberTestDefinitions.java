@@ -324,12 +324,16 @@ public class SpringBootCucumberTestDefinitions {
    public void aListOfApplicantsIsAvailable() {
       responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/jobs/1/applicants", HttpMethod.GET, null, String.class);
       list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+      System.out.println("GIVEN "+list);
+      System.out.println("GIVEN "+ responseEntity);
    }
 
    @When("I view the list of applicants")
    public void iViewTheListOfApplicants() {
-      Assert.assertEquals(0, list.size());
-//      Assert.assertTrue(list.size() > 0);
+      System.out.println("WHEN " + list);
+      System.out.println("WHEN " + responseEntity);
+//      Assert.assertEquals(0, list.size());
+      Assert.assertTrue(list.size() > 0);
    }
 
    @Then("I can see the list of applicants")
