@@ -44,6 +44,8 @@ public class JobController {
         return jobService.deleteJobListing(jobId);
     }
 
+    // User Story: I want to see a list of applicants that applied for my job listing
+    // http://localhost:8080/api/jobs/{jobId}/applicants
     @GetMapping(path = "/{jobId}/applicants")
     public List<User> getListOfApplicants(@PathVariable Long jobId) {
         return jobService.getListOfApplicants(jobId);
