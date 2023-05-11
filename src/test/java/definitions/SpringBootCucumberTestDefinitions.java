@@ -247,6 +247,10 @@ public class SpringBootCucumberTestDefinitions {
 
    /**
     * Test Scenario: User is able to see a specific job listing for a business
+    * Path: GET http://localhost:8080/api/jobs/{jobId}
+    * aJobListingIsAvailable gets the job object from the specified endpoint
+    * iSearchByJobId checks that the job object is not null
+    * iCanSearchForAJobID makes sure that the HTTP status is 200 when we successfully find the job object
     */
    @Given("A job listing is available")
    public void aJobListingIsAvailable() {
