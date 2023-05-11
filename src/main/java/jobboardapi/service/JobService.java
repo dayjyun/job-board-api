@@ -21,7 +21,7 @@ public class JobService {
      * getAllJobs retrieves the list of all jobs from the job repository
      * @return a list of jobs
      */
-    public List<Job> getAllJobs() {
+    public List<Job> getAllJobListings() {
         return jobRepository.findAll();
     }
 }

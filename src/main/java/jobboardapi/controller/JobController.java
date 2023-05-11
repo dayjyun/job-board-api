@@ -19,7 +19,7 @@ public class JobController {
     // User Story: I want to see a list of all jobs available
     // http://localhost:8080/api/jobs
     @GetMapping(path = "")
-    public List<Job> getAllJobs() {
-        return jobService.getAllJobs();
+    public List<Job> getAllJobListings() {
+        return jobService.getAllJobListings();
     }
 }

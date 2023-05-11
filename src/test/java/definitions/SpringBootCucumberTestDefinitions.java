@@ -13,8 +13,6 @@ import io.restassured.specification.RequestSpecification;
 import jobboardapi.JobBoardApiApplication;
 import jobboardapi.models.Business;
 import jobboardapi.repository.BusinessRepository;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -225,24 +223,24 @@ public class SpringBootCucumberTestDefinitions {
 // Jobs
 
    /**
-    * Test Scenario: User is able to see a list of job listings for a business
+    * Test Scenario: User is able to see a list of all jobs
     * Path: DELETE http://localhost:8080/api/jobs
     * aListOfJobsIsAvailable gets the list of all jobs from the database referenced by the endpoint
     * iSearchForJobListingsWithinABusiness checks that there is a list of jobs containing at least on job
     * iCanSeeAListOfJobsForABusiness makes sure the HTTP status is 200 when we successfully find the list of jobs
     */
-   @Given("A list of jobs is available")
+   @Given("A list of jobs are available")
    public void aListOfJobsIsAvailable() {
       responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/jobs", HttpMethod.GET, null, String.class);
       list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
    }
 
-   @When("I search for job listings within a business")
+   @When("I search for jobs")
    public void iSearchForJobListingsWithinABusiness() {
       Assert.assertTrue(list.size() > 0);
    }
 
-   @Then("I can see a list of jobs for a business")
+   @Then("I can see a list of jobs")
    public void iCanSeeAListOfJobsForABusiness() {
       Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
