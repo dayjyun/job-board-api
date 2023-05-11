@@ -132,8 +132,6 @@ public class BusinessService {
     public Job createJobForBusinessId(Long businessId, Job jobObject){
         Optional<Business> business = businessRepository.findById(businessId);
         if (business.isPresent()) {
-//            Business updatedBusiness = businessRepository.findById(businessId).get();
-//            updatedBusiness.getJobList().add(jobObject);
             jobObject.setBusiness(business.get());
             return jobRepository.save(jobObject);
         } else {
