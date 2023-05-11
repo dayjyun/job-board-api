@@ -26,7 +26,6 @@ Feature: Rest API functionalities
 #    Then I can see a list of jobs
 #    When No jobs have been applied for
 #    Then I see a message saying no jobs have been applied for
-#
 
   Scenario: User is able to see a list of all businesses
     Given A list of businesses are available
@@ -42,7 +41,7 @@ Feature: Rest API functionalities
     Given A business is available
     When I search by business id
     Then I can see a business's details
-#
+
   Scenario: User is able to edit business details
     Given I can search for a business ID
     When I edit my business details
@@ -57,7 +56,6 @@ Feature: Rest API functionalities
     Given A business is available
     When I delete a business from my Business list
     Then I can see my business is deleted
-
 
 #  Scenario: User is able to see a list of job listings for a business
 #    Given A list of jobs is available
@@ -74,10 +72,10 @@ Feature: Rest API functionalities
     When I search for jobs
     Then I can see a list of jobs
 
-#  Scenario: User is able to see a specific job listing for a business
-#    Given A job listing is available
-#    When I search by job id
-#    Then I can see job listing details
+  Scenario: User is able to see a specific job listing for a business
+    Given A job listing is available
+    When I search by job id
+    Then I can see job listing details
 ##
 #  Scenario: User with business is able to edit job listing details
 #    Given A job listing is available

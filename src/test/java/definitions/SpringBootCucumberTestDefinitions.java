@@ -248,7 +248,22 @@ public class SpringBootCucumberTestDefinitions {
    /**
     * Test Scenario: User is able to see a specific job listing for a business
     */
+   @Given("A job listing is available")
+   public void aJobListingIsAvailable() {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given();
+      response = request.get(BASE_URL + port + "/api/jobs/1");
+   }
 
+   @When("I search by job id")
+   public void iSearchByJobId() {
+      Assert.assertNotNull(String.valueOf(response));
+   }
+
+   @Then("I can see job listing details")
+   public void iCanSeeJobListingDetails() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 
    /**
     * Test Scenario: User with business is able to edit job listing details
