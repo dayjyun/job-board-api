@@ -221,4 +221,27 @@ public class SpringBootCucumberTestDefinitions {
     public void iCanSeeMyBusinessIsDeleted() {
         Assert.assertEquals(200, response.getStatusCode());
     }
+
+    /**
+     * Test Scenario: User is able to see a list of all jobs
+     * Path: GET http://localhost:8080/api/businesses/{businessId}/jobs
+     * aListOfJobsAreAvailable gets the list of all jobs from the business id = 1, as referenced by the endpoint
+     * iSearchForJobs checks that there is a list of jobs containing at least one job
+     * iCanSeeAListOfJobs makes sure that the HTTP status is 200 when we successfully find the list of jobs
+     */
+    @Given("A list of jobs are available")
+    public void aListOfJobsAreAvailable() {
+        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1", HttpMethod.GET, null, String.class);
+        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+    }
+
+    @When("I search for jobs")
+    public void iSearchForJobs() {
+        Assert.assertTrue(list.size() > 0);
+    }
+
+    @Then("I can see a list of jobs")
+    public void iCanSeeAListOfJobs() {
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
 }

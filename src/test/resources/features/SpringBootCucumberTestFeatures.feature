@@ -84,10 +84,10 @@ Feature: Rest API functionalities
 #    When I search by job id
 #    Then I can delete the job listing
 #
-#  Scenario: User is able to see a list of all jobs
-#    Given A list of jobs are available
-#    When I search for jobs
-#    Then I can see a list of jobs
+g
+    Given A list of jobs are available
+    When I search for jobs
+    Then I can see a list of jobs
 #
 #  Scenario: User is able to see a list of all applicants for their job
 #    Given A user account is available
