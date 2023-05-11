@@ -265,7 +265,7 @@ public class SpringBootCucumberTestDefinitions {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
-        requestBody.put("id", 1L);
+//        requestBody.put("id", 1L);
         requestBody.put("title", newJobNameForBusiness);
         requestBody.put("description", "New Job Description");
         requestBody.put("location", "New Job Location");

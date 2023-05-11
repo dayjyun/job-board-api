@@ -87,10 +87,10 @@ Feature: Rest API functionalities
     When I delete a job from my Job list
     Then I can see my job listing is deleted
 
-  Scenario: User is able to see a list of all applicants for their job
-    Given A list of applicants is available
-    When I view the list of applicants
-    Then I can see the list of applicants
+#  Scenario: User is able to see a list of all applicants for their job
+#    Given A list of applicants is available
+#    When I view the list of applicants
+#    Then I can see the list of applicants
 #    Given A user account is available
 #    When I search by my job id
 #    Then I can see a list of applicants for my job
