@@ -416,7 +416,7 @@ public class SpringBootCucumberTestDefinitions {
       RestAssured.baseURI = BASE_URL;
       request = RestAssured.given();
       JSONObject requestBody = new JSONObject();
-      // Current logged-in user's id
+      requestBody.put("id", 1L);
       requestBody.put("name", "Logged-in user's name");
       requestBody.put("email", "logged-in user's email");
       requestBody.put("resume", "logged-in user's resume");
