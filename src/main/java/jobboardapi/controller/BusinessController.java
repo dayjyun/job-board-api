@@ -31,7 +31,7 @@ public class BusinessController {
     public List<Business> getAllBusinesses(){
         return businessService.getAllBusinesses();
     }
-
+  
     // User Story: Create a business
     // http://localhost:8080/api/businesses
     @PostMapping(path = "")
@@ -39,11 +39,25 @@ public class BusinessController {
     public Business createBusiness(@RequestBody Business businessObject) {
         return businessService.createBusiness(businessObject);
     }
+
+    // User Story: I want to view business details
+    // http://localhost:8080/api/businesses/{businessId}
+    @GetMapping(path = "/{businessId}")
+    public Optional<Business> getBusinessById(@PathVariable Long businessId) {
+        return businessService.getBusinessById(businessId);
+    }
   
     // User Story: I want to update my business's detail
     // http://localhost:8080/api/businesses/{businessId}
     @PutMapping("/{businessId}")
     public Business updateBusiness(@PathVariable Long businessId, @RequestBody Business businessBody) {
         return businessService.updateBusiness(businessId, businessBody);
+    }
+
+    // User Story: I want to delete my business
+    // http://localhost:8080/api/businesses/{businessId}
+    @DeleteMapping(path = "/{businessId}")
+    public Business deleteBusiness(@PathVariable Long businessId) {
+        return businessService.deleteBusiness(businessId);
     }
 }

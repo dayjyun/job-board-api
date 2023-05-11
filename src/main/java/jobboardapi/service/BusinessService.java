@@ -28,6 +28,16 @@ public class BusinessService {
     public List<Business> getAllBusinesses(){
         return businessRepository.findAll();
     }
+    
+    public Business createBusiness(Business businessObject){
+          Business business = businessRepository.findByName(businessObject.getName());
+          if (business != null) {
+              throw new AlreadyExistsException("Business with the name " + businessObject.getName() + " already exists.");
+          } else {
+              businessRepository.save(businessObject);
+              return businessObject;
+          }
+      }
 
      /**
      * getBusinessById retrieves the business by the business id, if the business id exists.
@@ -43,18 +53,8 @@ public class BusinessService {
             throw new NotFoundException("Business not found");
         }
     }
-
-    public Business createBusiness(Business businessObject){
-        Business business = businessRepository.findByName(businessObject.getName());
-        if (business != null) {
-            throw new AlreadyExistsException("Business with the name " + businessObject.getName() + " already exists.");
-        } else {
-            businessRepository.save(businessObject);
-            return businessObject;
-        }
-    }
-
-     /**
+  
+  /**
      * updateBusiness updates the business by searching for a business's ID and throws the NotFoundException if the business ID does not exist.
      * @param businessId is our target business ID
      * @param businessBody updated business details
@@ -70,5 +70,15 @@ public class BusinessService {
         } else {
             throw new NotFoundException("Business not found");
         }
+    }
+
+    public Business deleteBusiness(Long businessId) {
+      Optional<Business> business = businessRepository.findById(businessId);
+      if (business.isPresent()) {
+          businessRepository.deleteById(businessId);
+          return business.get();
+      } else {
+          throw new NotFoundException("Business not found");
+      }
     }
 }
