@@ -281,8 +281,8 @@ public class SpringBootCucumberTestDefinitions {
       requestBody.put("title", "Updated job title");
       requestBody.put("description", "Updated job description");
       requestBody.put("location", "Updated job location");
-      requestBody.put("salary", "Updated job salary");
-      requestBody.put("applied", "Updated job applied section");
+      requestBody.put("salary", 0.00);
+      requestBody.put("applied", true);
       request.header("Content-Type", "application/json");
       response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/jobs/1");
    }
