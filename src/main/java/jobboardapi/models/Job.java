@@ -3,10 +3,12 @@ package jobboardapi.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
-
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "jobs")
@@ -17,14 +19,14 @@ public class Job {
    private Long id;
 
    @Column
-   @NotNull
+   @NotNull(message = "Job title may not be null")
    private String title;
 
    @Column
    private String description;
 
    @Column
-   @NotNull
+   @NotNull(message = "Job location may not be null")
    private String location;
 
    @Column
@@ -33,12 +35,8 @@ public class Job {
    @Column
    private boolean applied;
 
-   @Column
-   @CreationTimestamp
-   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH-mm-ss")
-   private Timestamp createdAt;
-
    // many job applications can belong to one user
+   // Current logged-in user can see the list of jobs they applied for
    @ManyToOne
    @JoinColumn(name = "user_id")
    @JsonIgnore // excludes user details when displaying job details
@@ -50,16 +48,22 @@ public class Job {
    @JsonIgnore // excludes business details when displaying job details
    private Business business;
 
+   // Job should have a list of users who applied to the job listing
+   // one job can have many applicants (users)
+   @OneToMany(mappedBy = "job", orphanRemoval = true)
+   @LazyCollection(LazyCollectionOption.FALSE)
+   private List<User> applicantsList;
+
    public Job() {}
 
-   public Job(Long id, String title, String description, String location, double salary, boolean applied, Timestamp createdAt) {
+   public Job(Long id, String title, String description, String location, double salary, boolean applied) {
       this.id = id;
       this.title = title;
       this.description = description;
       this.location = location;
       this.salary = salary;
       this.applied = applied;
-      this.createdAt = createdAt;
+      this.applicantsList = new ArrayList<>();
    }
 
    public Long getId() {
@@ -110,13 +114,6 @@ public class Job {
       this.applied = applied;
    }
 
-   public Timestamp getCreatedAt() {
-      return createdAt;
-   }
-
-   public void setCreatedAt(Timestamp createdAt) {
-      this.createdAt = createdAt;
-   }
 
    public User getUser() {
       return user;
@@ -134,6 +131,14 @@ public class Job {
       this.business = business;
    }
 
+   public List<User> getApplicantsList() {
+      return applicantsList;
+   }
+
+   public void setApplicantsList(List<User> applicantsList) {
+      this.applicantsList = applicantsList;
+   }
+
    @Override
    public String toString() {
       return "Job{" +
@@ -143,7 +148,6 @@ public class Job {
               ", location='" + location + '\'' +
               ", salary=" + salary +
               ", applied=" + applied +
-              ", createdAt=" + createdAt +
               '}';
    }
 }

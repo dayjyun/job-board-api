@@ -1,11 +1,13 @@
 package jobboardapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -17,11 +19,11 @@ public class User {
    private Long id;
 
    @Column
-   @NotNull
+   @NotNull(message = "User name may not be null")
    private String name;
 
    @Column(unique = true)
-   @NotNull
+   @NotNull(message = "User email may not be null")
    private String email;
 
    @Column
@@ -37,9 +39,16 @@ public class User {
    private List<Business> businessList;
 
    // one user can apply to jobs
+   // Current logged-in user can see the list of jobs they applied for
    @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the job from database if we deleted it from a user
    @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
    private List<Job> jobList;
+
+   // many users (applicants) applied to one job
+   @ManyToOne
+   @JoinColumn(name = "job_id")
+   @JsonIgnore
+   private Job job;
 
    public User() {}
 
@@ -49,6 +58,7 @@ public class User {
       this.email = email;
       this.password = password;
       this.resume = resume;
+      this.jobList = new ArrayList<>();
    }
 
    public Long getId() {
@@ -105,6 +115,14 @@ public class User {
 
    public void setJobList(List<Job> jobList) {
       this.jobList = jobList;
+   }
+
+   public Job getJob() {
+      return job;
+   }
+
+   public void setJob(Job job) {
+      this.job = job;
    }
 
    @Override
