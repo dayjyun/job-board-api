@@ -228,19 +228,19 @@ public class SpringBootCucumberTestDefinitions {
       /**
      * Test Scenario: User is able to see a list of job listings for a business
      * Path: GET http://localhost:8080/api/businesses/{businessId}/jobs
-     * aListOfJobsIsAvailable gets the list of all jobs from the business id = 1, as referenced by the endpoint
-     * iSearchForJobListingsWithinABusiness checks that there is a list of jobs containing at least one job
+     * aListOfJobsIsAvailableForABusiness gets the list of all jobs from the business id = 1, as referenced by the endpoint
+     * iSearchForJobListingsForABusiness checks that there is a list of jobs containing at least one job
      * iCanSeeAListOfJobsForABusiness makes sure that the HTTP status is 200 when we successfully find the list of jobs
      */
-    @Given("A list of jobs is available")
-    public void aListOfJobsIsAvailable() {
+    @Given("A list of jobs is available for a business")
+    public void aListOfJobsIsAvailableForABusiness() {
         responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
         list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
         System.out.println(list);
     }
 
-    @When("I search for job listings within a business")
-    public void iSearchForJobListingsWithinABusiness() {
+    @When("I search for job listings for a business")
+    public void iSearchForJobListingsForABusiness() {
         Assert.assertTrue(list.size() == 0);
     }
 
@@ -289,7 +289,7 @@ public class SpringBootCucumberTestDefinitions {
     * Path: GET http://localhost:8080/api/jobs
     * aListOfJobsIsAvailable gets the list of all jobs from the database referenced by the endpoint
     * iSearchForJobListingsWithinABusiness checks that there is a list of jobs containing at least on job
-    * iCanSeeAListOfJobsForABusiness makes sure the HTTP status is 200 when we successfully find the list of jobs
+    * iCanSeeAListOfJobs makes sure the HTTP status is 200 when we successfully find the list of jobs
     */
    @Given("A list of jobs are available")
    public void aListOfJobsIsAvailable() {
@@ -303,7 +303,7 @@ public class SpringBootCucumberTestDefinitions {
    }
 
    @Then("I can see a list of jobs")
-   public void iCanSeeAListOfJobsForABusiness() {
+   public void iCanSeeAListOfJobs() {
       Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
 
