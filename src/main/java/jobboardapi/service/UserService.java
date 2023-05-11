@@ -19,6 +19,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public User findUserByEmailAddress(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
     /**
      * getUserById retrieves the user by the user id, if the user id exists.
      * If the user id does not exist, we throw the NotFoundException
