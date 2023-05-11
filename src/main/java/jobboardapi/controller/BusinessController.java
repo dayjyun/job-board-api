@@ -1,8 +1,6 @@
 package jobboardapi.controller;
 
-import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.models.Business;
-import jobboardapi.repository.BusinessRepository;
 import jobboardapi.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +15,6 @@ public class BusinessController {
 
     @Autowired
     private BusinessService businessService;
-
-    private BusinessRepository businessRepository;
-
-    @Autowired
-    public void setBusinessRepository(BusinessRepository businessRepository) {
-        this.businessRepository = businessRepository;
-    }
 
     // User Story: Returns a list of all businesses
     // http://localhost:8080/api/businesses
