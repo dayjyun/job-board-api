@@ -16,6 +16,8 @@ public class JobController {
     @Autowired
     private JobService jobService;
 
+    // User Story: I want to see a list of all jobs available
+    // http://localhost:8080/api/jobs
     @GetMapping(path = "")
     public List<Job> getAllJobs() {
         return jobService.getAllJobs();
