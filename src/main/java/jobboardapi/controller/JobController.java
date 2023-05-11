@@ -35,4 +35,7 @@ public class JobController {
     public Job updateJobListing(@PathVariable Long jobId, @RequestBody Job jobBody) {
         return jobService.updateJobListing(jobId, jobBody);
     }
+
+//    @GetMapping(path = '/{jobId}/applicants')
+//    public List<User>
 }

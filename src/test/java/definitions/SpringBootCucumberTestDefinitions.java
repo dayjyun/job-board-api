@@ -302,6 +302,9 @@ public class SpringBootCucumberTestDefinitions {
 
    /**
     * Test Scenario: User with business is able to delete job listing
+    * Path: DELETE http://localhost:8080/api/jobs/{jobId}
+    * iDeleteAJobFromMyJobList gets the job from the specified endpoint and sends the delete request to delete the job
+    * iCanSeeMyJobListingIsDeleted makes sure that the HTTP status is 200 when we successfully delete the job object
     */
    @When("I delete a job from my Job list")
    public void iDeleteAJobFromMyJobList() {
