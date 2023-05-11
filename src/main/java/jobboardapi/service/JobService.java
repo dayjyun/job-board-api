@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.rmi.AlreadyBoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +68,7 @@ public class JobService {
             updatedJobListing.setDescription(jobBody.getDescription());
             updatedJobListing.setLocation(jobBody.getLocation());
             updatedJobListing.setSalary(jobBody.getSalary());
-            updatedJobListing.setApplied(jobBody.isApplied());
+//            updatedJobListing.setApplied(jobBody.isApplied());
             return jobRepository.save(updatedJobListing);
         } else {
             throw new NotFoundException("Job listing not found");
@@ -101,14 +102,37 @@ public class JobService {
     public List<User> getListOfApplicants(Long jobId) {
         Optional<Job> jobListing = jobRepository.findById(jobId);
         if(jobListing.isPresent()) {
-            // Update jobRepository to search for list of applicants
-            // Should no longer search through userRepository.
-            List<User> userList = userRepository.findAll();
-            if(userList.size() > 0) {
-                return userList;
+            List<User> applicantsList = jobListing.get()
+                                                  .getApplicantsList();
+            if(applicantsList.size() > 0) {
+                return applicantsList;
             } else {
                 // Return a message instead of throwing an exception
                 throw new NotFoundException("No applicants found");
+            }
+        } else {
+            throw new NotFoundException("Job listing not found");
+        }
+    }
+
+    /**
+     *
+     */
+//     I want to update the job listing boolean to true
+    public Optional<Job> applyForJobListing(Long jobId, User userBody) throws AlreadyBoundException {
+        Optional<Job> jobListing = jobRepository.findById(jobId);
+        if(jobListing.isPresent()){
+//            User user = userRepository.findUserByEmail(userBody.getEmail());
+//            Optional<User> user = jobRepository.findByUserEmail(userBody.getEmail());
+            Optional<User> user = jobRepository.findByUserId(userBody.getId());
+            if(user.isPresent()) {
+                throw new AlreadyBoundException("Application already submitted");
+            } else {
+                jobListing.get().setApplied(true);
+                jobListing.get().getApplicantsList().add(userBody);
+//                jobListing.get().setApplicantsList(userBody);
+                jobRepository.save(jobListing.get());
+                return jobListing;
             }
         } else {
             throw new NotFoundException("Job listing not found");

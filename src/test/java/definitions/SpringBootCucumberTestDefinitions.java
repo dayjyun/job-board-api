@@ -352,7 +352,7 @@ public class SpringBootCucumberTestDefinitions {
       requestBody.put("description", "Updated job description");
       requestBody.put("location", "Updated job location");
       requestBody.put("salary", 0.00);
-      requestBody.put("applied", true);
+//      requestBody.put("applied", true);
       request.header("Content-Type", "application/json");
       response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/jobs/1");
    }
@@ -381,6 +381,10 @@ public class SpringBootCucumberTestDefinitions {
 
    /**
     * Test Scenario: User is able to see a list of all applicants for their job
+    * Path: GET http://localhost:8080/api/jobs/1/applicants
+    * aListOfApplicantsIsAvailable gets the list of all Users from the database referenced by the endpoint
+    * iViewTheListOfApplicants checks that there is a list of jobs containing at least on job
+    * iCanSeeTheListOfApplicants makes sure the HTTP status is 200 when we successfully find the list of jobs
     */
    @Given("A list of applicants is available")
    public void aListOfApplicantsIsAvailable() {
@@ -407,4 +411,21 @@ public class SpringBootCucumberTestDefinitions {
     * Test Scenario: User is able to apply for a job
     */
 
+   @When("I apply for the job")
+   public void iApplyForTheJob() throws JSONException {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given();
+      JSONObject requestBody = new JSONObject();
+      // Current logged-in user's id
+      requestBody.put("name", "Logged-in user's name");
+      requestBody.put("email", "logged-in user's email");
+      requestBody.put("resume", "logged-in user's resume");
+      request.header("Content-Type", "application/json");
+      response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/jobs/1/applicants");
+   }
+
+   @Then("I see a message saying I have applied for the job")
+   public void iSeeAMessageSayingIHaveAppliedForTheJob() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 }

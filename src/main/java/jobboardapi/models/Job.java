@@ -2,11 +2,13 @@ package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
+import com.sun.istack.NotNull;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import javax.persistence.*;
+import java.util.ArrayList;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
 
 @Entity
 @Table(name = "jobs")
@@ -34,6 +36,7 @@ public class Job {
    private boolean applied;
 
    // many job applications can belong to one user
+   // Current logged-in user can see the list of jobs they applied for
    @ManyToOne
    @JoinColumn(name = "user_id")
    @JsonIgnore // excludes user details when displaying job details
@@ -45,6 +48,12 @@ public class Job {
    @JsonIgnore // excludes business details when displaying job details
    private Business business;
 
+   // Job should have a list of users who applied to the job listing
+   // one job can have many applicants (users)
+   @OneToMany(mappedBy = "job", orphanRemoval = true)
+   @LazyCollection(LazyCollectionOption.FALSE)
+   private List<User> applicantsList;
+
    public Job() {}
 
    public Job(Long id, String title, String description, String location, double salary, boolean applied) {
@@ -54,6 +63,7 @@ public class Job {
       this.location = location;
       this.salary = salary;
       this.applied = applied;
+      this.applicantsList = new ArrayList<>();
    }
 
    public Long getId() {
@@ -119,6 +129,14 @@ public class Job {
 
    public void setBusiness(Business business) {
       this.business = business;
+   }
+
+   public List<User> getApplicantsList() {
+      return applicantsList;
+   }
+
+   public void setApplicantsList(List<User> applicantsList) {
+      this.applicantsList = applicantsList;
    }
 
    @Override

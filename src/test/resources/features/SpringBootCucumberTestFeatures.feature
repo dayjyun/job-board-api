@@ -97,7 +97,7 @@ Feature: Rest API functionalities
 #    When I have no jobs listed
 #    Then I see a message saying I have no jobs listed
 #
-#  Scenario: User is able to apply for a job
-#    Given A user account is available
-#    When I apply for the job
-#    Then I see a message saying I have applied for the job
+  Scenario: User is able to apply for a job
+    Given A job listing is available
+    When I apply for the job
+    Then I see a message saying I have applied for the job
