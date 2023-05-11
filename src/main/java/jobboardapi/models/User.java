@@ -1,11 +1,13 @@
 package jobboardapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,6 +44,12 @@ public class User {
    @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
    private List<Job> jobList;
 
+   // many users (applicants) applied to one job
+   @ManyToOne
+   @JoinColumn(name = "job_id")
+//   @JsonIgnore
+   private Job job;
+
    public User() {}
 
    public User(Long id, String name, String email, String password, String resume) {
@@ -50,6 +58,7 @@ public class User {
       this.email = email;
       this.password = password;
       this.resume = resume;
+      this.jobList = new ArrayList<>();
    }
 
    public Long getId() {
@@ -106,6 +115,14 @@ public class User {
 
    public void setJobList(List<Job> jobList) {
       this.jobList = jobList;
+   }
+
+   public Job getJob() {
+      return job;
+   }
+
+   public void setJob(Job job) {
+      this.job = job;
    }
 
    @Override
