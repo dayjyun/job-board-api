@@ -3,7 +3,6 @@ package jobboardapi.service;
 import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.Business;
-import jobboardapi.models.User;
 import jobboardapi.repository.BusinessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,14 @@ public class BusinessService {
     public List<Business> getAllBusinesses(){
         return businessRepository.findAll();
     }
-    
+
+    /**
+     * createBusiness checks for the business name in the business database.
+     * If the name already exists, then the AlreadyExistsException is thrown.
+     * If the name does not exist, the business objects gets saved to the database.
+     * @param businessObject is the new business the user is creating.
+     * @return the details of the new business.
+     */
     public Business createBusiness(Business businessObject){
           Business business = businessRepository.findByName(businessObject.getName());
           if (business != null) {
@@ -72,6 +78,13 @@ public class BusinessService {
         }
     }
 
+    /**
+     * deleteBusiness checks if a business id is present in the business database.
+     * If the business id does not exist, NotFoundException is thrown.
+     * If the business id exists, the business is deleted from the database, and the deleted business's details are returned.
+     * @param businessId is the business the user wants to delete
+     * @return the deleted business's details
+     */
     public Business deleteBusiness(Long businessId) {
       Optional<Business> business = businessRepository.findById(businessId);
       if (business.isPresent()) {
