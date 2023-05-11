@@ -96,6 +96,12 @@ public class BusinessService {
       }
     }
 
+    /**
+     * getJobByBusinessId retrieves a list of jobs by the business id, if the business id exists.
+     * If the business id does not exist, we throw the NotFoundException
+     * @param businessId is what we're searching by
+     * @return a list of jobs for the business
+     */
     public List<Job> getJobByBusinessId(Long businessId){
         Optional<Business> business = businessRepository.findById(businessId);
         if (business.isPresent()) {
