@@ -409,6 +409,9 @@ public class SpringBootCucumberTestDefinitions {
 
    /**
     * Test Scenario: User is able to apply for a job
+    * Path: http://localhost:8080/api/jobs/1/applicants
+    * iApplyForTheJob submits a User JSON object and posts it to the endpoint
+    * iSeeAMessageSayingIHaveAppliedForTheJob Returns the job details
     */
 
    @When("I apply for the job")
