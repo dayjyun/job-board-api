@@ -1,13 +1,11 @@
 package jobboardapi.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.util.ArrayList;
-import javax.persistence.*;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 
 @Entity
