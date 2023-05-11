@@ -6,6 +6,7 @@ import jobboardapi.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class JobService {
         if(job.isPresent()) {
             return job;
         } else {
-            throw new NotFoundException("Job not found");
+            throw new NotFoundException("Job listing not found");
         }
     }
 
@@ -60,7 +61,17 @@ public class JobService {
             updatedJobListing.setApplied(jobBody.isApplied());
             return jobRepository.save(updatedJobListing);
         } else {
-            throw new NotFoundException("Job not found");
+            throw new NotFoundException("Job listing not found");
+        }
+    }
+
+    public Job deleteJobListing(Long jobId) {
+        Optional<Job> jobListing = jobRepository.findById(jobId);
+        if(jobListing.isPresent()) {
+            jobRepository.deleteById(jobId);
+            return jobListing.get();
+        } else {
+            throw new NotFoundException("Job listing not found");
         }
     }
 }

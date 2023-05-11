@@ -36,6 +36,11 @@ public class JobController {
         return jobService.updateJobListing(jobId, jobBody);
     }
 
+    @DeleteMapping(path = "/{jobId}")
+    public Job deleteJobListing(@PathVariable Long jobId) {
+        return jobService.deleteJobListing(jobId);
+    }
+
 //    @GetMapping(path = '/{jobId}/applicants')
 //    public List<User>
 }
