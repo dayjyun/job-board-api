@@ -59,10 +59,10 @@ Feature: Rest API functionalities
     Then I can see my business is deleted
 
 
-#  Scenario: User is able to see a list of job listings for a business
-#    Given A list of jobs is available
-#    When I search for job listings within a business
-#    Then I can see a list of jobs for a business
+  Scenario: User is able to see a list of job listings for a business
+    Given A list of jobs is available
+    When I search for job listings within a business
+    Then I can see a list of jobs for a business
 #
 #  Scenario: User with business is able to create a job listing
 #    Given A business is available
@@ -85,10 +85,10 @@ Feature: Rest API functionalities
 #    Then I can delete the job listing
 #
 
-  Scenario: User is able to see a list of all jobs
-    Given A list of jobs are available
-    When I search for jobs
-    Then I can see a list of jobs
+#  Scenario: User is able to see a list of all jobs
+#    Given A list of jobs is available
+#    When I search for jobs
+#    Then I can see a list of jobs
 #
 #  Scenario: User is able to see a list of all applicants for their job
 #    Given A user account is available
