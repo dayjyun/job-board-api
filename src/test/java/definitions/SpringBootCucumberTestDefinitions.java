@@ -222,8 +222,14 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertEquals(200, response.getStatusCode());
     }
 
+// Jobs
+
    /**
     * Test Scenario: User is able to see a list of job listings for a business
+    * Path: DELETE http://localhost:8080/api/jobs
+    * aListOfJobsIsAvailable gets the list of all jobs from the database referenced by the endpoint
+    * iSearchForJobListingsWithinABusiness checks that there is a list of jobs containing at least on job
+    * iCanSeeAListOfJobsForABusiness makes sure the HTTP status is 200 when we successfully find the list of jobs
     */
    @Given("A list of jobs is available")
    public void aListOfJobsIsAvailable() {
@@ -240,7 +246,4 @@ public class SpringBootCucumberTestDefinitions {
    public void iCanSeeAListOfJobsForABusiness() {
       Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
-
-//    JOBS
-
 }
