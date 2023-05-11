@@ -114,7 +114,6 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("headquarters", "New Business Headquarters");
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses");
-        System.out.println(requestBody);
     }
 
     @Then("I can see my new business's details")
@@ -134,7 +133,6 @@ public class SpringBootCucumberTestDefinitions {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         response = request.get(BASE_URL + port + "/api/businesses/1");
-        System.out.println(response.getBody().asString());
     }
 
     @When("I search by business id")
@@ -155,13 +153,13 @@ public class SpringBootCucumberTestDefinitions {
     * iCanEditMyBusinessDetails confirms a successful update
     */
    @Given("I can search for a business ID")
-   public void aBusinessIsAvailable() {
+   public void aBusinessIsAvailablePUT() {
       RestAssured.baseURI = BASE_URL;
       request = RestAssured.given();
    }
 
    @When("I edit my business details")
-   public void iSearchByBusinessId() throws JSONException {
+   public void iSearchByBusinessIdPUT() throws JSONException {
       JSONObject requestBody = new JSONObject();
       requestBody.put("name", "Updated name");
       requestBody.put("headquarters", "Updated headquarters");
@@ -170,7 +168,7 @@ public class SpringBootCucumberTestDefinitions {
    }
 
    @Then("I see the business is updated")
-   public void iCanEditMyBusinessDetails() {
+   public void iCanEditMyBusinessDetailsPUT() {
       Assert.assertEquals(200, response.getStatusCode());
    } 
 
@@ -216,9 +214,7 @@ public class SpringBootCucumberTestDefinitions {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
-        response = request.delete(BASE_URL + port + "/api/businesses/4");
-
-        System.out.println(response.getBody().asString());
+        response = request.delete(BASE_URL + port + "/api/businesses/3");
     }
 
     @Then("I can see my business is deleted")
