@@ -181,13 +181,13 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 
 # Acknowledgment
 Development team that helped to build this API:
-**Kevin Barrios**:[Github Profile](**Insert Github Profile link here**)
-**Kim Nguyen**:[Github Profile](**Insert Github Profile link here**)
-**DeShe Woods**:[Github Profile](https://github.com/woodsdeshe)
+- **Kevin Barrios**: [Github Profile](**Insert Github Profile link here**)
+- **Kim Nguyen**: [Github Profile](**Insert Github Profile link here**)
+- **DeShe Woods**: [Github Profile](https://github.com/woodsdeshe)
 
 Helped development team in creating seed data
-**Maksym Zinchenko**:[Github profile](**Insert Github Profile link here**)
+- **Maksym Zinchenko**: [Github profile](**Insert Github Profile link here**)
 
 Helped development team with debugging code
-**Suresh Sigera**[Github profile](**Insert Github Profile link here**)
+- **Suresh Sigera**: [Github profile](**Insert Github Profile link here**)
 
