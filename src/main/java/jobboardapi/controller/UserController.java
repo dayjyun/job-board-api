@@ -23,6 +23,7 @@ public class UserController {
         return userService.createUser(userObject);
     }
 
+    // Functionality: User logs into account
     // http://localhost:8080/auth/users/login
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
