@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -25,7 +26,7 @@ public class UserController {
 
     // http://localhost:8080/auth/users/register
     @PostMapping("/register")
-    public User createUser(@RequestBody User userObject) {
+    public User createUser(@RequestBody @Valid User userObject) {
         return userService.createUser(userObject);
     }
 
