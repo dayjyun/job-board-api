@@ -116,38 +116,25 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 
 # Dependency Installation Instructions
 - Use the following links provided below to access the Maven Central repository.
-  -  spring-boot-starter-data-rest:
-    -  Maven Central: spring-boot-starter-data-rest
-  -  spring-boot-devtools:
-    -  Maven Central: spring-boot-devtools
-  -  h2:
-    -  Maven Central: h2
-  -  spring-boot-starter-jdbc:
-    -  Maven Central: spring-boot-starter-jdbc
-  -  spring-boot-starter-test:
-    -  Maven Central: spring-boot-starter-test
-  -  spring-boot-starter-data-jpa:
-    -  Maven Central: spring-boot-starter-data-jpa
-  -  spring-boot-starter-security:
-    -  Maven Central: spring-boot-starter-security
-  -  junit:
-    -  Maven Central: junit
-  -  cucumber-java:
-    -  Maven Central: cucumber-java
-  -  cucumber-junit:
-    -  Maven Central: cucumber-junit
-  -  cucumber-spring:
-    -  Maven Central: cucumber-spring
-  -  rest-assured:
-    -  Maven Central: rest-assured
-  -  spring-boot-starter-validation:
-    -  Maven Central: spring-boot-starter-validation
-  -  jjwt-api:
-    -  Maven Central: jjwt-api
-  -  jjwt-impl:
-    -  Maven Central: jjwt-impl
-  -  jjwt-jackson:
-    -  Maven Central: jjwt-jackson
+- 
+| Dependency                     | Maven Central Link             |
+|--------------------------------|--------------------------------|
+| spring-boot-starter-data-rest  | [spring-boot-starter-data-rest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest) |
+| spring-boot-devtools           | [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)           |
+| h2                             | [h2](https://mvnrepository.com/artifact/com.h2database/h2)                             |
+| spring-boot-starter-jdbc       | [spring-boot-starter-jdbc](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc)       |
+| spring-boot-starter-test       | [spring-boot-starter-test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)       |
+| spring-boot-starter-data-jpa   | [spring-boot-starter-data-jpa](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa)   |
+| spring-boot-starter-security   | [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)   |
+| junit                          | [junit](https://mvnrepository.com/artifact/junit/junit)                          |
+| cucumber-java                  | [cucumber-java](https://mvnrepository.com/artifact/io.cucumber/cucumber-java)                  |
+| cucumber-junit                 | [cucumber-junit](https://mvnrepository.com/artifact/io.cucumber/cucumber-junit)                 |
+| cucumber-spring                | [cucumber-spring](https://mvnrepository.com/artifact/io.cucumber/cucumber-spring)                |
+| rest-assured                   | [rest-assured](https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0)                   |
+| spring-boot-starter-validation | [spring-boot-starter-validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.6) |
+| jjwt-api                       | [jjwt-api](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api/0.11.5)                       |
+| jjwt-impl                      | [jjwt-impl](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl/0.11.5)                      |
+| jjwt-jackson                   | [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)                   |
    
 - Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
 - Refresh the Maven project and the dependencies should be added to your project
