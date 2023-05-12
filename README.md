@@ -113,3 +113,41 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | GET          | /jobs                    | Returns all jobs in the job board                   | Public  |
 | GET          | /jobs/{1}/applicants     | Returns a list of all applicants for the job        | Private |
 | POST         | /jobs/{1}/applicants     | User applies for job                                | Private |
+
+# Dependency Installation Instructions
+- Use the following links provided below to access the Maven Central repository.
+  -  spring-boot-starter-data-rest:
+    -  Maven Central: spring-boot-starter-data-rest
+  -  spring-boot-devtools:
+    -  Maven Central: spring-boot-devtools
+  -  h2:
+    -  Maven Central: h2
+  -  spring-boot-starter-jdbc:
+    -  Maven Central: spring-boot-starter-jdbc
+  -  spring-boot-starter-test:
+    -  Maven Central: spring-boot-starter-test
+  -  spring-boot-starter-data-jpa:
+    -  Maven Central: spring-boot-starter-data-jpa
+  -  spring-boot-starter-security:
+    -  Maven Central: spring-boot-starter-security
+  -  junit:
+    -  Maven Central: junit
+  -  cucumber-java:
+    -  Maven Central: cucumber-java
+  -  cucumber-junit:
+    -  Maven Central: cucumber-junit
+  -  cucumber-spring:
+    -  Maven Central: cucumber-spring
+  -  rest-assured:
+    -  Maven Central: rest-assured
+  -  spring-boot-starter-validation:
+    -  Maven Central: spring-boot-starter-validation
+  -  jjwt-api:
+    -  Maven Central: jjwt-api
+  -  jjwt-impl:
+    -  Maven Central: jjwt-impl
+  -  jjwt-jackson:
+    -  Maven Central: jjwt-jackson
+   
+- Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
+- Refresh the Maven project and the dependencies should be added to your project
