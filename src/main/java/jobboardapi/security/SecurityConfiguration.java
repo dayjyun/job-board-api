@@ -60,8 +60,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ // accepts a http server request
         http.authorizeRequests().antMatchers(
-                        "/auth/register",
-                        "/auth/login",
+                        "/api/users/register",
+                        "/api/users/login",
                         "/api/users/{userId}",
                         "/api/myProfile",
                         "/api/myProfile/jobs",
