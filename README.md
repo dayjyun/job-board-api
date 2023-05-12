@@ -138,8 +138,8 @@ Despite these hurdles, the team remained proactive and motivated to solving them
    
 - Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
 
-[](https://postimg.cc/NLkCkhrg)
-[](https://postimg.cc/0btthpfF)
+![Maven dependency copy](https://postimg.cc/NLkCkhrg)
+![pom.xml file](https://postimg.cc/0btthpfF)
 
 - Refresh the Maven project and the dependencies should be added to your project
-[](https://postimg.cc/rDKhTKZm)
+![Reload Maven](https://postimg.cc/rDKhTKZm)
