@@ -49,13 +49,20 @@ public class BusinessService {
     * @param businessObject is the new business the user is creating.
     * @return the details of the new business.
     */
+   // Crashes server when going to another request
+   // Check that the business belongs to the user bRep.findBusinessByNameAndUserId
    public Business createBusiness(Business businessObject) {
-      Business business = businessRepository.findByName(businessObject.getName());
-      if (business != null) {
+      Optional<Business> business = businessRepository.findByName(businessObject.getName());
+      if (business.isPresent()) {
          throw new AlreadyExistsException("Business with the name " + businessObject.getName() + " already exists.");
       } else {
-         businessRepository.save(businessObject);
-         return businessObject;
+         if (businessObject.getName()
+                           .isEmpty() || businessObject.getName() == null) {
+            throw new NotFoundException("Business name may not be null");
+         } else {
+            businessObject.setUser(UserService.getLoggedInUser());
+            return businessRepository.save(businessObject);
+         }
       }
    }
 
@@ -83,13 +90,18 @@ public class BusinessService {
     * @return the updated Business object
     */
    public Business updateBusiness(Long businessId, Business businessBody) {
-      Optional<Business> business = businessRepository.findById(businessId);
+//      Optional<Business> business = businessRepository.findById(businessId);
+
+      Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser()
+                                                                                                        .getId());
       List<Business> allBusinesses = businessRepository.findAll();
       if (business.isPresent()) {
-         Business updatedBusiness = businessRepository.findById(businessId)
+         Business updatedBusiness = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser()
+                                                                                                        .getId())
                                                       .get();
          for (Business b : allBusinesses) {
-            if (b.getName().equals(businessBody.getName())) {
+            if (b.getName()
+                 .equals(businessBody.getName())) {
                throw new AlreadyExistsException("Business name already exists");
             }
          }
