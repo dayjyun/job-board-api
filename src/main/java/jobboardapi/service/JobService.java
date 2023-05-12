@@ -73,7 +73,8 @@ public class JobService {
 
    /**
     * updateJobListing updates the job by searching for a job's ID. It first checks for the business's id and the current logged-in user's
-    * id to make sure the user is the owner for the business. Next, it checks if the businesses has a list of jobs available Following that,
+    * id to make sure the user is the owner for the business. Next, it checks if the businesses has a list of jobs available. Following
+    * that,
     * it checks if any of the job's business id matches the business id for the business owned by the user Once it passes the check, the
     * listing gets updated If any of the checks fail, a NotFoundException is thrown
     *
@@ -111,9 +112,10 @@ public class JobService {
    }
 
    /**
-    * deleteJobListing checks if a job id is present in the job database If the job id does not exist, a NotFoundException is thrown If the
-    * job id exists, the job is deleted from the database, and the deleted job's details are returned.
-    *
+    * deleteJobListing checks if a job id is present in the job database.
+    * Next, it checks if the businesses has a list of jobs available. Following that, it checks if any of the job's business id matches
+    * the business id for the business owned by the user Once it passes the check, the listing gets updated If any of the checks fail, a
+    * NotFoundException is thrown
     * @param jobId is the id for the job the user wants to delete
     * @return the deleted job's details
     */
