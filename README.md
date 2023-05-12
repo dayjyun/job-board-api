@@ -1,4 +1,23 @@
 # Job Board API
+## Table of Contents
+
+- [Description](#description)
+- [Technologies](#technologies)
+  - [Technologies Used](#technologies-used)
+  - [Documentation](#documentation)
+- [General Approach](#general-approach)
+- [API Hurdles](#api-hurdles) 
+- [User Stories](#user-stories)
+  - [Users Stories](#users-stories)
+  - [Business Stories](#business-stories)
+  - [Jobs Stories ](#jobs-stories)
+-  [Endpoints](#endpoints)
+  -  [Users](#users)
+  -  [Business](#business)
+  -  [Jobs](#jobs)
+- [Dependency Installation Instructions](#dependency-installation-instructions)
+  
+
 
 ## Description
 The Job Board API provides a platform for users to interact with job postings and businesses. It offers a range of features to meet the needs of job seekers and businesses looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job openings and track their applications. Businesses can view applicants for their job listings and manage their business information.
@@ -33,17 +52,17 @@ The documentation provides detailed explanations, usage examples, and external r
   - **Spring Security and H2 Database Access**: Stack Overflow provides a solution to allow access to the H2 Database Console when using Spring Security. The code snippet and explanation can be found at [Stack Overflow Answer](https://stackoverflow.com/questions/43794721/spring-boot-h2-console-throws-403-with-spring-security-1-5-2).
 
 # General Approach 
-To develop this API, the development team started by reviewing user stories and creating an ERD to visualize the database structure. The team followed a Test-Driven Development(TDD) to approach using Cucumber with Rest Assured, writing tests for each endpoint and implementing the minimum code required to make them pass. This helped to ensure that the API worked as expected and met the acceptance criteria.
+To develop this API, the development team started by reviewing user stories and creating an ERD to visualize the database structure. The team followed a Test-Driven Development (TDD) to approach using Cucumber with Rest Assured, writing tests for each endpoint and implementing the minimum code required to make them pass. This helped to ensure that the API worked as expected and met the acceptance criteria.
 
 The team utilized branching in Git with branches like Main, Dev, and Test. This allowed the team to work on seperate features and merge them into the appropriate branches. The team maintained seperate controllers and services, following the MVC design pattern, to ensure code organization and modularity. The team also focused on handling exceptions gracefully and providing clear error messages to users. 
 
-The API offers CRUD operations for users, businesses, and jobs. The development team used Sprinf Security and JWT tokens for authentications and personlized access to endpoints. Most routes required authentication, except for user registration, login, and publicly accessible business and job information. To facilitate collaboration, the team used a Kanban board to track tasks and assigned roles like driver, navigator, tester, and pull request approver.
+The API offers CRUD operations for users, businesses, and jobs. The development team used Spring Security and JWT tokens for authentications and personalized access to endpoints. Most routes required authentication, except for user registration, login, and publicly accessible business and job information. To facilitate collaboration, the team used a Kanban board to track tasks and assigned roles like driver, navigator, tester, and pull request approver.
 
 Progress has been documented in the README file, including project overview, tools used, and links to user stories, the ERD diagram, and planning documentation. Documentation was also provided for the REST API endpoints and provided installation instructions for dependencies. The team focused on iteratve development, TDD, and adherence to best practices. With efficient teamwork and project management techniques, the team successfully delivered a job board API.
 
 # API Hurdles
-During the development process, the team encountered a few hurdles that challeneged the progress of the API. Some of the specific issues we faced include:
- - Testing for `PUT` and `POST` requests: Objects were being created even when certain columns didn't exist. This reuired debugging and refining of code to ensure data integrity and proper handling of requests.
+During the development process, the team encountered a few hurdles that challeneged the progress of the API. Some of the specific issues that were faced include:
+ - Testing for `PUT` and `POST` requests: Objects were being created even when certain columns didn't exist. This required debugging and refining of code to ensure data integrity and proper handling of requests.
  - Adding a list to our seed data: There was difficulty incorporating a list of items into our seed data, which affected the accuracy of the tests. The team revisited a data setup and found a solution to include the required list data.
  - Testing private APIs with Cucumber: Cucumber needed to be set up to test private API's, which required more configuration and understanding of Cucumber. Different approaches were explored and refactoring of tests were made.
  - Resolving merge conflicts: As the team utlized branching, there were a few merge conflicts. Resolving these conflicts required effective communication and collaboration to ensure a smooth branch merging process.
@@ -51,7 +70,7 @@ During the development process, the team encountered a few hurdles that challene
 Despite these hurdles, the team remained proactive and motivated to solving them, and ultimately overcame those hurdles to continue the development process.
 
 # User Stories
-## Users
+## Users Stories
 | Functionality                                       | User Stories                                                |
 |-----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | User creates account                                | As an unregistered user, I want to create an account so that I can apply for jobs or create job postings.                                                                              |
@@ -61,7 +80,7 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | Delete user account                                 | As a registered user, I want to delete my account when I no longer need it, so that businesses do not have access to my information.                                                   |
 | Returns a list of jobs the user applied for         | As a registered user, I want to see all the jobs I’ve applied for so that I can keep track of my applications.                                                                        |
 
-## Business
+## Business Stories
  | Functionality                                       | User Stories                                                                                                                                                                          |
 |-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Returns a list of all businesses                    | As a registered user or unregistered user, I want to see a list of all businesses so that I can find details about the business and jobs related to that business.                    |
@@ -75,7 +94,7 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | Update job listing from the business                | As a registered user with a business, I want to update my job listing so that the information for the role is up-to-date.                                                             |
 | Delete job listing from the business                | As a registered user with a business, I want to delete a job listing from the job board so that candidates can no longer apply for that role.                                         |
 
-## Jobs
+## Jobs Stories
 | Functionality                                | User Stories                                                                                                                                               |
 |----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Returns all jobs in the job board            | As a registered user or unregistered user, I want to see a list of all jobs available so that I can see what opportunities are open to apply for.          |
