@@ -76,9 +76,11 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | Delete job listing from the business                | As a registered user with a business, I want to delete a job listing from the job board so that candidates can no longer apply for that role.                                         |
 
 ## Jobs
-
-
-
+| Functionality                                | User Stories                                                                                                                                               |
+|----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Returns all jobs in the job board            | As a registered user or unregistered user, I want to see a list of all jobs available so that I can see what opportunities are open to apply for.          |
+| Returns a list of all applicants for the job | As a registered user with a business, I want to see a list of applicants that applied for my job listing so that I may choose the most suitable candidate. |
+| User applies for job                         | As a registered user, I want to apply for a job, so that a business will consider me as a candidate for their business.                                    |
 
 # Endpoints
 ## Users
