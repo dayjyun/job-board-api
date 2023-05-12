@@ -4,8 +4,8 @@
 ## Users
 | Request Type | URL                      | Functionality                                       | Access  |
 |--------------|--------------------------|-----------------------------------------------------|---------|
-| POST         | /auth/register           | User creates account                                | Public  |
-| POST         | /auth/login              | User logs into account                              | Public  |
+| POST         | /api/users/register      | User creates account                                | Public  |
+| POST         | /api/users/login         | User logs into account                              | Public  |
 | GET          | /users/{id}              | Returns user account details                        | Private |
 | PUT          | /users/{id}              | Edit user account                                   | Private |
 | DELETE       | /users/{id}              | Delete user account                                 | Private |
