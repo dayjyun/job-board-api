@@ -4,6 +4,7 @@ import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.Business;
 import jobboardapi.models.Job;
+import jobboardapi.models.User;
 import jobboardapi.repository.BusinessRepository;
 import jobboardapi.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,8 +78,8 @@ public class BusinessService {
       newBusiness.setName(businessObject.getName());
       newBusiness.setHeadquarters(businessObject.getHeadquarters());
       newBusiness.setUser(UserService.getLoggedInUser());
+      UserService.getLoggedInUser().getBusinessList().add(newBusiness);
       return businessRepository.save(newBusiness);
-
    }
 
    /**
