@@ -124,40 +124,40 @@ public class JobService {
     /**
      *
      */
-    public Optional<Job> applyForJobListing(Long jobId, User userBody) {
-        Optional<Job> jobListing = jobRepository.findById(jobId);
-        if(jobListing.isPresent()){
-//            User user = userRepository.findUserByEmail(userBody.getEmail());
-//            Optional<User> user = jobRepository.findByUserEmail(userBody.getEmail());
-//            Optional<User> user = jobRepository.findByUserId(userBody.getId());
-//            Optional<User> user = jobRepository.findJobByIdAndAndUserId(jobId, userBody.getId());
-            Optional<User> user = userRepository.findUserByIdAndJobId(jobId, userBody.getId());
-            if(user.isPresent()) {
-                throw new AlreadyExistsException("Application already submitted");
-            } else {
-                jobListing.get().setApplied(true);
-                jobListing.get().getApplicantsList().add(userBody);
-                jobRepository.save(jobListing.get());
-                return jobListing;
-            }
-        } else {
-            throw new NotFoundException("Job listing not found");
-        }
-//        if(jobListing.isPresent()) {
-//            Job job = jobListing.get();
-//            List<User> applicantsList = job.getApplicantsList();
-//            Optional<User> user = applicantsList.stream().filter(applicant -> applicant.getId().equals(userBody.getId())).findFirst();
-//
+//    public Optional<Job> applyForJobListing(Long jobId, User userBody) {
+//        Optional<Job> jobListing = jobRepository.findById(jobId);
+//        if(jobListing.isPresent()){
+////            User user = userRepository.findUserByEmail(userBody.getEmail());
+////            Optional<User> user = jobRepository.findByUserEmail(userBody.getEmail());
+////            Optional<User> user = jobRepository.findByUserId(userBody.getId());
+////            Optional<User> user = jobRepository.findJobByIdAndAndUserId(jobId, userBody.getId());
+//            Optional<User> user = userRepository.findUserByIdAndJobId(jobId, userBody.getId());
 //            if(user.isPresent()) {
 //                throw new AlreadyExistsException("Application already submitted");
 //            } else {
-//                job.setApplied(true);
-//                applicantsList.add(userBody);
-//                jobRepository.save(job);
+//                jobListing.get().setApplied(true);
+//                jobListing.get().getApplicantsList().add(userBody);
+//                jobRepository.save(jobListing.get());
 //                return jobListing;
 //            }
 //        } else {
 //            throw new NotFoundException("Job listing not found");
 //        }
-    }
+////        if(jobListing.isPresent()) {
+////            Job job = jobListing.get();
+////            List<User> applicantsList = job.getApplicantsList();
+////            Optional<User> user = applicantsList.stream().filter(applicant -> applicant.getId().equals(userBody.getId())).findFirst();
+////
+////            if(user.isPresent()) {
+////                throw new AlreadyExistsException("Application already submitted");
+////            } else {
+////                job.setApplied(true);
+////                applicantsList.add(userBody);
+////                jobRepository.save(job);
+////                return jobListing;
+////            }
+////        } else {
+////            throw new NotFoundException("Job listing not found");
+////        }
+//    }
 }

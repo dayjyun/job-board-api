@@ -51,6 +51,7 @@ public class User {
 //   private Job job;
 
    @ManyToMany(mappedBy = "applicantsList")
+   @JsonIgnore
    private List<Job> jobList;
 
    public User() {}

@@ -52,18 +52,33 @@ public class BusinessService {
    // Crashes server when going to another request
    // Check that the business belongs to the user bRep.findBusinessByNameAndUserId
    public Business createBusiness(Business businessObject) {
-      Optional<Business> business = businessRepository.findByName(businessObject.getName());
-      if (business.isPresent()) {
+//      Optional<Business> business = businessRepository.findByName(businessObject.getName());
+//      if (business.isPresent()) {
+//         throw new AlreadyExistsException("Business with the name " + businessObject.getName() + " already exists.");
+//      } else {
+//         if (businessObject.getName()
+//                           .isEmpty() || businessObject.getName() == null) {
+//            throw new NotFoundException("Business name may not be null");
+//         } else {
+//            businessObject.setUser(UserService.getLoggedInUser());
+//            return businessRepository.save(businessObject);
+//         }
+//      }
+      Optional<Business> existingBusiness = businessRepository.findByName(businessObject.getName());
+      if(existingBusiness.isPresent()) {
          throw new AlreadyExistsException("Business with the name " + businessObject.getName() + " already exists.");
-      } else {
-         if (businessObject.getName()
-                           .isEmpty() || businessObject.getName() == null) {
-            throw new NotFoundException("Business name may not be null");
-         } else {
-            businessObject.setUser(UserService.getLoggedInUser());
-            return businessRepository.save(businessObject);
-         }
       }
+
+      if (businessObject.getName() == null || businessObject.getName().isEmpty()) {
+         throw new NotFoundException("Business name may not be null");
+      }
+
+      Business newBusiness = new Business();
+      newBusiness.setName(businessObject.getName());
+      newBusiness.setHeadquarters(businessObject.getHeadquarters());
+      newBusiness.setUser(UserService.getLoggedInUser());
+      return businessRepository.save(newBusiness);
+
    }
 
    /**
