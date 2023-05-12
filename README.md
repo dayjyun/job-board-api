@@ -41,9 +41,14 @@ The API offers CRUD operations for users, businesses, and jobs. The development 
 
 Progress has been documented in the README file, including project overview, tools used, and links to user stories, the ERD diagram, and planning documentation. Documentation was also provided for the REST API endpoints and provided installation instructions for dependencies. The team focused on iteratve development, TDD, and adherence to best practices. With efficient teamwork and project management techniques, the team successfully delivered a job board API.
 
-#API Hurdles
+# API Hurdles
 During the development process, the team encountered a few hurdles that challeneged the progress of the API. Some of the specific issues we faced include:
  - Testing for `PUT` and `POST` requests: Objects were being created even when certain columns didn't exist. This reuired debugging and refining of code to ensure data integrity and proper handling of requests.
+ - Adding a list to our seed data: There was difficulty incorporating a list of items into our seed data, which affected the accuracy of the tests. The team revisited a data setup and found a solution to include the required list data.
+ - Testing private APIs with Cucumber: Cucumber needed to be set up to test private API's, which required more configuration and understanding of Cucumber. Different approaches were explored and refactoring of tests were made.
+ - Resolving merge conflicts: As the team utlized branching, there were a few merge conflicts. Resolving these conflicts required effective communication and collaboration to ensure a smooth branch merging process.
+
+Despite these hurdles, the team remained proactive and motivated to solving them, and ultimately overcame those hurdles to continue the development process.
 
 # Endpoints
 ## Users
