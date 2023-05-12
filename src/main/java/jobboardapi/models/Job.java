@@ -156,4 +156,12 @@ public class Job {
               ", applied=" + applied +
               '}';
    }
+
+   public List<User> getApplicantsList() {
+      return applicantsList;
+   }
+
+   public void setApplicantsList(List<User> applicantsList) {
+      this.applicantsList = applicantsList;
+   }
 }

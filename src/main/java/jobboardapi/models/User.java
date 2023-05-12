@@ -50,6 +50,9 @@ public class User {
 //   @JsonIgnore
 //   private Job job;
 
+   @ManyToMany(mappedBy = "applicantsList")
+   private List<Job> jobList;
+
    public User() {}
 
    public User(Long id, String name, String email, String password, String resume) {
@@ -134,5 +137,13 @@ public class User {
               ", password='" + password + '\'' +
               ", resume='" + resume + '\'' +
               '}';
+   }
+
+   public List<Job> getJobList() {
+      return jobList;
+   }
+
+   public void setJobList(List<Job> jobList) {
+      this.jobList = jobList;
    }
 }
