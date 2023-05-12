@@ -1,7 +1,15 @@
-# job-board-api
+# Job Board API
 
 ## Description
 The Job Board API provides a platform for users to interact with job postings and businesses. It offers a range of features to meet the needs of job seekers and businesses looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job openings and track their applications. Businesses can view applicants for their job listings and manage their business information.
+
+## Technologies
+
+### Technologies Used
+
+The Job Board API is built using the following technologies:
+  - **Version Control**
+
 
 # Endpoints
 ## Users
