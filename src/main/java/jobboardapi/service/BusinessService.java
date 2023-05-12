@@ -49,8 +49,6 @@ public class BusinessService {
     * @param businessObject is the new business the user is creating.
     * @return the details of the new business.
     */
-   // Crashes server when going to another request
-   // Check that the business belongs to the user bRep.findBusinessByNameAndUserId
    public Business createBusiness(Business businessObject) {
       Optional<Business> business = businessRepository.findByName(businessObject.getName());
       if (business.isPresent()) {
