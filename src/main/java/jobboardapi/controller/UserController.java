@@ -23,13 +23,13 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-    // http://localhost:8080/auth/users/register/
+    // http://localhost:8080/auth/users/register
     @PostMapping("/register")
     public User createUser(@RequestBody User userObject) {
         return userService.createUser(userObject);
     }
 
-    // http://localhost:8080/auth/users/login/
+    // http://localhost:8080/auth/users/login
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         return userService.loginUser(loginRequest);
