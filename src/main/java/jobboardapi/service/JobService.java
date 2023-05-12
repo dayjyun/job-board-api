@@ -32,7 +32,8 @@ public class JobService {
     }
 
     /**
-     * getAllJobs retrieves the list of all jobs from the job repository
+     * getAllJobs retrieves the list of all jobs from the job repository. A NotFoundException is thrown if no jobs are stored in the
+     * database
      * @return a list of jobs
      */
     public List<Job> getAllJobListings() {
