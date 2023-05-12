@@ -33,12 +33,12 @@ public class Job {
    @Column
    private boolean applied;
 
-   // many job applications can belong to one user
-   // Current logged-in user can see the list of jobs they applied for
-   @ManyToOne
-   @JoinColumn(name = "user_id")
-   @JsonIgnore // excludes user details when displaying job details
-   private User user;
+//   // many job applications can belong to one user
+//   // Current logged-in user can see the list of jobs they applied for
+//   @ManyToOne
+//   @JoinColumn(name = "user_id")
+//   @JsonIgnore // excludes user details when displaying job details
+//   private User user;
 
    // many job listings can belong to one business
    @ManyToOne
@@ -46,11 +46,11 @@ public class Job {
    @JsonIgnore // excludes business details when displaying job details
    private Business business;
 
-   // Job should have a list of users who applied to the job listing
-   // one job can have many applicants (users)
-   @OneToMany(mappedBy = "job", orphanRemoval = true)
-   @LazyCollection(LazyCollectionOption.FALSE)
-   private List<User> applicantsList;
+//   // Job should have a list of users who applied to the job listing
+//   // one job can have many applicants (users)
+//   @OneToMany(mappedBy = "job", orphanRemoval = true)
+//   @LazyCollection(LazyCollectionOption.FALSE)
+//   private List<User> applicantsList;
 
    public Job() {}
 
@@ -113,13 +113,13 @@ public class Job {
    }
 
 
-   public User getUser() {
-      return user;
-   }
-
-   public void setUser(User user) {
-      this.user = user;
-   }
+//   public User getUser() {
+//      return user;
+//   }
+//
+//   public void setUser(User user) {
+//      this.user = user;
+//   }
 
    public Business getBusiness() {
       return business;
@@ -129,13 +129,13 @@ public class Job {
       this.business = business;
    }
 
-   public List<User> getApplicantsList() {
-      return applicantsList;
-   }
-
-   public void setApplicantsList(List<User> applicantsList) {
-      this.applicantsList = applicantsList;
-   }
+//   public List<User> getApplicantsList() {
+//      return applicantsList;
+//   }
+//
+//   public void setApplicantsList(List<User> applicantsList) {
+//      this.applicantsList = applicantsList;
+//   }
 
    @Override
    public String toString() {
