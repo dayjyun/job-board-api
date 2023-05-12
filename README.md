@@ -12,9 +12,9 @@
   - [Business Stories](#business-stories)
   - [Jobs Stories ](#jobs-stories)
 -  [Endpoints](#endpoints)
-  -  [Users](#users)
-  -  [Business](#business)
-  -  [Jobs](#jobs)
+    -  [Users](#users)
+    -  [Business](#business)
+    -  [Jobs](#jobs)
 - [Dependency Installation Instructions](#dependency-installation-instructions)
   
 
