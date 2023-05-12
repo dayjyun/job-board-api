@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -59,18 +60,21 @@ public class SecurityConfiguration {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ // accepts a http server request
-        http.authorizeRequests().antMatchers(
+        http.authorizeRequests().antMatchers(HttpMethod.POST,
                         "/api/users/register",
-                        "/api/users/login",
-                        "/api/users/{userId}",
-                        "/api/myProfile",
-                        "/api/myProfile/jobs",
+                        "/api/users/login").permitAll()
+
+                .antMatchers(HttpMethod.GET,
                         "/api/businesses",
                         "/api/businesses/{businessId}",
                         "/api/businesses/{businessId}/jobs",
                         "/api/jobs",
-                        "/api/jobs/{jobId}",
-                        "/api/jobs/{jobId}/applicants"
+                        "/api/jobs/{jobId}"
+
+//                        "/api/users/{userId}",
+//                        "/api/myProfile",
+//                        "/api/myProfile/jobs",
+//                        "/api/jobs/{jobId}/applicants"
                         ).permitAll()// these are all public urls
                 .anyRequest().authenticated() // other urls need authentication
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // when you log into a server, you need to maintain a session. add this session so that our java springboot knows we're logged in
