@@ -22,7 +22,7 @@
 
 
 ## Description
-The Job Board API provides a platform for users to interact with job postings and businesses. It offers a range of features to meet the needs of job seekers and businesses looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job openings and track their applications. Businesses can view applicants for their job listings and manage their business information.
+The Job Board API provides a platform for users to interact with job listings and businesses. It offers a range of features to meet the needs of job seekers and businesses looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job listings and track their applications. Businesses can view applicants for their job listings and manage their business information.
 
 # Technologies
 
@@ -54,11 +54,11 @@ The documentation provides detailed explanations, usage examples, and external r
   - **Spring Security and H2 Database Access**: Stack Overflow provides a solution to allow access to the H2 Database Console when using Spring Security. The code snippet and explanation can be found at [Stack Overflow Answer](https://stackoverflow.com/questions/43794721/spring-boot-h2-console-throws-403-with-spring-security-1-5-2).
 
 # General Approach 
-To develop this API, the development team started by reviewing user stories and creating an ERD to visualize the database structure. The team followed a Test-Driven Development (TDD) to approach using Cucumber with Rest Assured, writing tests for each endpoint and implementing the minimum code required to make them pass. This helped to ensure that the API worked as expected and met the acceptance criteria.
+To develop this API, the development team started by reviewing user stories and creating an ERD to visualize the database structure. The team followed a Test-Driven Development (TDD) approach using Cucumber with Rest Assured, writing tests for each endpoint and implementing the minimum code required to make them pass. This helped to ensure that the API worked as expected and met the acceptance criteria.
 
-The team utilized branching in Git with branches like Main, Dev, and Test. This allowed the team to work on seperate features and merge them into the appropriate branches. The team maintained seperate controllers and services, following the MVC design pattern, to ensure code organization and modularity. The team also focused on handling exceptions gracefully and providing clear error messages to users. 
+The team utilized branching in Git with branches like Main, Dev, and Test. This allowed them to work on seperate features and merge them into the appropriate branches. The team maintained seperate controllers and services, following the MVC design pattern, to ensure code organization and modularity. They also focused on handling exceptions gracefully and providing clear error messages to users. 
 
-The API offers CRUD operations for users, businesses, and jobs. The development team used Spring Security and JWT tokens for authentications and personalized access to endpoints. Most routes required authentication, except for user registration, login, and publicly accessible business and job information. To facilitate collaboration, the team used a Kanban board to track tasks and assigned roles like driver, navigator, tester, and pull request approver.
+The API offers CRUD operations for users, businesses, and jobs. The development team used Spring Security and JWT tokens for authentications and personalized access to endpoints. Most routes required authentication, except for user registration, login, and publicly accessible business and job information. To facilitate collaboration, they used a Kanban board to track tasks and assigned roles like driver, navigator, tester, and pull request approver.
 
 Progress has been documented in the README file, including project overview, tools used, and links to user stories, the ERD diagram, and planning documentation. Documentation was also provided for the REST API endpoints and provided installation instructions for dependencies. The team focused on iteratve development, TDD, and adherence to best practices. With efficient teamwork and project management techniques, the team successfully delivered a job board API.
 
