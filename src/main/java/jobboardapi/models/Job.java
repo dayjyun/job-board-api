@@ -3,6 +3,7 @@ package jobboardapi.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,14 @@ public class Job {
 //   @LazyCollection(LazyCollectionOption.FALSE)
 //   private List<User> applicantsList;
 
-   public Job() {}
+   @ManyToMany
+   @JoinTable(name = "user_jobs",
+           joinColumns = @JoinColumn(name = "user_id"),
+           inverseJoinColumns = @JoinColumn(name = "job_id"))
+   private List<User> applicantsList;
+
+   public Job() {
+   }
 
    public Job(Long id, String title, String description, String location, double salary, boolean applied) {
       this.id = id;
