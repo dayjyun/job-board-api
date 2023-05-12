@@ -158,26 +158,25 @@ public class JobService {
    /**
     * getListOfApplicants retrieves the list of all users that have applied to the job listing If the job id does not exist, a
     * NotFoundException is thrown If the user list is empty, a NotFoundException is thrown
-    *
+    * A user is only able to see a list of applicants for a business they own.
     * @param jobId is the id for the job the user wants to check the applicants for
     * @return a list of applicants for the targeted job
     */
    public List<User> getListOfApplicants(Long jobId) {
       // Check that the logged-in user has a business where the id for the business matches the business_id in relation to the job's id
-      Optional<Business> loggedInUserBusiness =
+      Optional<Business> targetUserBusiness =
               businessRepository.findBusinessByIdAndUserId(jobRepository.findById(jobId)
                                                                         .get()
                                                                         .getBusiness()
                                                                         .getId(), UserService.getLoggedInUser()
                                                                                              .getId());
-
       // While the user has the targeted business
-      if (loggedInUserBusiness.isPresent()) {
+      if (targetUserBusiness.isPresent()) {
          // Search for the list of jobs belonging to the targeted business
-         List<Job> jobList = loggedInUserBusiness.get().getJobList();
+         List<Job> jobList = targetUserBusiness.get().getJobList();
          // While we have a list of jobs for the targeted business
          if (jobList.size() > 0) {
-            // Search for the matching job id for our jobId
+            // Search through each job in the job list
             for (Job job : jobList) {
                // Find the job listing that matches the jobId
                if (Objects.equals(job.getId(), jobId)) {
@@ -202,23 +201,12 @@ public class JobService {
    public Optional<Job> applyForJobListing(Long jobId, User userBody) {
       Optional<Job> jobListing = jobRepository.findById(jobId);
       if (jobListing.isPresent()) {
-//            User user = userRepository.findUserByEmail(userBody.getEmail());
-//            Optional<User> user = jobRepository.findByUserEmail(userBody.getEmail());
-//            Optional<User> user = jobRepository.findByUserId(userBody.getId());
-//            Optional<User> user = jobRepository.findJobByIdAndAndUserId(jobId, userBody.getId());
-//            Optional<User> user = userRepository.findUserByIdAndJobId(jobId, userBody.getId());
-//            if(user.isPresent()) {
             if(jobListing.get().getUser() == userBody){
                 throw new AlreadyExistsException("Application already submitted");
             } else {
-                jobListing.get().setApplied(true);
-                User applicant = userRepository.findById(userBody.getId()).get();
-                applicant.setId(userBody.getId());
-                applicant.setName(userBody.getName());
-                applicant.setEmail(userBody.getEmail());
-                applicant.setResume(userBody.getResume());
-//                applicant.getJobList().add(jobRepository.findById(jobId).get());
+                User applicant = UserService.getLoggedInUser();
                 jobListing.get().getApplicantsList().add(applicant);
+                applicant.getJobList().add(jobListing.get());
                 jobRepository.save(jobListing.get());
                 return jobListing;
             }
