@@ -109,7 +109,7 @@ public class BusinessService {
    }
 
    /**
-    * deleteBusiness checks if a business id is present in the business database for the logged-in user. If the business id does not 
+    * deleteBusiness checks if a business id is present in the business database for the logged-in user. If the business id does not
     * exist, a NotFoundException is
     * thrown. If the business id exists, the business is deleted from the database, and the deleted business's details are returned.
     * @param businessId is the id for business the user wants to delete
@@ -135,6 +135,11 @@ public class BusinessService {
    public List<Job> getJobByBusinessId(Long businessId) {
       Optional<Business> business = businessRepository.findById(businessId);
       if (business.isPresent()) {
+         List<Job> jobList = business.get()
+                                     .getJobList();
+         if(jobList.size() == 0) {
+            throw new NotFoundException("No jobs posted for " + business.get().getName());
+         }
          return business.get()
                         .getJobList();
       } else {
