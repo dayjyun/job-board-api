@@ -16,6 +16,8 @@
     -  [Business](#business)
     -  [Jobs](#jobs)
 - [Dependency Installation Instructions](#dependency-installation-instructions)
+- [Continued Development](#continued-development)
+- [Acknowledgment](#acknowledgment)
   
 
 
@@ -163,3 +165,29 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 
 - Refresh the Maven project and the dependencies should be added to your project
 ![](https://i.postimg.cc/NjxZ1X11/Screenshot-25.png)
+
+# Continued Development
+
+- Test Scenario for `GET` returns loggin-in user account details
+- Test Scenario for `PUT` edits user account
+- Test Scenario for `DELETE` deletes user account
+- Test Scenario for `GET` returns a list of jobs the user applied for 
+- `GET` returns loggin-in user account details
+- `PUT` edits user account
+- `DELETE` deletes user account
+- `GET` returns a list of jobs the user applied for 
+- Display jobs based on salary ranges
+- Display jobs based on role seniority
+
+# Acknowledgment
+Development team that helped to build this API:
+**Kevin Barrios**:[Github Profile](**Insert Github Profile link here**)
+**Kim Nguyen**:[Github Profile](**Insert Github Profile link here**)
+**DeShe Woods**:[Github Profile](https://github.com/woodsdeshe)
+
+Helped development team in creating seed data
+**Maksym Zinchenko**:[Github profile](**Insert Github Profile link here**)
+
+Helped development team with debugging code
+**Suresh Sigera**[Github profile](**Insert Github Profile link here**)
+
