@@ -4,6 +4,8 @@ package jobboardapi.service;
 import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.User;
+import jobboardapi.models.login.LoginRequest;
+import jobboardapi.models.login.LoginResponse;
 import jobboardapi.repository.UserRepository;
 import jobboardapi.security.JWTUtils;
 import jobboardapi.security.MyUserDetails;
