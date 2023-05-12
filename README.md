@@ -24,6 +24,13 @@ The Job Board API is built using the following technologies:
   - **API Testing**: POstman is used to test the API endpoints and manage the workspace.
   - **Markdown Table Generator**: The Markdown table generator available at [Tables Generator](https://www.tablesgenerator.com/markdown_tables) is used to create Markdown tables.
 
+### Documentation
+The documentation provides detailed explanations, usage examples, and external resources to support developers in effectively working with the Job Board API:
+  - **Java API**: The official Java API documentation provided by Oracle can be accessed at [Java SE 17 Documentation](https://docs.oracle.com/en/java/javase/17/docs/api/index.html).
+  - **Spring Framework Documentation**: The documentation for the Spring Framework can be found at [Spring Framework Reference Documentation](https://docs.spring.io/spring-framework/docs/current/reference/html/).
+  - **Cucumber with Rest Assured**: Cucumber is used as a behavior-driven testing framework, integrating with Rest Assured for API testing. Information about Gherkin parsing language and usage can be found in the [Gherkin Documentation](https://cucumber.io/docs/gherkin/reference/#:~:text=Data%20Tables.-,Doc%20Strings,-Doc%20Strings%20are).
+  - **JWT and Cucumber Integration**: Information on integrating JWT (JSON Web Tokens) with Cucumber for testing purposes is available in the [Spring Cucumber Rest API repository](https://github.com/RedFroggy/spring-cucumber-rest-api/blob/master/README.md?plain=1).
+  - **Spring Security and H2 Database Access**: Stack Overflow provides a solution to allow access to the H2 Database Console when using Spring Security. The code snippet and explanation can be found at [Stack Overflow Answer](https://stackoverflow.com/questions/43794721/spring-boot-h2-console-throws-403-with-spring-security-1-5-2).
 
 # Endpoints
 ## Users
