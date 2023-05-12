@@ -29,12 +29,10 @@ public class UserController {
         return userService.loginUser(loginRequest);
     }
 
-    // User Story: Returns user account details
+    // Functionality: Returns user account details
     // http://localhost:8080/api/users/{userId}
     @GetMapping(path = "/{userId}")
     public Optional<User> getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);
     }
-
-
 }

@@ -84,6 +84,8 @@ public class UserService {
      * @return the optional of the user
      */
     public Optional<User> getUserById(Long userId) {
+        // Check only users that have applied to my job listing for my business
+
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()) {
             return user;
