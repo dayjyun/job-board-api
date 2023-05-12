@@ -124,10 +124,8 @@ public class BusinessService {
    }
 
    /**
-    * getJobByBusinessId retrieves a list of jobs by the business id. If the business id does not exist, a NotFoundException is thrown. If
-    * the
-    * business
-    * has no jobs, a NotFoundException is thrown
+    * getJobByBusinessId retrieves a list of jobs by the business id. If the business id does not exist, a NotFoundException is thrown.
+    * If the business has no jobs, a NotFoundException is thrown
     * @param businessId is what we're searching by
     * @return a list of jobs for the business
     */
