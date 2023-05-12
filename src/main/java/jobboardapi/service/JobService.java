@@ -181,7 +181,7 @@ public class JobService {
                // Find the job listing that matches the jobId
                if (Objects.equals(job.getId(), jobId)) {
                   // Return the list of applicants for the job
-                  return job.getApplicantsList();
+                  return jobRepository.findById(jobId).get().getApplicantsList();
                } else {
                   throw new NotFoundException("No applicants for job");
                }
@@ -201,33 +201,18 @@ public class JobService {
    public Optional<Job> applyForJobListing(Long jobId, User userBody) {
       Optional<Job> jobListing = jobRepository.findById(jobId);
       if (jobListing.isPresent()) {
-            if(jobListing.get().getUser() == userBody){
+         List<User> applicants = jobListing.get().getApplicantsList();
+            if(applicants.contains(UserService.getLoggedInUser())){
                 throw new AlreadyExistsException("Application already submitted");
             } else {
                 User applicant = UserService.getLoggedInUser();
-                jobListing.get().getApplicantsList().add(applicant);
                 applicant.getJobList().add(jobListing.get());
+                jobListing.get().getApplicantsList().add(applicant);
                 jobRepository.save(jobListing.get());
                 return jobListing;
             }
         } else {
             throw new NotFoundException("Job listing not found");
         }
-//        if(jobListing.isPresent()) {
-//            Job job = jobListing.get();
-//            List<User> applicantsList = job.getApplicantsList();
-//            Optional<User> user = applicantsList.stream().filter(applicant -> applicant.getId().equals(userBody.getId())).findFirst();
-//
-//            if(user.isPresent()) {
-//                throw new AlreadyExistsException("Application already submitted");
-//            } else {
-//                job.setApplied(true);
-//                applicantsList.add(userBody);
-//                jobRepository.save(job);
-//                return jobListing;
-//            }
-//        } else {
-//            throw new NotFoundException("Job listing not found");
-//        }
    }
 }

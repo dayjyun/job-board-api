@@ -43,7 +43,7 @@ public class User {
    // Current logged-in user can see the list of jobs they applied for
    @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the job from database if we deleted it from a user
    @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
-   private List<Job> jobList;
+   private List<Job> appliedJobs;
 
    // many users (applicants) applied to one job
    @ManyToOne
@@ -59,7 +59,7 @@ public class User {
       this.email = email;
       this.password = password;
       this.resume = resume;
-//      this.jobList = new ArrayList<>();
+//      this.appliedJobs = new ArrayList<>();
    }
 
    public Long getId() {
@@ -111,11 +111,11 @@ public class User {
    }
 
    public List<Job> getJobList() {
-      return jobList;
+      return appliedJobs;
    }
 
-   public void setJobList(List<Job> jobList) {
-      this.jobList = jobList;
+   public void setJobList(List<Job> appliedJobs) {
+      this.appliedJobs = appliedJobs;
    }
 
    public Job getJob() {
