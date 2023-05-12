@@ -1,7 +1,6 @@
 package jobboardapi.security;
 
 import jobboardapi.models.User;
-import jobboardapi.repository.UserRepository;
 import jobboardapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,11 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     /**
@@ -28,7 +27,7 @@ public class MyUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(emailAddress);
+        User user = userService.findUserByEmailAddress(emailAddress);
         return new MyUserDetails(user);
     }
 }

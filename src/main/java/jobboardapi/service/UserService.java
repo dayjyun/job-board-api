@@ -1,10 +1,22 @@
 package jobboardapi.service;
 
 
+import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.User;
+import jobboardapi.models.login.LoginRequest;
+import jobboardapi.models.login.LoginResponse;
 import jobboardapi.repository.UserRepository;
+import jobboardapi.security.JWTUtils;
+import jobboardapi.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,10 +25,50 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private JWTUtils jwtUtils;
+    private AuthenticationManager authenticationManager;
+    private MyUserDetails myUserDetails;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,
+                       @Lazy PasswordEncoder passwordEncoder,
+                       JWTUtils jwtUtils,
+                       @Lazy AuthenticationManager authenticationManager,
+                       @Lazy MyUserDetails myUserDetails) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
+        this.authenticationManager = authenticationManager;
+        this.myUserDetails = myUserDetails;
+    }
+
+    public User createUser(User userObject) {
+        if (!userRepository.existsByEmail(userObject.getEmail())) {
+            userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
+            return userRepository.save(userObject);
+        } else {
+            throw new AlreadyExistsException("user with email address " + userObject.getEmail() +
+                    " already exists");
+        }
+    }
+
+    public User findUserByEmailAddress(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            myUserDetails = (MyUserDetails) authentication.getPrincipal();
+
+            final String JWT = jwtUtils.generateJwtToken(myUserDetails);
+            return ResponseEntity.ok(new LoginResponse(JWT));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new LoginResponse("Error : username or password is incorrect"));
+        }
     }
 
     /**
@@ -33,6 +85,4 @@ public class UserService {
             throw new NotFoundException("User not found");
         }
     }
-
-
 }
