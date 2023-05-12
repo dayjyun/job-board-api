@@ -11,8 +11,6 @@ import jobboardapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.rmi.AlreadyBoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -86,17 +84,24 @@ public class JobService {
     * @return the updated Job object
     */
    public Job updateJobListing(Long jobId, Job jobBody) {
+      // Check that the logged-in user has a business where the id for the business matches the business_id in relation to the job's id
       Optional<Business> loggedInUserBusiness =
               businessRepository.findBusinessByIdAndUserId(jobRepository.findById(jobId)
                                                                         .get()
                                                                         .getBusiness()
                                                                         .getId(), UserService.getLoggedInUser()
                                                                                              .getId());
+      // // While the user has the targeted business
       if (loggedInUserBusiness.isPresent()) {
+         // Search for the list of jobs belonging to the targeted business
          List<Job> jobListForBusiness = loggedInUserBusiness.get().getJobList();
+         // While we have a list of jobs for the targeted business
          if (jobListForBusiness.size() > 0) {
+            // While we have a list of jobs for the targeted business
             for (Job job : jobListForBusiness) {
+               // Find the job listing that matches the jobId
                if (Objects.equals(job.getId(), jobId)) {
+                  // Update the job listing
                   Job updatedJobListing = jobRepository.findById(jobId).get();
                   updatedJobListing.setTitle(jobBody.getTitle());
                   updatedJobListing.setDescription(jobBody.getDescription());
@@ -123,8 +128,11 @@ public class JobService {
     * @return the deleted job's details
     */
    public Job deleteJobListing(Long jobId) {
+      // Find the targeted job listing
       Optional<Job> jobListing = jobRepository.findById(jobId);
+      // When the job listing is found
       if (jobListing.isPresent()) {
+         // 
          Optional<Business> loggedInUserBusiness = businessRepository.findBusinessByIdAndUserId(jobListing.get()
                                                                                                           .getBusiness()
                                                                                                           .getId(),
@@ -171,8 +179,12 @@ public class JobService {
          if (jobList.size() > 0) {
             // Search for the matching job id for our jobId
             for (Job job : jobList) {
+               // Find the job listing that matches the jobId
                if (Objects.equals(job.getId(), jobId)) {
+                  // Return the list of applicants for the job
                   return job.getApplicantsList();
+               } else {
+                  throw new NotFoundException("No applicants for job");
                }
             }
             throw new NotFoundException("Job listing not found");
