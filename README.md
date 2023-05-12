@@ -52,30 +52,34 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 
 # User Stories
 ## Users
-| Functionality                                       | User Stories                                                                                                                           |
-|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| User creates account                                | As an unregistered user, I want to create an account so that I can apply for jobs or create job postings.                                                                             |
+| Functionality                                       | User Stories                                                |
+|-----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| User creates account                                | As an unregistered user, I want to create an account so that I can apply for jobs or create job postings.                                                                              |
 | User logs into account                              | As a registered user, I want to log into my account so that I can apply for jobs and create job postings.                                                                             |
 | Returns user account details                        | As a registered user, I want to view my account details so that I can see information businesses have access to.                                                                      |
 | Edit user account                                   | As a registered user, I want to edit my account details so that I can keep my information up-to-date.                                                                                 |
-| Delete user account                                 | As a registered user, I want to delete my account when I no longer need it, so that businesses do not have access to my information.                                                  |
+| Delete user account                                 | As a registered user, I want to delete my account when I no longer need it, so that businesses do not have access to my information.                                                   |
 | Returns a list of jobs the user applied for         | As a registered user, I want to see all the jobs I’ve applied for so that I can keep track of my applications.                                                                        |
-| Returns all jobs in the job board                   | As a registered user or unregistered user, I want to see a list of all jobs available so that I can see what opportunities are open to apply for.                                     |
-| Returns a list of all applicants for the job        | As a registered user with a business, I want to see a list of applicants that applied for my job listing so that I may choose the most suitable candidate.                            |
-| User applies for job                                | As a registered user, I want to apply for a job, so that a business will consider me as a candidate for their business.                                                               |
-| Returns a list of all businesses                    | As a registered user or unregistered user, I want to see a list of all businesses so that I can find details about the business and jobs related to that business.                    |
-| Create a business                                   | As a registered user, I want to create a business so that I can post that I can post job listings for my business.                                                                    |
-| Returns business details                            | As a registered user or unregistered user, I want to view business details so that I can find more information on a specific business.                                                |
-| Update business details                             | As a registered user with a business, I want to update my business’s details so that I can keep my business’s information up-to-date.                                                 |
-| Delete a business                                   | As a registered user with a business, I want to delete my business so that other users cannot access information on my business.                                                      |
-| Returns a list of all job listings for the business | As a registered or unregistered user, I want to see a list of all job listings for a specific business so that I can find a job listing for that business and apply for any open jobs |
-| Create a new job listing for the business           | As a registered user with a business, I want to be able to create a job listing so that I can get applicants to apply for those roles.                                                |
-| Shows job listing from the business                 | As a registered or unregistered user, I want to see a specific job listing so that I can assess whether or not I am interested in the job.                                            |
-| Update job listing from the business                | As a registered user with a business, I want to update my job listing so that the information for the role is up-to-date.                                                             |
-| Delete job listing from the business                | As a registered user with a business, I want to delete a job listing from the job board so that candidates can no longer apply for that role.                                         |
+
 ## Business
+| Returns all jobs in the job board                   | As a registered user or unregistered user, I want to see a list of all jobs available so that I can see what opportunities are open to apply for.                                      |
+| Returns a list of all applicants for the job        | As a registered user with a business, I want to see a list of applicants that applied for my job listing so that I may choose the most suitable candidate.                        |
+| User applies for job                                | As a registered user, I want to apply for a job, so that a business will consider me as a candidate for their business.                                                                 |
+| Returns a list of all businesses                    | As a registered user or unregistered user, I want to see a list of all businesses so that I can find details about the business and jobs related to that business.                     |
+| Create a business                                   | As a registered user, I want to create a business so that I can post that I can post job listings for my business.                                                                  |
+| Returns business details                            | As a registered user or unregistered user, I want to view business details so that I can find more information on a specific business.                                                 |
+| Update business details                             | As a registered user with a business, I want to update my business’s details so that I can keep my business’s information up-to-date.                                                 |
+| Delete a business                                   | As a registered user with a business, I want to delete my business so that other users cannot access information on my business.                                                       |
 
 ## Jobs
+| Returns a list of all job listings for the business | As a registered or unregistered user, I want to see a list of all job listings for a specific business so that I can find a job listing for that business and apply for any open jobs |
+                                                      |
+| Shows job listing from the business                 | As a registered or unregistered user, I want to see a specific job listing so that I can assess whether or not I am interested in the job.                                             |
+| Update job listing from the business                | As a registered user with a business, I want to update my job listing so that the information for the role is up-to-date.                                                         |
+| Delete job listing from the business                | As a registered user with a business, I want to delete a job listing from the job board so that candidates can no longer apply for that role.                                    |
+
+
+
 
 # Endpoints
 ## Users
