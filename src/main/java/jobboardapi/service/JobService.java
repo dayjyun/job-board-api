@@ -72,12 +72,11 @@ public class JobService {
    }
 
    /**
-    * updateJobListing updates the job by searching for a job's ID. It first checks for the business's id and the current logged-in
-    * user's id to make sure the user is the owner for the business.
-    * Next, it checks if the businesses has a list of jobs available
-    * Following that, it checks if any of the job's business id matches the business id for the business owned by the user
-    * Once it passes the check, the listing gets updated
-    * If any of the checks fail, a NotFoundException is thrown
+    * updateJobListing updates the job by searching for a job's ID. It first checks for the business's id and the current logged-in user's
+    * id to make sure the user is the owner for the business. Next, it checks if the businesses has a list of jobs available Following that,
+    * it checks if any of the job's business id matches the business id for the business owned by the user Once it passes the check, the
+    * listing gets updated If any of the checks fail, a NotFoundException is thrown
+    *
     * @param jobId   is our target job ID
     * @param jobBody updated job details
     * @return the updated Job object
@@ -121,8 +120,23 @@ public class JobService {
    public Job deleteJobListing(Long jobId) {
       Optional<Job> jobListing = jobRepository.findById(jobId);
       if (jobListing.isPresent()) {
-         jobRepository.deleteById(jobId);
-         return jobListing.get();
+         Optional<Business> loggedInUserBusiness = businessRepository.findBusinessByIdAndUserId(jobListing.get()
+                                                                                                          .getBusiness()
+                                                                                                          .getId(),
+                 UserService.getLoggedInUser()
+                            .getId());
+         if (loggedInUserBusiness.isPresent()) {
+            List<Job> jobListForBusiness = loggedInUserBusiness.get().getJobList();
+            for(Job job: jobListForBusiness) {
+               if(Objects.equals(job.getId(), jobId)) {
+                  jobRepository.deleteById(jobId);
+                  return jobListing.get();
+               }
+            }
+            throw new NotFoundException("Job listing not found");
+         } else {
+            throw new NotFoundException("Business has no job listings");
+         }
       } else {
          throw new NotFoundException("Job listing not found");
       }
