@@ -17,13 +17,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // User Story: Returns user account details
-    // http://localhost:8080/api/users/{userId}
-    @GetMapping(path = "/{userId}")
-    public Optional<User> getUserById(@PathVariable Long userId) {
-        return userService.getUserById(userId);
-    }
-
     // http://localhost:8080/auth/users/register
     @PostMapping("/register")
     public User createUser(@RequestBody @Valid User userObject) {
@@ -35,4 +28,13 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         return userService.loginUser(loginRequest);
     }
+
+    // User Story: Returns user account details
+    // http://localhost:8080/api/users/{userId}
+    @GetMapping(path = "/{userId}")
+    public Optional<User> getUserById(@PathVariable Long userId) {
+        return userService.getUserById(userId);
+    }
+
+
 }
