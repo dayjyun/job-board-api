@@ -16,8 +16,8 @@ The Job Board API is built using the following technologies:
   - **Documentation Tool**: Google Docs is used for documenting daily stand-ups and stand-downs.
   - **Entity Relationship Diagram (ERD)**: [Dbdiagram.io](https://dbdiagram.io/d/644ad886dca9fb07c42b4c62) is used to create the ERD for the database design.
   - **Database**: H2 database is used during development, accessible at [H2 Database Console](http://localhost:8080/h2-console/login.jsp).
-  - **Secret Key Generation: The secret key generator provided [GRC](https://www.grc.com/passwords.htm) is used to generate secure secret keys.
-  - **Application Generator: [Spring Initializer](https://start.spring.io/) is used to boostrap the project structure. The project is built using Maven.
+  - **Secret Key Generation**: The secret key generator provided [GRC](https://www.grc.com/passwords.htm) is used to generate secure secret keys.
+  - **Application Generator**: [Spring Initializer](https://start.spring.io/) is used to boostrap the project structure. The project is built using Maven.
   - **Programming Language**: The API is developed using Java 17.
   - **Framework**: The API is built on Spring Boot version 2.7.11.
   - **Packaging**: The API is packaged as a JAR files.
