@@ -92,13 +92,10 @@ public class BusinessService {
    public Business updateBusiness(Long businessId, Business businessBody) {
 //      Optional<Business> business = businessRepository.findById(businessId);
 
-      Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser()
-                                                                                                        .getId());
+      Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId());
       List<Business> allBusinesses = businessRepository.findAll();
       if (business.isPresent()) {
-         Business updatedBusiness = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser()
-                                                                                                        .getId())
-                                                      .get();
+         Business updatedBusiness = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId()).get();
          for (Business b : allBusinesses) {
             if (b.getName()
                  .equals(businessBody.getName())) {
