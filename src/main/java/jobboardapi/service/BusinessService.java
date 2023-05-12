@@ -29,8 +29,8 @@ public class BusinessService {
    }
 
    /**
-    * getAllBusinesses retrieves the list of all businesses from the business repository
-    *
+    * getAllBusinesses retrieves the list of all businesses from the business repository. If there are no businesses in the database, a
+    * NotFoundException is thrown
     * @return a list of businesses
     */
    public List<Business> getAllBusinesses() {
@@ -45,7 +45,6 @@ public class BusinessService {
    /**
     * createBusiness checks for the business name in the business database. If the name already exists, then the AlreadyExistsException is
     * thrown. If the name does not exist, the business objects gets saved to the database.
-    *
     * @param businessObject is the new business the user is creating.
     * @return the details of the new business.
     */
@@ -67,7 +66,6 @@ public class BusinessService {
    /**
     * getBusinessById retrieves the business by the business id, if the business id exists. If the business id does not exist, a
     * NotFoundException is thrown
-    *
     * @param businessId is what we're searching by
     * @return the optional of the business
     */
