@@ -153,15 +153,15 @@ public class BusinessService {
     * is thrown. If the business id exists, then it checks to see if the job title exists in the business's job list. If the job title
     * exists, the AlreadyExistsException is thrown. If the job title does not exist, the job object is added to the business's job list, and
     * the user sees the new job's details.
-    *
     * @param businessId is the business the user is creating a job for
     * @param jobObject  is the new job the user is creating
     * @return the job object's information
     */
    public Job createJobForBusinessId(Long businessId, Job jobObject) {
-      Optional<Business> business = businessRepository.findById(businessId);
+      Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId());
       if (business.isPresent()) {
          jobObject.setBusiness(business.get());
+         business.get().getJobList().add(jobObject);
          return jobRepository.save(jobObject);
       } else {
          throw new NotFoundException("Business not found");
