@@ -62,10 +62,9 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | Returns a list of jobs the user applied for         | As a registered user, I want to see all the jobs I’ve applied for so that I can keep track of my applications.                                                                        |
 
 ## Business
- | Functionality                                       | User Stories                                                |
-|-----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Returns a list of all businesses                    | As a registered user or unregistered user, I want to see a list of all businesses so that I can find details about the business and jobs related to that business. 
-                 |
+ | Functionality                                       | User Stories                                                                                                                                                                          |
+|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Returns a list of all businesses                    | As a registered user or unregistered user, I want to see a list of all businesses so that I can find details about the business and jobs related to that business.                    |
 | Create a business                                   | As a registered user, I want to create a business so that I can post that I can post job listings for my business.                                                                    |
 | Returns business details                            | As a registered user or unregistered user, I want to view business details so that I can find more information on a specific business.                                                |
 | Update business details                             | As a registered user with a business, I want to update my business’s details so that I can keep my business’s information up-to-date.                                                 |
