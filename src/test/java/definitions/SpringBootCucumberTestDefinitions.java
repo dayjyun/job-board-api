@@ -24,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = JobBoardApiApplication.class)
@@ -101,7 +102,7 @@ public class SpringBootCucumberTestDefinitions {
      */
     @Given("A business name does not exist yet")
     public void aBusinessNameDoesNotExistYet() {
-        Business existingBusiness = businessRepository.findByName(newBusinessName);
+        Optional<Business> existingBusiness = businessRepository.findByName(newBusinessName);
         Assert.assertNull(existingBusiness);
     }
 

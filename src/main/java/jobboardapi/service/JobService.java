@@ -206,21 +206,25 @@ public class JobService {
 //            Optional<User> user = jobRepository.findByUserEmail(userBody.getEmail());
 //            Optional<User> user = jobRepository.findByUserId(userBody.getId());
 //            Optional<User> user = jobRepository.findJobByIdAndAndUserId(jobId, userBody.getId());
-         Optional<User> user = userRepository.findUserByIdAndJobId(jobId, userBody.getId());
-         if (user.isPresent()) {
-            throw new AlreadyExistsException("Application already submitted");
-         } else {
-            jobListing.get()
-                      .setApplied(true);
-            jobListing.get()
-                      .getApplicantsList()
-                      .add(userBody);
-            jobRepository.save(jobListing.get());
-            return jobListing;
-         }
-      } else {
-         throw new NotFoundException("Job listing not found");
-      }
+//            Optional<User> user = userRepository.findUserByIdAndJobId(jobId, userBody.getId());
+//            if(user.isPresent()) {
+            if(jobListing.get().getUser() == userBody){
+                throw new AlreadyExistsException("Application already submitted");
+            } else {
+                jobListing.get().setApplied(true);
+                User applicant = userRepository.findById(userBody.getId()).get();
+                applicant.setId(userBody.getId());
+                applicant.setName(userBody.getName());
+                applicant.setEmail(userBody.getEmail());
+                applicant.setResume(userBody.getResume());
+//                applicant.getJobList().add(jobRepository.findById(jobId).get());
+                jobListing.get().getApplicantsList().add(applicant);
+                jobRepository.save(jobListing.get());
+                return jobListing;
+            }
+        } else {
+            throw new NotFoundException("Job listing not found");
+        }
 //        if(jobListing.isPresent()) {
 //            Job job = jobListing.get();
 //            List<User> applicantsList = job.getApplicantsList();
