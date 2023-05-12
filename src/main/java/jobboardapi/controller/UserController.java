@@ -17,6 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Functionality: User creates account
     // http://localhost:8080/auth/users/register
     @PostMapping("/register")
     public User createUser(@RequestBody @Valid User userObject) {
