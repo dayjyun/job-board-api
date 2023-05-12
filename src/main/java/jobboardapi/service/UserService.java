@@ -9,7 +9,11 @@ import jobboardapi.security.JWTUtils;
 import jobboardapi.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,9 +51,22 @@ public class UserService {
         }
     }
 
-
     public User findUserByEmailAddress(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            myUserDetails = (MyUserDetails) authentication.getPrincipal();
+
+            final String JWT = jwtUtils.generateJwtToken(myUserDetails);
+            return ResponseEntity.ok(new LoginResponse(JWT));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new LoginResponse("Error : username or password is incorrect"));
+        }
     }
 
     /**
