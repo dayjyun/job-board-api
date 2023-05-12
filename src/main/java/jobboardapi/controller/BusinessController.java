@@ -25,7 +25,7 @@ public class BusinessController {
         return businessService.getAllBusinesses();
     }
   
-    // User Story: Create a business
+    // Functionality: Returns a list of all businesses
     // http://localhost:8080/api/businesses
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
