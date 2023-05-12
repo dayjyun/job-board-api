@@ -137,8 +137,9 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | jjwt-jackson                   | [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)                   |
    
 - Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
-[url=https://postimg.cc/NLkCkhrg][img]https://i.postimg.cc/NLkCkhrg/Screenshot-22.png[/img][/url]
-[url=https://postimg.cc/0btthpfF][img]https://i.postimg.cc/0btthpfF/Screenshot-27.png[/img][/url]
+
+[](https://postimg.cc/NLkCkhrg)
+[](https://postimg.cc/0btthpfF)
 
 - Refresh the Maven project and the dependencies should be added to your project
-[url=https://postimg.cc/rDKhTKZm][img]https://i.postimg.cc/rDKhTKZm/Screenshot-25.png[/img][/url]
+[](https://postimg.cc/rDKhTKZm)
