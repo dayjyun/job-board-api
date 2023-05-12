@@ -41,6 +41,10 @@ The API offers CRUD operations for users, businesses, and jobs. The development 
 
 Progress has been documented in the README file, including project overview, tools used, and links to user stories, the ERD diagram, and planning documentation. Documentation was also provided for the REST API endpoints and provided installation instructions for dependencies. The team focused on iteratve development, TDD, and adherence to best practices. With efficient teamwork and project management techniques, the team successfully delivered a job board API.
 
+#API Hurdles
+During the development process, the team encountered a few hurdles that challeneged the progress of the API. Some of the specific issues we faced include:
+ - Testing for `PUT` and `POST` requests: Objects were being created even when certain columns didn't exist. This reuired debugging and refining of code to ensure data integrity and proper handling of requests.
+
 # Endpoints
 ## Users
 | Request Type | URL                      | Functionality                                       | Access  |
