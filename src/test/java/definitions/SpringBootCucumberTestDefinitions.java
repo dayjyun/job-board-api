@@ -101,7 +101,7 @@ public class SpringBootCucumberTestDefinitions {
      */
     @Given("A business name does not exist yet")
     public void aBusinessNameDoesNotExistYet() {
-        Business existingBusiness = businessRepository.findByName(newBusinessName);
+        Business existingBusiness = businessRepository.findByName(newBusinessName).get();
         Assert.assertNull(existingBusiness);
     }
 
