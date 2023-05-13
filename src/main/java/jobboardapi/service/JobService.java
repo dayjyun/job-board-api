@@ -85,39 +85,34 @@ public class JobService {
     * @return the updated Job object
     */
    public Job updateJobListing(Long jobId, Job jobBody) {
-      // Check that the logged-in user has a business where the id for the business matches the business_id in relation to the job's id
-      Optional<Business> loggedInUserBusiness =
-              businessRepository.findBusinessByIdAndUserId(jobRepository.findById(jobId)
-                                                                        .get()
-                                                                        .getBusiness()
-                                                                        .getId(), UserService.getLoggedInUser()
-                                                                                             .getId());
-      // // While the user has the targeted business
-      if (loggedInUserBusiness.isPresent()) {
-         // Search for the list of jobs belonging to the targeted business
-         List<Job> jobListForBusiness = loggedInUserBusiness.get().getListOfJobsAvailable();
-         // While we have a list of jobs for the targeted business
-         if (jobListForBusiness.size() > 0) {
+      Optional<Job> jobToUpdate = jobRepository.findById(jobId);
+      if (jobToUpdate.isPresent()) {
+         // Check that the logged-in user has a business where the id for the business matches the business_id in relation to the job's id
+         Optional<Business> loggedInUserBusiness = businessRepository.findBusinessByIdAndUserId(
+                 jobRepository.findById(jobId).get().getBusiness().getId(),
+                 UserService.getLoggedInUser().getId()
+         );
+         // While the user has the targeted business
+         if (loggedInUserBusiness.isPresent()) {
+            // Search for the list of jobs belonging to the targeted business
+            List<Job> jobListForBusiness = loggedInUserBusiness.get().getListOfJobsAvailable();
             // While we have a list of jobs for the targeted business
-            for (Job job : jobListForBusiness) {
-               // Find the job listing that matches the jobId
-               if (Objects.equals(job.getId(), jobId)) {
-                  // Update the job listing
-                  Job updatedJobListing = jobRepository.findById(jobId).get();
-                  updatedJobListing.setTitle(jobBody.getTitle());
-                  updatedJobListing.setDescription(jobBody.getDescription());
-                  updatedJobListing.setLocation(jobBody.getLocation());
-                  updatedJobListing.setSalary(jobBody.getSalary());
-                  return jobRepository.save(updatedJobListing);
+            if (jobListForBusiness.size() > 0) {
+               for (Job job : jobListForBusiness) {
+                  if (job.getId().equals(jobId)) {
+                     job.setTitle(jobBody.getTitle());
+                     job.setDescription(jobBody.getDescription());
+                     job.setLocation(jobBody.getLocation());
+                     job.setSalary(jobBody.getSalary());
+                     return jobRepository.save(job);
+                  }
                }
             }
-            throw new NotFoundException("Job listing not found");
-         } else {
-            throw new NotFoundException("Business has no job listings");
+            throw new NotFoundException("No jobs found for business with id " + loggedInUserBusiness.get().getId());
          }
-      } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + loggedInUserBusiness.get().getId() + " not found");
       }
+      throw new NotFoundException("Job with id " + jobId + " not found");
    }
 
    /**
