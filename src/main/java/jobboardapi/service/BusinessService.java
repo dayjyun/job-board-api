@@ -131,12 +131,12 @@ public class BusinessService {
       Optional<Business> business = businessRepository.findById(businessId);
       if (business.isPresent()) {
          List<Job> jobList = business.get()
-                                     .getJobList();
+                                     .getListOfJobsAvailable();
          if(jobList.size() == 0) {
             throw new NotFoundException("No jobs posted for " + business.get().getName());
          }
          return business.get()
-                        .getJobList();
+                        .getListOfJobsAvailable();
       } else {
          throw new NotFoundException("Business not found");
       }
@@ -155,7 +155,7 @@ public class BusinessService {
       Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId());
       if (business.isPresent()) {
          jobObject.setBusiness(business.get());
-         business.get().getJobList().add(jobObject);
+         business.get().getListOfJobsAvailable().add(jobObject);
          return jobRepository.save(jobObject);
       } else {
          throw new NotFoundException("Business not found");
