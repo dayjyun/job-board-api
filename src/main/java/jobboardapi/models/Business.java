@@ -26,16 +26,17 @@ public class Business {
    @Column
    private String headquarters;
 
-   // many businesses can belong to one user
-   @ManyToOne
-   @JoinColumn(name = "user_id")
-   // @JsonIgnore // excludes user details when displaying business details
-   private User user;
-
    // one business can have many job listings
    @OneToMany(mappedBy = "business", orphanRemoval = true) // orphanRemoval removes the job from the database if we deleted it from a business
    @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
-   private List<Job> jobList;
+   @JsonIgnore
+   private List<Job> listOfJobsAvailable;
+
+   // many businesses can belong to one user
+   @ManyToOne
+   @JoinColumn(name = "user_id")
+    @JsonIgnore // excludes user details when displaying business details
+   private User user;
 
    public Business() {}
 
@@ -77,12 +78,21 @@ public class Business {
       this.user = user;
    }
 
-   public List<Job> getJobList() {
-      return jobList;
+//   public List<Job> getJobList() {
+//      return listOfJobsAvailable;
+//   }
+//
+//   public void setJobList(List<Job> listOfJobsAvailable) {
+//      this.listOfJobsAvailable = listOfJobsAvailable;
+//   }
+
+
+   public List<Job> getListOfJobsAvailable() {
+      return listOfJobsAvailable;
    }
 
-   public void setJobList(List<Job> jobList) {
-      this.jobList = jobList;
+   public void setListOfJobsAvailable(List<Job> listOfJobsAvailable) {
+      this.listOfJobsAvailable = listOfJobsAvailable;
    }
 
    @Override
