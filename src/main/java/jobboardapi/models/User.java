@@ -6,7 +6,6 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -42,8 +41,10 @@ public class User {
    // one user can apply to jobs
    // Current logged-in user can see the list of jobs they applied for
    @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the job from database if we deleted it from a user
-   @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)
-   private List<Job> appliedJobs;
+   @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)on
+   @JsonIgnore
+   private List<Job> listOfJobsAppliedTo;
+
 
    // many users (applicants) applied to one job
    @ManyToOne
@@ -59,7 +60,6 @@ public class User {
       this.email = email;
       this.password = password;
       this.resume = resume;
-//      this.appliedJobs = new ArrayList<>();
    }
 
    public Long getId() {
@@ -110,12 +110,20 @@ public class User {
       this.businessList = businessList;
    }
 
-   public List<Job> getJobList() {
-      return appliedJobs;
+//   public List<Job> getJobList() {
+//      return appliedJobs;
+//   }
+//
+//   public void setJobList(List<Job> appliedJobs) {
+//      this.appliedJobs = appliedJobs;
+//   }
+
+   public List<Job> getListOfJobsAppliedTo() {
+      return listOfJobsAppliedTo;
    }
 
-   public void setJobList(List<Job> appliedJobs) {
-      this.appliedJobs = appliedJobs;
+   public void setListOfJobsAppliedTo(List<Job> listOfJobsAppliedTo) {
+      this.listOfJobsAppliedTo = listOfJobsAppliedTo;
    }
 
    public Job getJob() {
