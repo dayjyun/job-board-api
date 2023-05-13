@@ -69,27 +69,31 @@ Feature: Rest API functionalities
    When I create a job listing
    Then I can see the new job listing's details
 
-   #
+   # PASS (PUBLIC)
   Scenario: User is able to see a list of all jobs
     Given A list of jobs are available
     When I search for jobs
     Then I can see a list of jobs
 
+    # PASS (PUBLIC)
   Scenario: User is able to see a specific job listing for a business
     Given A job listing is available
     When I search by job id
     Then I can see job listing details
 
+    # PASS (PRIVATE)
   Scenario: User with business is able to edit job listing details
     Given I can search for a job ID
     When I edit my job details
     Then I see the job is updated
 
+    # PASS (PUBLIC)
   Scenario: User with business is able to delete job listing
     Given A job listing is available
     When I delete a job from my Job list
     Then I can see my job listing is deleted
 
+    #
   Scenario: User is able to see a list of all applicants for their job
     Given A list of applicants is available
     When I view the list of applicants
