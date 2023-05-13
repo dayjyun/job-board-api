@@ -18,9 +18,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedHashMap;
@@ -209,9 +207,13 @@ public class SpringBootCucumberTestDefinitions {
     @When("I delete a business from my Business list")
     public void iDeleteBusinessFromMyBusinessList() throws Exception {
         RestAssured.baseURI = BASE_URL;
+       request.header("Content-Type", "application/json");
         request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
-        request.header("Content-Type", "application/json");
+
         response = request.delete(BASE_URL + port + "/api/businesses/1");
+
+       System.out.println("response"+response);
+       System.out.println("request"+request);
     }
 
     @Then("I can see my business is deleted")
@@ -384,24 +386,25 @@ public class SpringBootCucumberTestDefinitions {
     * iCanSeeTheListOfApplicants makes sure the HTTP status is 200 when we successfully find the list of jobs
     */
    @Given("A list of applicants is available")
-   public void aListOfApplicantsIsAvailable() {
-      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/jobs/1/applicants", HttpMethod.GET, null, String.class);
+   public void aListOfApplicantsIsAvailable() throws Exception {
+      HttpHeaders headers = new HttpHeaders();
+      headers.setBearerAuth(getSecurityKey());
+      HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/jobs/1/applicants", HttpMethod.GET, entity, String.class);
       list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
-      System.out.println("GIVEN "+list);
-      System.out.println("GIVEN "+ responseEntity);
    }
 
    @When("I view the list of applicants")
    public void iViewTheListOfApplicants() {
-      System.out.println("WHEN " + list);
-      System.out.println("WHEN " + responseEntity);
-      Assert.assertEquals(0, list.size());
-//      Assert.assertTrue(list.size() > 0);
+//      Assert.assertEquals(0, list.size());
+      Assert.assertTrue(list.size() > 0);
    }
 
    @Then("I can see the list of applicants")
    public void iCanSeeTheListOfApplicants() {
-      Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+//      Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
 
    /**
@@ -412,9 +415,10 @@ public class SpringBootCucumberTestDefinitions {
     */
 
    @When("I apply for the job")
-   public void iApplyForTheJob() throws JSONException {
+   public void iApplyForTheJob() throws Exception {
       RestAssured.baseURI = BASE_URL;
-      request = RestAssured.given();
+//      request = RestAssured.given();
+      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
       JSONObject requestBody = new JSONObject();
       requestBody.put("id", 1L);
       requestBody.put("name", "Logged-in user's name");
