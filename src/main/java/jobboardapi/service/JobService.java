@@ -11,7 +11,6 @@ import jobboardapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -121,9 +120,9 @@ public class JobService {
    }
 
    /**
-)    * deleteJobListing checks if a job id is present in the job database. Next, it checks if the businesses has a list of jobs available.
-    * Following that, it checks if any of the job's business id matches the business id for the business owned by the user Once it passes
-    * the check, the listing gets updated If any of the checks fail, a NotFoundException is thrown
+    * )    * deleteJobListing checks if a job id is present in the job database. Next, it checks if the businesses has a list of jobs
+    * available. Following that, it checks if any of the job's business id matches the business id for the business owned by the user Once
+    * it passes the check, the listing gets updated If any of the checks fail, a NotFoundException is thrown
     *
     * @param jobId is the id for the job the user wants to delete
     * @return the deleted job's details
@@ -149,7 +148,8 @@ public class JobService {
             }
             throw new NotFoundException("Job listing with id" + jobId + " not found");
          }
-         throw new NotFoundException("Business with id " + jobRepository.findById(jobId).get().getBusiness().getId() + " does not belong to user");
+         throw new NotFoundException("Business with id " + jobRepository.findById(jobId).get().getBusiness()
+                                                                        .getId() + " does not belong to user");
       }
       throw new NotFoundException("Job listing with id" + jobId + " not found");
    }
@@ -186,7 +186,7 @@ public class JobService {
       User applicant = UserService.getLoggedInUser();
       if (jobListing.isPresent()) {
          List<User> applicantsList = jobListing.get().getApplicantsList();
-         if(!applicantsList.contains(applicant)){
+         if (!applicantsList.contains(applicant)) {
             applicantsList.add(applicant);
             jobListing.get().setApplicantsList(applicantsList);
 
