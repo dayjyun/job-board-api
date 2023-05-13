@@ -69,7 +69,8 @@ public class SecurityConfiguration {
                         "/api/businesses/{businessId}",
                         "/api/businesses/{businessId}/jobs",
                         "/api/jobs",
-                        "/api/jobs/{jobId}"
+                        "/api/jobs/{jobId}",
+                        "/api/users/{userId}"
 
 //                        "/api/users/{userId}",
 //                        "/api/myProfile",

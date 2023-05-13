@@ -18,9 +18,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedHashMap;
@@ -40,7 +38,22 @@ public class SpringBootCucumberTestDefinitions {
    private Business newBusiness;
    private static final String newBusinessName = "New Business Name";
    private static final String newJobNameForBusiness = "New Job Name For Business";
-   private String jwtToken;
+//   private String jwtToken;
+
+//   public void iHaveAValidJWTToken() {
+//        JWTRequestFilter jwtRequestFilter = new JWTRequestFilter();
+//        jwtToken = jwtRequestFilter.getJwtToken();
+//   }
+
+   public String getSecurityKey() throws Exception {
+      RequestSpecification request = RestAssured.given();
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("email", "deshe@gmail.com");
+      requestBody.put("password", "pw");
+      request.header("Content-Type", "application/json");
+      response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/users/login");
+      return response.jsonPath().getString("message");
+   }
 
    @Autowired
    private BusinessRepository businessRepository;
@@ -105,23 +118,24 @@ public class SpringBootCucumberTestDefinitions {
     @Given("A business name does not exist yet")
     public void aBusinessNameDoesNotExistYet() {
         Optional<Business> existingBusiness = businessRepository.findByName(newBusinessName);
-        Assert.assertNull(existingBusiness);
+        Assert.assertTrue(existingBusiness.isEmpty());
     }
 
-    @Given("I have a valid JWT token")
-    public void iHaveAValidJWTToken() {
-        JWTRequestFilter jwtRequestFilter = new JWTRequestFilter();
-        jwtToken = jwtRequestFilter.getJwtToken();
-    }
+//    @Given("I have a valid JWT token")
+//    public void iHaveAValidJWTToken() {
+//        JWTRequestFilter jwtRequestFilter = new JWTRequestFilter();
+//        jwtToken = jwtRequestFilter.getJwtToken();
+//    }
 
     @When("I create a business with that name")
-    public void iCreateABusinessWithThatName() throws JSONException {
+    public void iCreateABusinessWithThatName() throws Exception {
         RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
+//        RequestSpecification request = RestAssured.given();
+       RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
         JSONObject requestBody = new JSONObject();
         requestBody.put("name", newBusinessName);
         requestBody.put("headquarters", "New Business Headquarters");
-        request.header("Authorization", "Bearer " + jwtToken);
+//        request.header("Authorization", "Bearer " + getSecurityKey());
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses");
     }
@@ -163,57 +177,26 @@ public class SpringBootCucumberTestDefinitions {
     * iCanEditMyBusinessDetails confirms a successful update for the business
     */
    @Given("I can search for a business ID")
-   public void aBusinessIsAvailablePUT() {
+   public void aBusinessIsAvailablePUT() throws Exception {
       RestAssured.baseURI = BASE_URL;
       request = RestAssured.given();
-      request.header("Authorization", "Bearer " + jwtToken);
+      request.header("Authorization", "Bearer " + getSecurityKey());
    }
 
    @When("I edit my business details")
-   public void iSearchByBusinessIdPUT() throws JSONException {
+   public void iSearchByBusinessIdPUT() throws Exception {
       JSONObject requestBody = new JSONObject();
       requestBody.put("name", "Updated name");
       requestBody.put("headquarters", "Updated headquarters");
       request.header("Content-Type", "application/json");
-      request.header("Authorization", "Bearer " + jwtToken);
+      request.header("Authorization", "Bearer " + getSecurityKey());
       response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/businesses/1");
    }
 
    @Then("I see the business is updated")
    public void iCanEditMyBusinessDetailsPUT() {
       Assert.assertEquals(200, response.getStatusCode());
-   } 
-
-//   @Given("A business account is available")
-//   public void aBusinessAccountIsAvailable() {
-//      RestAssured.baseURI = BASE_URL;
-//      request = RestAssured.given();
-//      response = request.get(BASE_URL + port + "/api/businesses/1");
-//   }
-//
-//   @When("I search for a business account")
-//   public void iSearchForABusinessAccount() {
-//      Assert.assertNotNull(String.valueOf(response));
-//   }
-//
-//   @Then("I can see the business account's details")
-//   public void iCanSeeTheBusinessAccountSDetails() {
-//      Assert.assertEquals(200, response.getStatusCode());
-//   }
-//
-//   @When("I edit the business details")
-//   public void iEditTheBusinessDetails() throws JSONException {
-//      JSONObject requestBody = new JSONObject();
-//      requestBody.put("name", "Updated name");
-//      requestBody.put("headquarters", "Updated headquarters");
-//      request.header("Content-Type", "application/json");
-//      response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/businesses/1");
-//   }
-//
-//   @Then("I can see the business is updated")
-//   public void iCanSeeTheBusinessIsUpdated() {
-//      Assert.assertEquals(200, response.getStatusCode());
-//   }
+   }
   
   /**
      * Testing for Scenario: User is able to delete business
@@ -222,11 +205,15 @@ public class SpringBootCucumberTestDefinitions {
      * iCanSeeMyBusinessIsDeleted makes sure that the HTTP status is 200 when we successfully delete the business object
      */
     @When("I delete a business from my Business list")
-    public void iDeleteBusinessFromMyBusinessList() {
+    public void iDeleteBusinessFromMyBusinessList() throws Exception {
         RestAssured.baseURI = BASE_URL;
-        request = RestAssured.given().header("Authorization", "Bearer " + jwtToken);
-        request.header("Content-Type", "application/json");
-        response = request.delete(BASE_URL + port + "/api/businesses/3");
+       request.header("Content-Type", "application/json");
+        request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+
+        response = request.delete(BASE_URL + port + "/api/businesses/1");
+
+       System.out.println("response"+response);
+       System.out.println("request"+request);
     }
 
     @Then("I can see my business is deleted")
@@ -250,7 +237,7 @@ public class SpringBootCucumberTestDefinitions {
 
     @When("I search for job listings for a business")
     public void iSearchForJobListingsForABusiness() {
-        Assert.assertTrue(list.size() == 0);
+        Assert.assertTrue(list.size() > 0);
     }
 
     @Then("I can see a list of jobs for a business")
@@ -266,25 +253,25 @@ public class SpringBootCucumberTestDefinitions {
      * iCanSeeTheNewJobListingSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
      */
     @Given("A business is available to create a job")
-    public void aBusinessIsAvailableToCreateAJob() {
+    public void aBusinessIsAvailableToCreateAJob() throws Exception {
         RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
-        request.header("Authorization", "Bearer " + jwtToken);
+//        RequestSpecification request = RestAssured.given();
+//        request.header("Authorization", "Bearer " + getSecurityKey());
+       request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
         response = request.get(BASE_URL + port + "/api/businesses/1/jobs");
     }
 
     @When("I create a job listing")
-    public void iCreateAJobListing() throws JSONException {
+    public void iCreateAJobListing() throws Exception {
         RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
+        request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
         requestBody.put("title", newJobNameForBusiness);
         requestBody.put("description", "New Job Description");
         requestBody.put("location", "New Job Location");
-        requestBody.put("salary", "120000.00");
-        requestBody.put("applied", "False");
+        requestBody.put("salary", 120000.00);
         request.header("Content-Type", "application/json");
-        request.header("Authorization", "Bearer " + jwtToken);
+        request.header("Authorization", "Bearer " + getSecurityKey());
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses/1/jobs");
         System.out.println(requestBody);
     }
@@ -350,22 +337,21 @@ public class SpringBootCucumberTestDefinitions {
     */
 
    @Given("I can search for a job ID")
-   public void iCanSearchForAJobID() {
+   public void iCanSearchForAJobID() throws Exception {
       RestAssured.baseURI = BASE_URL;
       request = RestAssured.given();
-      request.header("Authorization", "Bearer " + jwtToken);
+      request.header("Authorization", "Bearer " + getSecurityKey());
    }
 
    @When("I edit my job details")
-   public void iEditMyJobDetails() throws JSONException {
+   public void iEditMyJobDetails() throws Exception {
       JSONObject requestBody = new JSONObject();
       requestBody.put("title", "Updated job title");
       requestBody.put("description", "Updated job description");
       requestBody.put("location", "Updated job location");
       requestBody.put("salary", 0.00);
-//      requestBody.put("applied", true);
       request.header("Content-Type", "application/json");
-      request.header("Authorization", "Bearer " + jwtToken);
+      request.header("Authorization", "Bearer " + getSecurityKey());
       response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/jobs/1");
    }
 
@@ -381,10 +367,10 @@ public class SpringBootCucumberTestDefinitions {
     * iCanSeeMyJobListingIsDeleted makes sure that the HTTP status is 200 when we successfully delete the job object
     */
    @When("I delete a job from my Job list")
-   public void iDeleteAJobFromMyJobList() {
+   public void iDeleteAJobFromMyJobList() throws Exception {
       request.header("Content-Type", "application/json");
-      request.header("Authorization", "Bearer " + jwtToken);
-      response = request.delete(BASE_URL + port + "/api/businesses/1");
+      request.header("Authorization", "Bearer " + getSecurityKey());
+      response = request.delete(BASE_URL + port + "/api/jobs/1");
    }
 
    @Then("I can see my job listing is deleted")
@@ -400,24 +386,25 @@ public class SpringBootCucumberTestDefinitions {
     * iCanSeeTheListOfApplicants makes sure the HTTP status is 200 when we successfully find the list of jobs
     */
    @Given("A list of applicants is available")
-   public void aListOfApplicantsIsAvailable() {
-      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/jobs/1/applicants", HttpMethod.GET, null, String.class);
+   public void aListOfApplicantsIsAvailable() throws Exception {
+      HttpHeaders headers = new HttpHeaders();
+      headers.setBearerAuth(getSecurityKey());
+      HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/jobs/1/applicants", HttpMethod.GET, entity, String.class);
       list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
-      System.out.println("GIVEN "+list);
-      System.out.println("GIVEN "+ responseEntity);
    }
 
    @When("I view the list of applicants")
    public void iViewTheListOfApplicants() {
-      System.out.println("WHEN " + list);
-      System.out.println("WHEN " + responseEntity);
-      Assert.assertEquals(0, list.size());
-//      Assert.assertTrue(list.size() > 0);
+//      Assert.assertEquals(0, list.size());
+      Assert.assertTrue(list.size() > 0);
    }
 
    @Then("I can see the list of applicants")
    public void iCanSeeTheListOfApplicants() {
-      Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+//      Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
 
    /**
@@ -428,9 +415,10 @@ public class SpringBootCucumberTestDefinitions {
     */
 
    @When("I apply for the job")
-   public void iApplyForTheJob() throws JSONException {
+   public void iApplyForTheJob() throws Exception {
       RestAssured.baseURI = BASE_URL;
-      request = RestAssured.given();
+//      request = RestAssured.given();
+      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
       JSONObject requestBody = new JSONObject();
       requestBody.put("id", 1L);
       requestBody.put("name", "Logged-in user's name");
