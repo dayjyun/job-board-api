@@ -1,5 +1,5 @@
 Feature: Rest API functionalities
-#
+# idk
   Scenario: User is able to view another user's account details
     Given A user account is available
     When I search for another user's id
@@ -27,47 +27,49 @@ Feature: Rest API functionalities
 #    When No jobs have been applied for
 #    Then I see a message saying no jobs have been applied for
 
+  # PASS (PUBLIC)
   Scenario: User is able to see a list of all businesses
     Given A list of businesses are available
     When I search for businesses
     Then I can see a list of businesses
 
+    # PASS (PRIVATE)
   Scenario: User is able to create a business
     Given A business name does not exist yet
-    Given I have a valid JWT token
     When I create a business with that name
     Then I can see my new business's details
 
+    # PASS (PUBLIC)
   Scenario: User is able to view business details
     Given A business is available
     When I search by business id
     Then I can see a business's details
 
+    # PASS (PRIVATE)
   Scenario: User is able to edit business details
     Given I can search for a business ID
     When I edit my business details
     Then I see the business is updated
-#    Given A business account is available
-#    When I search for a business account
-#    Then I can see the business account's details
-#    When I edit the business details
-#    Then I can see the business is updated
 
+    # PASS (PRIVATE)
   Scenario: User is able to delete business
     Given A business is available
     When I delete a business from my Business list
     Then I can see my business is deleted
-    
+
+    # PASS (PUBLIC)
  Scenario: User is able to see a list of job listings for a business
     Given A list of jobs is available for a business
     When I search for job listings for a business
     Then I can see a list of jobs for a business
 
+   # PASS (PRIVATE)
  Scenario: User with business is able to create a job listing
    Given A business is available to create a job
    When I create a job listing
    Then I can see the new job listing's details
 
+   #
   Scenario: User is able to see a list of all jobs
     Given A list of jobs are available
     When I search for jobs
