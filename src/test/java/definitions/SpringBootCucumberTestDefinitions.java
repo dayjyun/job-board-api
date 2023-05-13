@@ -3,6 +3,7 @@ package definitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import jobboardapi.security.JWTRequestFilter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import io.cucumber.spring.CucumberContextConfiguration;
@@ -39,6 +40,7 @@ public class SpringBootCucumberTestDefinitions {
    private Business newBusiness;
    private static final String newBusinessName = "New Business Name";
    private static final String newJobNameForBusiness = "New Job Name For Business";
+   private String jwtToken;
 
    @Autowired
    private BusinessRepository businessRepository;
@@ -106,6 +108,12 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertNull(existingBusiness);
     }
 
+    @Given("I have a valid JWT token")
+    public void iHaveAValidJWTToken() {
+        JWTRequestFilter jwtRequestFilter = new JWTRequestFilter();
+        jwtToken = jwtRequestFilter.getJwtToken();
+    }
+
     @When("I create a business with that name")
     public void iCreateABusinessWithThatName() throws JSONException {
         RestAssured.baseURI = BASE_URL;
@@ -113,6 +121,7 @@ public class SpringBootCucumberTestDefinitions {
         JSONObject requestBody = new JSONObject();
         requestBody.put("name", newBusinessName);
         requestBody.put("headquarters", "New Business Headquarters");
+        request.header("Authorization", "Bearer " + jwtToken);
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses");
     }
@@ -157,6 +166,7 @@ public class SpringBootCucumberTestDefinitions {
    public void aBusinessIsAvailablePUT() {
       RestAssured.baseURI = BASE_URL;
       request = RestAssured.given();
+      request.header("Authorization", "Bearer " + jwtToken);
    }
 
    @When("I edit my business details")
@@ -165,6 +175,7 @@ public class SpringBootCucumberTestDefinitions {
       requestBody.put("name", "Updated name");
       requestBody.put("headquarters", "Updated headquarters");
       request.header("Content-Type", "application/json");
+      request.header("Authorization", "Bearer " + jwtToken);
       response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/businesses/1");
    }
 
@@ -213,7 +224,7 @@ public class SpringBootCucumberTestDefinitions {
     @When("I delete a business from my Business list")
     public void iDeleteBusinessFromMyBusinessList() {
         RestAssured.baseURI = BASE_URL;
-        request = RestAssured.given();
+        request = RestAssured.given().header("Authorization", "Bearer " + jwtToken);
         request.header("Content-Type", "application/json");
         response = request.delete(BASE_URL + port + "/api/businesses/3");
     }
@@ -258,6 +269,7 @@ public class SpringBootCucumberTestDefinitions {
     public void aBusinessIsAvailableToCreateAJob() {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + jwtToken);
         response = request.get(BASE_URL + port + "/api/businesses/1/jobs");
     }
 
@@ -272,6 +284,7 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("salary", "120000.00");
         requestBody.put("applied", "False");
         request.header("Content-Type", "application/json");
+        request.header("Authorization", "Bearer " + jwtToken);
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses/1/jobs");
         System.out.println(requestBody);
     }
@@ -340,6 +353,7 @@ public class SpringBootCucumberTestDefinitions {
    public void iCanSearchForAJobID() {
       RestAssured.baseURI = BASE_URL;
       request = RestAssured.given();
+      request.header("Authorization", "Bearer " + jwtToken);
    }
 
    @When("I edit my job details")
@@ -351,6 +365,7 @@ public class SpringBootCucumberTestDefinitions {
       requestBody.put("salary", 0.00);
 //      requestBody.put("applied", true);
       request.header("Content-Type", "application/json");
+      request.header("Authorization", "Bearer " + jwtToken);
       response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/jobs/1");
    }
 
@@ -368,6 +383,7 @@ public class SpringBootCucumberTestDefinitions {
    @When("I delete a job from my Job list")
    public void iDeleteAJobFromMyJobList() {
       request.header("Content-Type", "application/json");
+      request.header("Authorization", "Bearer " + jwtToken);
       response = request.delete(BASE_URL + port + "/api/businesses/1");
    }
 
@@ -428,4 +444,6 @@ public class SpringBootCucumberTestDefinitions {
    public void iSeeAMessageSayingIHaveAppliedForTheJob() {
       Assert.assertEquals(200, response.getStatusCode());
    }
+
+
 }
