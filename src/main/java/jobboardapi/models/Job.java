@@ -49,7 +49,7 @@ public class Job {
    // one job can have many applicants (users)
    @OneToMany(mappedBy = "job", orphanRemoval = true)
    @LazyCollection(LazyCollectionOption.FALSE)
-//   @JsonIgnore
+   @JsonIgnore
    private List<User> applicantsList;
 
    public Job() {}
