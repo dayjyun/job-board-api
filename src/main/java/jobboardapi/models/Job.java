@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 
@@ -30,8 +29,8 @@ public class Job {
    @Column
    private double salary;
 
-   @Column
-   private boolean applied;
+//   @Column
+//   private boolean applied;
 
    // many job applications can belong to one user
    // Current logged-in user can see the list of jobs they applied for
@@ -50,17 +49,18 @@ public class Job {
    // one job can have many applicants (users)
    @OneToMany(mappedBy = "job", orphanRemoval = true)
    @LazyCollection(LazyCollectionOption.FALSE)
+//   @JsonIgnore
    private List<User> applicantsList;
 
    public Job() {}
 
-   public Job(Long id, String title, String description, String location, double salary, boolean applied) {
+   public Job(Long id, String title, String description, String location, double salary) {
       this.id = id;
       this.title = title;
       this.description = description;
       this.location = location;
       this.salary = salary;
-      this.applied = applied;
+//      this.applied = applied;
 //      this.applicantsList = new ArrayList<>();
    }
 
@@ -104,13 +104,13 @@ public class Job {
       this.salary = salary;
    }
 
-   public boolean isApplied() {
-      return applied;
-   }
-
-   public void setApplied(boolean applied) {
-      this.applied = applied;
-   }
+//   public boolean isApplied() {
+//      return applied;
+//   }
+//
+//   public void setApplied(boolean applied) {
+//      this.applied = applied;
+//   }
 
 
    public User getUser() {
@@ -145,7 +145,7 @@ public class Job {
               ", description='" + description + '\'' +
               ", location='" + location + '\'' +
               ", salary=" + salary +
-              ", applied=" + applied +
+//              ", applied=" + applied +
               '}';
    }
 }
