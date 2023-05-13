@@ -3,9 +3,9 @@ package jobboardapi.controller;
 import jobboardapi.models.Job;
 import jobboardapi.models.User;
 import jobboardapi.service.JobService;
+import jobboardapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.rmi.AlreadyBoundException;
 import javax.validation.Valid;
 
 import java.util.List;
@@ -46,15 +46,20 @@ public class JobController {
         return jobService.deleteJobListing(jobId);
     }
 
-    // User Story: I want to see a list of applicants that applied for my job listing
-    // http://localhost:8080/api/jobs/{jobId}/applicants
+//    // User Story: I want to see a list of applicants that applied for my job listing
+//    // http://localhost:8080/api/jobs/{jobId}/applicants
+//    @GetMapping(path = "/{jobId}/applicants")
+//    public List<User> getListOfApplicants(@PathVariable Long jobId) {
+//        return jobService.getListOfApplicants(jobId);
+//    }
+
     @GetMapping(path = "/{jobId}/applicants")
     public List<User> getListOfApplicants(@PathVariable Long jobId) {
         return jobService.getListOfApplicants(jobId);
     }
 
     @PostMapping(path = "/{jobId}/applicants")
-    public Optional<Job> applyForJobListing(@PathVariable Long jobId, @RequestBody User userBody) throws AlreadyBoundException {
-        return jobService.applyForJobListing(jobId, userBody);
+    public Optional<Job> applyForJobListing(@PathVariable Long jobId) {
+        return jobService.applyForJobListing(jobId);
     }
 }

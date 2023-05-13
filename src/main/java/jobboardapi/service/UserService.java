@@ -1,6 +1,5 @@
 package jobboardapi.service;
 
-
 import jobboardapi.exceptions.AlreadyExistsException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.User;
@@ -11,11 +10,13 @@ import jobboardapi.security.JWTUtils;
 import jobboardapi.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class UserService {
     private JWTUtils jwtUtils;
     private AuthenticationManager authenticationManager;
     private MyUserDetails myUserDetails;
+
+    public static User getLoggedInUser() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUser();
+    }
 
     @Autowired
     public UserService(UserRepository userRepository,
@@ -67,7 +73,7 @@ public class UserService {
             final String JWT = jwtUtils.generateJwtToken(myUserDetails);
             return ResponseEntity.ok(new LoginResponse(JWT));
         } catch (Exception e) {
-            return ResponseEntity.ok(new LoginResponse("Error : username or password is incorrect"));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse("Error : username or password is incorrect"));
         }
     }
 
@@ -78,6 +84,8 @@ public class UserService {
      * @return the optional of the user
      */
     public Optional<User> getUserById(Long userId) {
+        // Check only users that have applied to my job listing for my business
+
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()) {
             return user;

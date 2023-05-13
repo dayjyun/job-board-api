@@ -34,6 +34,7 @@ Feature: Rest API functionalities
 
   Scenario: User is able to create a business
     Given A business name does not exist yet
+    Given I have a valid JWT token
     When I create a business with that name
     Then I can see my new business's details
 

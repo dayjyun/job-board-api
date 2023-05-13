@@ -29,6 +29,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JWTUtils jwtUtils;
 
+    private String jwtToken;
+
     /**
      * parseJwt authenticates the json web token.
      * This method is called upon after the user has already been validated.
@@ -37,10 +39,14 @@ public class JWTRequestFilter extends OncePerRequestFilter {
      */
     private String parseJwt(HttpServletRequest request) {  // the request is what we're sending to the server
         String headerAuth = request.getHeader("Authorization"); // .getHeader is the key-value pair. for example, "Authorization" : "Bearer"
-        if (StringUtils.hasLength("headerAuth") && headerAuth.startsWith("Bearer")) {
+        if (StringUtils.hasLength(headerAuth) && headerAuth.startsWith("Bearer")) {
             return headerAuth.substring(7);
         }
         return null;
+    }
+
+    public String getJwtToken() {
+        return jwtToken;
     }
 
     @Override
@@ -49,6 +55,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             String jwt = parseJwt(request);
             // check if the jwt key is valid and not null
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) { // .validateJwtToken is the method we made earlier in the JWTUtils class
+                //Store the JWT token in the class variable
+                jwtToken = jwt;
                 // grab email address from jwt payload
                 // if valid get user email from the key
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
