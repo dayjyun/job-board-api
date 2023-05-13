@@ -55,9 +55,7 @@ public class JobController {
 
     @GetMapping(path = "/{jobId}/applicants")
     public List<User> getListOfApplicants(@PathVariable Long jobId) {
-        User principal = UserService.getLoggedInUser();
-        Long userId = principal.getId();
-        return jobService.getListOfApplicants(jobId, userId);
+        return jobService.getListOfApplicants(jobId);
     }
 
     @PostMapping(path = "/{jobId}/applicants")

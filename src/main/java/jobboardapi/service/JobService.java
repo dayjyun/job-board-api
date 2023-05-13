@@ -162,15 +162,14 @@ public class JobService {
     * @param jobId is the id for the job the user wants to check the applicants for
     * @return a list of applicants for the targeted job
     */
-   public List<User> getListOfApplicants(Long jobId, Long userId) {
+   public List<User> getListOfApplicants(Long jobId) {
       Optional<Job> jobListing = jobRepository.findById(jobId);
-      Optional<User> user = userRepository.findById(userId);
-      if (jobListing.isPresent() && user.isPresent()) {
-         Job job = jobListing.get();
-         if (job.getUser().getId().equals(userId)) {
-            List<User> applicantsList = job.getApplicantsList();
+      User user = UserService.getLoggedInUser();
+      if (jobListing.isPresent()) {
+         if (jobListing.get().getUser().getId().equals(user.getId())) {
+            List<User> applicantsList = jobListing.get().getApplicantsList();
             if (applicantsList.size() > 0) {
-               return job.getApplicantsList();
+               return jobListing.get().getApplicantsList();
             } else {
                throw new NotFoundException("No applicants found");
             }
@@ -184,9 +183,9 @@ public class JobService {
 
    public Optional<Job> applyForJobListing(Long jobId) {
       Optional<Job> jobListing = jobRepository.findById(jobId);
-      List<User> applicantsList = jobListing.get().getApplicantsList();
       User applicant = UserService.getLoggedInUser();
       if (jobListing.isPresent()) {
+         List<User> applicantsList = jobListing.get().getApplicantsList();
          if(!applicantsList.contains(applicant)){
             applicantsList.add(applicant);
             jobListing.get().setApplicantsList(applicantsList);
