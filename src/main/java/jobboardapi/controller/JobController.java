@@ -3,6 +3,7 @@ package jobboardapi.controller;
 import jobboardapi.models.Job;
 import jobboardapi.models.User;
 import jobboardapi.service.JobService;
+import jobboardapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -45,11 +46,18 @@ public class JobController {
         return jobService.deleteJobListing(jobId);
     }
 
-    // User Story: I want to see a list of applicants that applied for my job listing
-    // http://localhost:8080/api/jobs/{jobId}/applicants
+//    // User Story: I want to see a list of applicants that applied for my job listing
+//    // http://localhost:8080/api/jobs/{jobId}/applicants
+//    @GetMapping(path = "/{jobId}/applicants")
+//    public List<User> getListOfApplicants(@PathVariable Long jobId) {
+//        return jobService.getListOfApplicants(jobId);
+//    }
+
     @GetMapping(path = "/{jobId}/applicants")
     public List<User> getListOfApplicants(@PathVariable Long jobId) {
-        return jobService.getListOfApplicants(jobId);
+        User principal = UserService.getLoggedInUser();
+        Long userId = principal.getId();
+        return jobService.getListOfApplicants(jobId, userId);
     }
 
     @PostMapping(path = "/{jobId}/applicants")
