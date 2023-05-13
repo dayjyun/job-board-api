@@ -165,17 +165,11 @@ public class JobService {
    public List<User> getListOfApplicants(Long jobId, Long userId) {
       Optional<Job> jobListing = jobRepository.findById(jobId);
       Optional<User> user = userRepository.findById(userId);
-
       if (jobListing.isPresent() && user.isPresent()) {
          Job job = jobListing.get();
-
-         // Check if the logged-in user owns the job listing
          if (job.getUser().getId().equals(userId)) {
             List<User> applicantsList = job.getApplicantsList();
-
             if (applicantsList.size() > 0) {
-               job.getApplicantsList().add(user.get());
-               jobRepository.save(job);
                return job.getApplicantsList();
             } else {
                throw new NotFoundException("No applicants found");
@@ -188,80 +182,23 @@ public class JobService {
       }
    }
 
-
-//      Optional<Business> targetUserBusiness = businessRepository.findBusinessByIdAndUserId(jobRepository.findById(jobId).get().getBusiness().getId(),
-//                                                                                          UserService.getLoggedInUser().getId());
-//      System.out.println(targetUserBusiness.get().getId() - UserService.getLoggedInUser().getId());
-//      List<Job> jobList = targetUserBusiness.get().getListOfJobsAvailable();
-//      System.out.println(jobList);
-//      if (jobList.size() > 0) {
-//         for (Job job : jobList) {
-//            System.out.println(job);
-//            if (Objects.equals(job.getId(), jobId)) {
-//               System.out.println(job.getApplicantsList());
-//               return job.getApplicantsList();
-//            }
-//         }
-//         throw new NotFoundException("No applicants for job");
-//      } else {
-//         throw new NotFoundException("No job listings found");
-//      }
-//   }
-
-
-
-
-   // if job does not belong to user
-   // message: "Job with id " + jobId + " not found"
-
-
-
-//   // Part 2
-//   public List<User> getListOfApplicants(Long jobId) {
-//      Optional<Business> targetUserBusiness = businessRepository.findBusinessByIdAndUserId(
-//              jobRepository.findById(jobId).orElseThrow(() -> new NotFoundException("Job listing not found"))
-//                           .getBusiness().getId(),
-//              UserService.getLoggedInUser().getId());
-//
-//      if (targetUserBusiness.isEmpty()) {
-//         throw new NotFoundException("No businesses found");
-//      }
-//
-//      List<Job> jobList = targetUserBusiness.get().getListOfJobsAvailable();
-//
-//      if (jobList.isEmpty()) {
-//         throw new NotFoundException("No job listings found");
-//      }
-//
-//      for (Job job : jobList) {
-//         if (Objects.equals(job.getId(), jobId)) {
-//            return job.getApplicantsList();
-//         }
-//      }
-//
-//      throw new NotFoundException("Job listing not found");
-//   }
-
-
-
-   /**
-    *
-    */
    public Optional<Job> applyForJobListing(Long jobId) {
       Optional<Job> jobListing = jobRepository.findById(jobId);
+      List<User> applicantsList = jobListing.get().getApplicantsList();
+      User applicant = UserService.getLoggedInUser();
       if (jobListing.isPresent()) {
-         List<User> applicantsList = jobListing.get().getApplicantsList();
-            if(applicantsList.contains(UserService.getLoggedInUser())){
-                throw new AlreadyExistsException("Application already submitted");
-            } else {
-                User applicant = UserService.getLoggedInUser();
-                applicant.getListOfJobsAppliedTo().add(jobListing.get());
-                jobListing.get().getApplicantsList().add(applicant);
-                jobRepository.save(jobListing.get());
-                return jobListing;
-            }
-      } else {
-         throw new NotFoundException("Job listing not found");
+         if(!applicantsList.contains(applicant)){
+            applicantsList.add(applicant);
+            jobListing.get().setApplicantsList(applicantsList);
+
+            applicant.getListOfJobsAppliedTo().add(jobListing.get());
+            applicant.setJob(jobListing.get());
+            jobRepository.save(jobListing.get());
+            userRepository.save(applicant);
+            return jobListing;
+         }
+         throw new AlreadyExistsException("Application already submitted");
       }
+      throw new NotFoundException("Job listing not found");
    }
 }
