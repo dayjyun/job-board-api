@@ -54,9 +54,8 @@ public class BusinessService {
       if (business.isPresent()) {
          throw new AlreadyExistsException("Business with the name " + businessObject.getName() + " already exists.");
       } else {
-         if (businessObject.getName()
-                           .isEmpty() || businessObject.getName() == null) {
-            throw new BadRequestException("Business name may not be null");
+         if (businessObject.getName() == "" || businessObject.getName() == null) {
+            throw new BadRequestException("Business name is required");
          } else {
             businessObject.setUser(UserService.getLoggedInUser());
             return businessRepository.save(businessObject);
