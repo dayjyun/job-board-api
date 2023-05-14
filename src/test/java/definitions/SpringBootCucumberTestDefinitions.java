@@ -51,6 +51,11 @@ public class SpringBootCucumberTestDefinitions {
    @LocalServerPort
    String port;
 
+   // Scenario: User is able to register
+
+
+   // Scenario: User is able to log in
+
    /**
     * Test Scenario: User is able to view another user's account details
     * Path: GET http://localhost:8080/api/users/{userId}
@@ -178,29 +183,6 @@ public class SpringBootCucumberTestDefinitions {
 
    @Then("I see the business is updated")
    public void iCanEditMyBusinessDetailsPUT() {
-      Assert.assertEquals(200, response.getStatusCode());
-   }
-
-   /**
-    * Testing for Scenario: User is able to delete business
-    * This is the DELETE request at the endpoint http://localhost:8080/api/businesses/{businessId}
-    * iDeleteBusinessFromMyBusinessList gets the business from the specified endpoint and sends the delete request to delete the business
-    * iCanSeeMyBusinessIsDeleted makes sure that the HTTP status is 200 when we successfully delete the business object
-    */
-   @When("I delete a business from my Business list")
-   public void iDeleteBusinessFromMyBusinessList() throws Exception {
-      RestAssured.baseURI = BASE_URL;
-//      request.header("Content-Type", "application/json");
-      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
-
-      response = request.delete(BASE_URL + port + "/api/businesses/1");
-
-      System.out.println("response"+response);
-      System.out.println("request"+request);
-   }
-
-   @Then("I can see my business is deleted")
-   public void iCanSeeMyBusinessIsDeleted() {
       Assert.assertEquals(200, response.getStatusCode());
    }
 
@@ -342,24 +324,6 @@ public class SpringBootCucumberTestDefinitions {
    }
 
    /**
-    * Test Scenario: User with business is able to delete job listing
-    * Path: DELETE http://localhost:8080/api/jobs/{jobId}
-    * iDeleteAJobFromMyJobList gets the job from the specified endpoint and sends the delete request to delete the job
-    * iCanSeeMyJobListingIsDeleted makes sure that the HTTP status is 200 when we successfully delete the job object
-    */
-   @When("I delete a job from my Job list")
-   public void iDeleteAJobFromMyJobList() throws Exception {
-      request.header("Content-Type", "application/json");
-      request.header("Authorization", "Bearer " + getSecurityKey());
-      response = request.delete(BASE_URL + port + "/api/jobs/1");
-   }
-
-   @Then("I can see my job listing is deleted")
-   public void iCanSeeMyJobListingIsDeleted() {
-      Assert.assertEquals(200, response.getStatusCode());
-   }
-
-   /**
     * Test Scenario: User is able to see a list of all applicants for their job
     * Path: GET http://localhost:8080/api/jobs/1/applicants
     * aListOfApplicantsIsAvailable gets the list of all Users from the database referenced by the endpoint
@@ -408,6 +372,47 @@ public class SpringBootCucumberTestDefinitions {
 
    @Then("I see a message saying I have applied for the job")
    public void iSeeAMessageSayingIHaveAppliedForTheJob() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Test Scenario: User with business is able to delete job listing
+    * Path: DELETE http://localhost:8080/api/jobs/{jobId}
+    * iDeleteAJobFromMyJobList gets the job from the specified endpoint and sends the delete request to delete the job
+    * iCanSeeMyJobListingIsDeleted makes sure that the HTTP status is 200 when we successfully delete the job object
+    */
+   @When("I delete a job from my Job list")
+   public void iDeleteAJobFromMyJobList() throws Exception {
+      request.header("Content-Type", "application/json");
+      request.header("Authorization", "Bearer " + getSecurityKey());
+      response = request.delete(BASE_URL + port + "/api/jobs/1");
+   }
+
+   @Then("I can see my job listing is deleted")
+   public void iCanSeeMyJobListingIsDeleted() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Testing for Scenario: User is able to delete business
+    * This is the DELETE request at the endpoint http://localhost:8080/api/businesses/{businessId}
+    * iDeleteBusinessFromMyBusinessList gets the business from the specified endpoint and sends the delete request to delete the business
+    * iCanSeeMyBusinessIsDeleted makes sure that the HTTP status is 200 when we successfully delete the business object
+    */
+   @When("I delete a business from my Business list")
+   public void iDeleteBusinessFromMyBusinessList() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+//      request.header("Content-Type", "application/json");
+      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+
+      response = request.delete(BASE_URL + port + "/api/businesses/1");
+
+      System.out.println("response"+response);
+      System.out.println("request"+request);
+   }
+
+   @Then("I can see my business is deleted")
+   public void iCanSeeMyBusinessIsDeleted() {
       Assert.assertEquals(200, response.getStatusCode());
    }
 }
