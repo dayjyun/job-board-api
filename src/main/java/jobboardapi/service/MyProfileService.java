@@ -26,11 +26,17 @@ public class MyProfileService {
 
    private final PasswordEncoder passwordEncoder;
 
+   // Purpose is to encrypt password when updating profile
    public MyProfileService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
       this.passwordEncoder = passwordEncoder;
       this.userRepository = userRepository;
    }
 
+   /**
+    * // Retrieves currently logged-in user's data. If there is no data (Example: After account deletion), an Unauthorized error message
+    * is thrown"
+    * @return Logged-in user's data
+    */
    @ResponseStatus(HttpStatus.UNAUTHORIZED)
    public static User getLoggedInUser() {
       MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -41,10 +47,11 @@ public class MyProfileService {
    }
 
    /**
+    * updateMyProfile allows a logged-in user to update their information.
     * Updates but you need to generate a new JWT
     *
-    * @param updatedBody
-    * @return
+    * @param updatedBody the incoming user data requesting to be updated
+    * @return the logged-in user's data after the update
     */
    public User updateMyProfile(User updatedBody) {
       Optional<User> user = userRepository.findById(getLoggedInUser().getId());
