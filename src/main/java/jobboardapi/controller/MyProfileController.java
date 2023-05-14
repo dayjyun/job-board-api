@@ -5,6 +5,8 @@ import jobboardapi.service.MyProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/api/myProfile")
 public class MyProfileController {
@@ -21,8 +23,10 @@ public class MyProfileController {
       return myProfileService.updateMyProfile(updatedBody);
    }
 
-//   @DeleteMapping(path = "")
-
+   @DeleteMapping(path = "")
+   public Optional<User> deleteMyProfile() {
+      return myProfileService.deleteMyProfile();
+   }
 
 //   @GetMapping(path = "/jobs")
 }

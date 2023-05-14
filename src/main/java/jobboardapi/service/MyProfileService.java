@@ -1,8 +1,10 @@
 package jobboardapi.service;
 
 import jobboardapi.exceptions.BadRequestException;
+import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.User;
 import jobboardapi.repository.UserRepository;
+import jobboardapi.security.JWTRequestFilter;
 import jobboardapi.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,10 +12,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class MyProfileService {
 
+   Logger logger = Logger.getLogger((JWTRequestFilter.class.getName()));
 
    @Autowired
    private UserRepository userRepository;
@@ -39,18 +43,36 @@ public class MyProfileService {
       Optional<User> user = userRepository.findById(getLoggedInUser().getId());
       if(user.isPresent()) {
          // check that the email does not already in the database, and it's not the same as current email
-         if(userRepository.existsByEmail(updatedBody.getEmail())  && !user.get().getEmail().equals(updatedBody.getEmail())) {
+         if(userRepository.existsByEmail(updatedBody.getEmail()) && !user.get().getEmail().equals(updatedBody.getEmail())) {
             throw new BadRequestException("Email already in use");
          }
-         user.get().setName(updatedBody.getName());
-         user.get().setEmail(updatedBody.getEmail());
-         user.get().setPassword(passwordEncoder.encode(updatedBody.getPassword()));
+         if(updatedBody.getPassword() != null && !updatedBody.getPassword().isEmpty()) {
+            user.get().setPassword(passwordEncoder.encode(updatedBody.getPassword()));
+         }
+         if(updatedBody.getPassword() != null && !updatedBody.getName().isEmpty()) {
+            user.get().setName(updatedBody.getName());
+         }
+         if(updatedBody.getEmail() != null && !updatedBody.getEmail().isEmpty()) {
+            user.get().setEmail(updatedBody.getEmail());
+         }
          user.get().setResume(updatedBody.getResume());
-         return userRepository.save(user.get());
+
+
+            return userRepository.save(user.get());
+
       } else {
          return null;
       }
    }
 
 
+   public Optional<User> deleteMyProfile(){
+      Optional<User> myProfile = userRepository.findById(getLoggedInUser().getId());
+      if(myProfile.isPresent()) {
+         userRepository.deleteById(getLoggedInUser().getId());
+         return myProfile;
+      } else {
+         throw new NotFoundException("Odd. That wasn't supposed to happen.");
+      }
+   }
 }
