@@ -124,40 +124,20 @@ public class JobService {
     /**
      *
      */
-    public Optional<Job> applyForJobListing(Long jobId, User userBody) {
+    public Optional<Job> applyForJobListing(Long jobId) {
         Optional<Job> jobListing = jobRepository.findById(jobId);
-//        if(jobListing.isPresent()){
-////            User user = userRepository.findUserByEmail(userBody.getEmail());
-////            Optional<User> user = jobRepository.findByUserEmail(userBody.getEmail());
-////            Optional<User> user = jobRepository.findByUserId(userBody.getId());
-////            Optional<User> user = jobRepository.findJobByIdAndAndUserId(jobId, userBody.getId());
-//            Optional<User> user = userRepository.findUserByIdAndJobId(jobId, userBody.getId());
-//            if(user.isPresent()) {
-//                throw new AlreadyExistsException("Application already submitted");
-//            } else {
-////                jobListing.get().setApplied(true);
-//                jobListing.get().getApplicantsList().add(userBody);
-//                jobRepository.save(jobListing.get());
-//                return jobListing;
-//            }
-//        } else {
-//            throw new NotFoundException("Job listing not found");
-//        }
-        if(jobListing.isPresent()) {
-            Job job = jobListing.get();
-            List<User> applicantsList = job.getApplicantsList();
-            Optional<User> user = applicantsList.stream().filter(applicant -> applicant.getId().equals(userBody.getId())).findFirst();
-
-            if(user.isPresent()) {
-                throw new AlreadyExistsException("Application already submitted");
-            } else {
-//                job.setApplied(true);
-                applicantsList.add(userBody);
-                jobRepository.save(job);
+        User applicant = UserService.getLoggedInUser();
+        if (jobListing.isPresent()) {
+            List<User> applicantsList = jobListing.get().getApplicantsList();
+            if(!applicantsList.contains(applicant)){
+                List<User> applicantList = jobListing.get().getApplicantsList();
+                applicantList.add(applicant);
+                jobListing.get().setApplicantsList(applicantsList);
+                jobRepository.save(jobListing.get());
                 return jobListing;
             }
-        } else {
-            throw new NotFoundException("Job listing not found");
+            throw new AlreadyExistsException("Application already submitted");
         }
+        throw new NotFoundException("Job listing not found");
     }
 }
