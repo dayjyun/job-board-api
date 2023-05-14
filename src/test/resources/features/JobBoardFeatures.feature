@@ -99,12 +99,12 @@ Feature: Job Board API functionalities
     When I go to my profile
     Then I can see my account details
 
-#  Scenario: User is able to edit account details
-#    Given my account is available
-#    When I edit my profile
-#    Then I see my profile is updated
+  Scenario: User is able to edit their account details
+    Given my account is available
+    When I edit my profile
+    Then I see my profile is updated
 #
-#  Scenario: User is able to delete account
+#  Scenario: User is able to delete their account
 #    Given my account is available
 #    When I go to my profile
 #    Then I can delete my account

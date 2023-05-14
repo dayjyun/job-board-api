@@ -3,6 +3,7 @@ package definitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.json.JSONException;
 import org.json.JSONObject;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
@@ -437,6 +438,28 @@ public class JobBoardDefinitions {
 
    @Then("I can see my account details")
    public void iCanSeeMyAccountDetails() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Scenario: User is able to edit their account details
+    * Path: GET http://localhost:8080/api/myProfile
+    * Reuses GIVEN aMyAccountIsAvailable gets the current logged-in user's object
+    */
+   @When("I edit my profile")
+   public void iEditMyProfile() throws Exception {
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("name", "Updated name");
+      requestBody.put("email", "Updated email");
+      requestBody.put("password", "Updated pw");
+      requestBody.put("resume", "Updated resume");
+      request.header("Content-Type", "application/json");
+      request.header("Authorization", "Bearer", getSecurityKey());
+      response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/myProfile");
+   }
+
+   @Then("I see my profile is updated")
+   public void iSeeMyProfileIsUpdated() {
       Assert.assertEquals(200, response.getStatusCode());
    }
 }
