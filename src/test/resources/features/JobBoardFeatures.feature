@@ -94,15 +94,15 @@ Feature: Job Board API functionalities
     When I delete a business from my Business list
     Then I can see my business is deleted
 
-  Scenario: User is able to view account details
+  Scenario: User is able to view their account details
     Given my account is available
     When I go to my profile
     Then I can see my account details
 
 #  Scenario: User is able to edit account details
 #    Given my account is available
-#    When I go to my profile
-#    Then I can edit my account details
+#    When I edit my profile
+#    Then I see my profile is updated
 #
 #  Scenario: User is able to delete account
 #    Given my account is available

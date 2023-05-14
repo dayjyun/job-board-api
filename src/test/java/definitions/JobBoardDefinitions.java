@@ -416,7 +416,13 @@ public class JobBoardDefinitions {
       Assert.assertEquals(200, response.getStatusCode());
    }
 
-
+   /**
+    * Scenario: User is able to view their account details
+    * Path: GET http://localhost:8080/api/myProfile
+    * aMyAccountIsAvailable gets the current logged-in user's object
+    * iGoToMyProfile checks that the logged-in user's object is not null
+    * iCanSeeMyAccountDetails makes sure that the HTTP status code is 200 when successfully returning the logged-in user's object
+    */
    @Given("my account is available")
    public void aMyAccountIsAvailable() throws Exception {
       RestAssured.baseURI = BASE_URL;
