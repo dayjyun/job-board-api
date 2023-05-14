@@ -100,6 +100,9 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | Functionality                                | User Stories                                                                                                                                               |
 |----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Returns all jobs in the job board            | As a registered user or unregistered user, I want to see a list of all jobs available so that I can see what opportunities are open to apply for.          |
+| Return job listing details                   | As a registered user or unregistered user, I want to view job details so that I can find more information on the job listing.                              |
+| Update job listing                           | As a registered user with a job listing, I want to update my job listing details so that I can keep my job listing up-to-date.                             |
+| Delete job listing                           | As a registered user with a job listing, I want to delete my job listing so that applicants can no longer apply for that job.                              |
 | Returns a list of all applicants for the job | As a registered user with a business, I want to see a list of applicants that applied for my job listing so that I may choose the most suitable candidate. |
 | User applies for job                         | As a registered user, I want to apply for a job, so that a business will consider me as a candidate for their business.                                    |
 
