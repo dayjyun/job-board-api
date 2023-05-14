@@ -11,7 +11,6 @@ import jobboardapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -70,7 +69,7 @@ public class JobService {
       if (job.isPresent()) {
          return job;
       } else {
-         throw new NotFoundException("Job listing not found");
+         throw new NotFoundException("Job with id " + jobId + " not found");
       }
    }
 
@@ -85,45 +84,48 @@ public class JobService {
     * @return the updated Job object
     */
    public Job updateJobListing(Long jobId, Job jobBody) {
-      // Check that the logged-in user has a business where the id for the business matches the business_id in relation to the job's id
-      Optional<Business> loggedInUserBusiness =
-              businessRepository.findBusinessByIdAndUserId(jobRepository.findById(jobId)
-                                                                        .get()
-                                                                        .getBusiness()
-                                                                        .getId(), UserService.getLoggedInUser()
-                                                                                             .getId());
-      // // While the user has the targeted business
-      if (loggedInUserBusiness.isPresent()) {
-         // Search for the list of jobs belonging to the targeted business
-         List<Job> jobListForBusiness = loggedInUserBusiness.get().getListOfJobsAvailable();
-         // While we have a list of jobs for the targeted business
-         if (jobListForBusiness.size() > 0) {
+      Optional<Job> jobToUpdate = jobRepository.findById(jobId);
+      if (jobToUpdate.isPresent()) {
+         // Check that the logged-in user has a business where the id for the business matches the business_id in relation to the job's id
+         Optional<Business> loggedInUserBusiness = businessRepository.findBusinessByIdAndUserId(
+                 jobRepository.findById(jobId).get().getBusiness().getId(),
+                 UserService.getLoggedInUser().getId()
+         );
+         // While the user has the targeted business
+         if (loggedInUserBusiness.isPresent()) {
+            // Search for the list of jobs belonging to the targeted business
+            List<Job> jobListForBusiness = loggedInUserBusiness.get().getListOfJobsAvailable();
             // While we have a list of jobs for the targeted business
-            for (Job job : jobListForBusiness) {
-               // Find the job listing that matches the jobId
-               if (Objects.equals(job.getId(), jobId)) {
-                  // Update the job listing
-                  Job updatedJobListing = jobRepository.findById(jobId).get();
-                  updatedJobListing.setTitle(jobBody.getTitle());
-                  updatedJobListing.setDescription(jobBody.getDescription());
-                  updatedJobListing.setLocation(jobBody.getLocation());
-                  updatedJobListing.setSalary(jobBody.getSalary());
-                  return jobRepository.save(updatedJobListing);
+            if (jobListForBusiness.size() > 0) {
+               for (Job job : jobListForBusiness) {
+                  if (job.getId().equals(jobId)) {
+                     if(jobBody.getTitle() != null && !jobBody.getTitle().isEmpty()) {
+                     job.setTitle(jobBody.getTitle());
+                     }
+                     if(jobBody.getDescription() != null && !jobBody.getDescription().isEmpty()) {
+                        job.setDescription(jobBody.getDescription());
+                     }
+                     if(jobBody.getLocation() != null && !jobBody.getLocation().isEmpty()) {
+                        job.setLocation(jobBody.getLocation());
+                     }
+                     if(jobBody.getSalary() != null && jobBody.getSalary() > 0) {
+                        job.setSalary(jobBody.getSalary());
+                     }
+                     return jobRepository.save(job);
+                  }
                }
             }
-            throw new NotFoundException("Job listing not found");
-         } else {
-            throw new NotFoundException("Business has no job listings");
+            throw new NotFoundException("No jobs found for business with id " + loggedInUserBusiness.get().getId());
          }
-      } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + loggedInUserBusiness.get().getId() + " not found");
       }
+      throw new NotFoundException("Job with id " + jobId + " not found");
    }
 
    /**
-)    * deleteJobListing checks if a job id is present in the job database. Next, it checks if the businesses has a list of jobs available.
-    * Following that, it checks if any of the job's business id matches the business id for the business owned by the user Once it passes
-    * the check, the listing gets updated If any of the checks fail, a NotFoundException is thrown
+    * )    * deleteJobListing checks if a job id is present in the job database. Next, it checks if the businesses has a list of jobs
+    * available. Following that, it checks if any of the job's business id matches the business id for the business owned by the user Once
+    * it passes the check, the listing gets updated If any of the checks fail, a NotFoundException is thrown
     *
     * @param jobId is the id for the job the user wants to delete
     * @return the deleted job's details
@@ -133,7 +135,6 @@ public class JobService {
       Optional<Job> jobListing = jobRepository.findById(jobId);
       // When the job listing is found
       if (jobListing.isPresent()) {
-         // 
          Optional<Business> loggedInUserBusiness = businessRepository.findBusinessByIdAndUserId(jobListing.get()
                                                                                                           .getBusiness()
                                                                                                           .getId(),
@@ -149,7 +150,8 @@ public class JobService {
             }
             throw new NotFoundException("Job listing with id" + jobId + " not found");
          }
-         throw new NotFoundException("Business with id " + jobRepository.findById(jobId).get().getBusiness().getId() + " does not belong to user");
+         throw new NotFoundException("Business with id " + jobRepository.findById(jobId).get().getBusiness()
+                                                                        .getId() + " does not belong to user");
       }
       throw new NotFoundException("Job listing with id" + jobId + " not found");
    }
@@ -159,41 +161,43 @@ public class JobService {
     * NotFoundException is thrown If the user list is empty, a NotFoundException is thrown A user is only able to see a list of applicants
     * for a business they own.
     *
-    * @param jobId is the id for the job the user wants to check the applicants for
+    * @param jobId is the id for the job the user (business owner) wants to check the applicants for
     * @return a list of applicants for the targeted job
     */
    public List<User> getListOfApplicants(Long jobId) {
-      Optional<Job> jobListing = jobRepository.findById(jobId);
-      User user = UserService.getLoggedInUser();
-      if (jobListing.isPresent()) {
-         if (jobListing.get().getUser().getId().equals(user.getId())) {
-            List<User> applicantsList = jobListing.get().getApplicantsList();
-            if (applicantsList.size() > 0) {
-               return jobListing.get().getApplicantsList();
+      Optional<Job> job = jobRepository.findById(jobId);
+      if(job.isPresent()) {
+         Optional<Business> business = Optional.ofNullable(job.get().getBusiness());
+         if(business.isPresent() && business.get().getUser().getId().equals(UserService.getLoggedInUser().getId())) {
+            List<User> applicantsList = jobRepository.findById(jobId).get().getApplicantsList();
+            if (!applicantsList.isEmpty()) {
+               return applicantsList;
             } else {
                throw new NotFoundException("No applicants found");
             }
          } else {
-            throw new NotFoundException("Job with id " + jobId + " not found for user");
+            throw new NotFoundException("Business not found");
          }
       } else {
-         throw new NotFoundException("Job with id " + jobId + " not found");
+         throw new NotFoundException("Job not found");
       }
    }
 
+   /**
+    *
+    * @param jobId is the id for the job the user wants to apply for
+    * @return job listing details after submitting user's information
+    */
    public Optional<Job> applyForJobListing(Long jobId) {
       Optional<Job> jobListing = jobRepository.findById(jobId);
       User applicant = UserService.getLoggedInUser();
       if (jobListing.isPresent()) {
          List<User> applicantsList = jobListing.get().getApplicantsList();
-         if(!applicantsList.contains(applicant)){
-            applicantsList.add(applicant);
+         if (!applicantsList.contains(applicant)) {
+            List<User> applicantList = jobListing.get().getApplicantsList();
+            applicantList.add(applicant);
             jobListing.get().setApplicantsList(applicantsList);
-
-            applicant.getListOfJobsAppliedTo().add(jobListing.get());
-            applicant.setJob(jobListing.get());
             jobRepository.save(jobListing.get());
-            userRepository.save(applicant);
             return jobListing;
          }
          throw new AlreadyExistsException("Application already submitted");

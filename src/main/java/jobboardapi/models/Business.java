@@ -2,13 +2,10 @@ package jobboardapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.validation.constraints.NotNull;
-import net.bytebuddy.utility.nullability.NeverNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import java.util.List;
 
 @Entity
@@ -20,7 +17,6 @@ public class Business {
    private Long id;
 
    @Column(unique = true)
-   @NotNull(message = "Business name may not be null")
    private String name;
 
    @Column
@@ -35,7 +31,7 @@ public class Business {
    // many businesses can belong to one user
    @ManyToOne
    @JoinColumn(name = "user_id")
-    @JsonIgnore // excludes user details when displaying business details
+   @JsonIgnore // excludes user details when displaying business details
    private User user;
 
    public Business() {}
@@ -77,15 +73,6 @@ public class Business {
    public void setUser(User user) {
       this.user = user;
    }
-
-//   public List<Job> getJobList() {
-//      return listOfJobsAvailable;
-//   }
-//
-//   public void setJobList(List<Job> listOfJobsAvailable) {
-//      this.listOfJobsAvailable = listOfJobsAvailable;
-//   }
-
 
    public List<Job> getListOfJobsAvailable() {
       return listOfJobsAvailable;

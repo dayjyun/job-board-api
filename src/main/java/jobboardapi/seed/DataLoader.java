@@ -15,127 +15,81 @@ import java.util.ArrayList;
 
 @Component
 public class DataLoader implements CommandLineRunner {
+   @Autowired
+   UserService userService;
 
-    @Autowired
-    UserService userService;
+   @Autowired
+   UserRepository userRepository;
 
-    @Autowired
-    UserRepository userRepository;
+   @Autowired
+   BusinessRepository businessRepository;
 
-    @Autowired
-    BusinessRepository businessRepository;
+   @Autowired
+   JobRepository jobRepository;
 
-    @Autowired
-    JobRepository jobRepository;
+   @Override
+   public void run(String... args) throws Exception{
+      loadUserData();
+   }
 
-    @Override
-    public void run(String... args) throws Exception{
-        loadUserData();
-    }
+   private void loadUserData() {
+      if (userRepository.count() == 0 && businessRepository.count() == 0 && jobRepository.count() == 0) {
 
-    private void loadUserData() {
-        if (userRepository.count() == 0 && businessRepository.count() == 0 && jobRepository.count() == 0) {
+         // create users
+         User deshe = new User(1L, "DeShe", "deshe@gmail.com", "pw", "resume1");
+         User kevin = new User(2L, "Kevin", "kevin@gmail.com", "pw", "resume2");
+         User kim = new User(3L, "Kim", "kim@gmail.com", "pw", "resume3");
 
-            // create users
-            User deshe = new User(1L, "DeShe", "deshe@gmail.com", "pw", "resume1");
-            User kevin = new User(2L, "Kevin", "kevin@gmail.com", "pw", "resume2");
-            User kim = new User(3L, "Kim", "kim@gmail.com", "pw", "resume3");
-            userService.createUser(deshe);
-            userService.createUser(kevin);
-            userService.createUser(kim);
+         userService.createUser(deshe);
+         userService.createUser(kevin);
+         userService.createUser(kim);
 
-            // create businesses
-            Business dBusiness = new Business(1L, "DeShe's Business", "Michigan");
-            Business kevBusiness = new Business(2L, "Kevin's Business", "Illinois");
-            Business kimBusiness = new Business(3L, "Kim's Business", "Illinois");
+         // create businesses
+         Business dBusiness = new Business(1L, "DeShe's Business", "Michigan");
+         Business kevBusiness = new Business(2L, "Kevin's Business", "Illinois");
+         Business kimBusiness = new Business(3L, "Kim's Business", "Illinois");
 
-            // for business, show the user that created it
-            // assign an owner (user) for each business
-            dBusiness.setUser(deshe);
-            kevBusiness.setUser(kevin);
-            kimBusiness.setUser(kim);
+         // create jobs
+         Job dJob = new Job(1L, "DeShe's Job", "Job 1 description", "Michigan", 100000.00);
+         Job kevJob = new Job(2L, "Kevin's Job", "Job 2 description", "Illinois", 100000.00);
+         Job kimJob = new Job(3L, "Kim's Job", "Job 3 description", "Illinois", 100000.00);
 
-            // for user, show a list of businesses they own
-            // assign a business list for each owner (user)
-            ArrayList<Business> businessListDeShe = new ArrayList<>();
-            ArrayList<Business> businessListKevin = new ArrayList<>();
-            ArrayList<Business> businessListKim = new ArrayList<>();
-            businessListDeShe.add(dBusiness);
-            businessListKevin.add(kevBusiness);
-            businessListKim.add(kimBusiness);
-            deshe.setBusinessList(businessListDeShe);
-            kevin.setBusinessList(businessListKevin);
-            kim.setBusinessList(businessListKim);
+         // for business, assign the owner (user) for each business
+         dBusiness.setUser(deshe);
+         kevBusiness.setUser(kevin);
+         kimBusiness.setUser(kim);
 
-            businessRepository.save(dBusiness);
-            businessRepository.save(kevBusiness);
-            businessRepository.save(kimBusiness);
+         // for each job, assign a business where each job comes from
+         dJob.setBusiness(dBusiness);
+         kevJob.setBusiness(kevBusiness);
+         kimJob.setBusiness(kimBusiness);
 
-            // duplicate job list, json ignore?
+         // for job, show a list of applicants
+         // assign a list of applicants to the job they applied for
+         ArrayList<User> desheJobListOfApplicants = new ArrayList<>();
+         ArrayList<User> kevinJobListOfApplicants = new ArrayList<>();
+         ArrayList<User> kimJobListOfApplicants = new ArrayList<>();
 
-            // create jobs
-            Job job1 = new Job(1L, "Job for Deshe's business", "Job 1 description", "Michigan", 100000.00);
-            Job job2 = new Job(2L, "Job for Kevin's business", "Job 2 description", "Illinois", 100000.00);
-            Job job3 = new Job(3L, "Job for Kim's business", "Job 3 description", "Illinois", 100000.00);
+         desheJobListOfApplicants.add(kim); // Kim applied for DeShe's Job
+         desheJobListOfApplicants.add(kevin);
 
-            // for job, show the business it belongs to
-            // assign a business where each job comes from
-            job1.setBusiness(dBusiness);
-            job2.setBusiness(kevBusiness);
-            job3.setBusiness(kimBusiness);
+         kevinJobListOfApplicants.add(kim);
+         kevinJobListOfApplicants.add(kevin);
 
-            // for job, show the user that created it
-            // assign a creator (user) for each job
-            job1.setUser(deshe);
-            job2.setUser(kevin);
-            job3.setUser(kim);
+         kimJobListOfApplicants.add(kevin); // Kevin applied for Kim's Job
+         kimJobListOfApplicants.add(deshe);
 
+         dJob.setApplicantsList(desheJobListOfApplicants);
+         kevJob.setApplicantsList(kevinJobListOfApplicants);
+         kimJob.setApplicantsList(kimJobListOfApplicants);
 
-            // for user, show a list of jobs they created
-            // assign a list of jobs created to their creator (user)
-            ArrayList<Job> jobListDeShe = new ArrayList<>();
-            ArrayList<Job> jobListKevin = new ArrayList<>();
-            ArrayList<Job> jobListKim = new ArrayList<>();
-            jobListDeShe.add(job1);
-            jobListKevin.add(job2);
-            jobListKim.add(job3);
-            deshe.setListOfJobsAppliedTo(jobListDeShe);
-            deshe.setListOfJobsAppliedTo(jobListKevin);
-            deshe.setListOfJobsAppliedTo(jobListKim);
+         businessRepository.save(dBusiness);
+         businessRepository.save(kevBusiness);
+         businessRepository.save(kimBusiness);
 
-            // // // // // getListOfJobsAppliedTo.add????
-            deshe.getListOfJobsAppliedTo().add(job1);
-            deshe.getListOfJobsAppliedTo().add(job2);
-            deshe.getListOfJobsAppliedTo().add(job3);
-
-            // doesn't work
-            // for user, show the job id that they applied for
-            // assign an applicant to each job
-            deshe.setJob(job2); // DeShe applied for Kevin's Job
-            kevin.setJob(job3); // Kevin applied for Kim's Job
-            kim.setJob(job1); // Kim applied for DeShe's Job
-
-            // for business, show a list of jobs it has
-            // assign a list of jobs to each business
-            dBusiness.setListOfJobsAvailable(jobListDeShe);
-            kevBusiness.setListOfJobsAvailable(jobListKevin);
-            kimBusiness.setListOfJobsAvailable(jobListKim);
-
-            // for job, show a list of applicants
-            // assign a list of applicants to the job they applied for
-            ArrayList<User> applicantsJob1 = new ArrayList<>();
-            ArrayList<User> applicantsJob2 = new ArrayList<>();
-            ArrayList<User> applicantsJob3 = new ArrayList<>();
-            applicantsJob1.add(kim); // Kim applied for DeShe's Job
-            applicantsJob2.add(deshe); // DeShe applied for Kevin's Job
-            applicantsJob3.add(kevin); // Kevin applied for Kim's Job
-            job1.setApplicantsList(applicantsJob1);
-            job2.setApplicantsList(applicantsJob2);
-            job3.setApplicantsList(applicantsJob3);
-
-            jobRepository.save(job1);
-            jobRepository.save(job2);
-            jobRepository.save(job3);
-        }
-    }
+         jobRepository.save(dJob);
+         jobRepository.save(kevJob);
+         jobRepository.save(kimJob);
+      }
+   }
 }

@@ -1,6 +1,7 @@
 package jobboardapi.service;
 
 import jobboardapi.exceptions.AlreadyExistsException;
+import jobboardapi.exceptions.BadRequestException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.User;
 import jobboardapi.models.login.LoginRequest;
@@ -50,12 +51,20 @@ public class UserService {
     }
 
     public User createUser(User userObject) {
+        if (userObject.getName() == "" || userObject.getName() == null){
+            throw new BadRequestException("User name is required");
+        }
+        if (userObject.getEmail() == "" || userObject.getEmail() == null){
+            throw new BadRequestException("User email is required");
+        }
+        if (userObject.getPassword() == "" || userObject.getPassword() == null){
+            throw new BadRequestException("User password is required");
+        }
         if (!userRepository.existsByEmail(userObject.getEmail())) {
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
             return userRepository.save(userObject);
         } else {
-            throw new AlreadyExistsException("user with email address " + userObject.getEmail() +
-                    " already exists");
+            throw new AlreadyExistsException("User with email address " + userObject.getEmail() + " already exists");
         }
     }
 
@@ -84,13 +93,11 @@ public class UserService {
      * @return the optional of the user
      */
     public Optional<User> getUserById(Long userId) {
-        // Check only users that have applied to my job listing for my business
-
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()) {
             return user;
         } else {
-            throw new NotFoundException("User not found");
+            throw new NotFoundException("User with id " + userId + " not found");
         }
     }
 }

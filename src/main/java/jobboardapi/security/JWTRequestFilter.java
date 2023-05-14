@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-
     // logger allows us to save information in server's memory, but not hard drive
     Logger logger = Logger.getLogger(JWTRequestFilter.class.getName());
 
