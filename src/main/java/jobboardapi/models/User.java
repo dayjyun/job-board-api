@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -18,11 +19,9 @@ public class User {
    private Long id;
 
    @Column
-   @NotNull(message = "User name may not be null")
    private String name;
 
    @Column(unique = true)
-   @NotNull(message = "User email may not be null")
    private String email;
 
    @Column

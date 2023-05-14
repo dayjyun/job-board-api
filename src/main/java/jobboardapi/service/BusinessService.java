@@ -7,6 +7,7 @@ import jobboardapi.models.Business;
 import jobboardapi.models.Job;
 import jobboardapi.repository.BusinessRepository;
 import jobboardapi.repository.JobRepository;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,7 @@ public class BusinessService {
       if (allBusinesses.size() > 0) {
          return allBusinesses;
       } else {
-         throw new NotFoundException("Not businesses found");
+         throw new NotFoundException("No businesses found");
       }
    }
 
@@ -54,9 +55,8 @@ public class BusinessService {
       if (business.isPresent()) {
          throw new AlreadyExistsException("Business with the name " + businessObject.getName() + " already exists.");
       } else {
-         if (businessObject.getName()
-                           .isEmpty() || businessObject.getName() == null) {
-            throw new BadRequestException("Business name may not be null");
+         if (businessObject.getName() == "" || businessObject.getName() == null) {
+            throw new BadRequestException("Business name is required");
          } else {
             businessObject.setUser(UserService.getLoggedInUser());
             return businessRepository.save(businessObject);
@@ -75,7 +75,7 @@ public class BusinessService {
       if (business.isPresent()) {
          return business;
       } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + businessId + " not found");
       }
    }
 
@@ -92,16 +92,19 @@ public class BusinessService {
       if (business.isPresent()) {
          Business updatedBusiness = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId()).get();
          for (Business b : allBusinesses) {
-            if (b.getName()
-                 .equals(businessBody.getName())) {
+            if (b.getName().equals(businessBody.getName())) {
                throw new AlreadyExistsException("Business name already exists");
             }
          }
-         updatedBusiness.setName(businessBody.getName());
-         updatedBusiness.setHeadquarters(businessBody.getHeadquarters());
+         if(businessBody.getName() != null && !businessBody.getName().isEmpty()) {
+            updatedBusiness.setName(businessBody.getName());
+         }
+         if(businessBody.getHeadquarters() != null && !businessBody.getHeadquarters().isEmpty()) {
+            updatedBusiness.setHeadquarters(businessBody.getHeadquarters());
+         }
          return businessRepository.save(updatedBusiness);
       } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + businessId + " not found");
       }
    }
 
@@ -112,13 +115,15 @@ public class BusinessService {
     * @param businessId is the id for business the user wants to delete
     * @return the deleted business's details
     */
-   public Business deleteBusiness(Long businessId) {
+   public JSONObject deleteBusiness(Long businessId) {
       Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId());
+      JSONObject returnMessage = new JSONObject();
+      returnMessage.put("message", "Business successfully deleted");
       if (business.isPresent()) {
          businessRepository.deleteById(businessId);
-         return business.get();
+         return returnMessage;
       } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + businessId + " not found for user");
       }
    }
 
@@ -131,15 +136,14 @@ public class BusinessService {
    public List<Job> getJobByBusinessId(Long businessId) {
       Optional<Business> business = businessRepository.findById(businessId);
       if (business.isPresent()) {
-         List<Job> jobList = business.get()
-                                     .getListOfJobsAvailable();
+         List<Job> jobList = business.get().getListOfJobsAvailable();
          if(jobList.size() == 0) {
             throw new NotFoundException("No jobs posted for " + business.get().getName());
          }
          return business.get()
                         .getListOfJobsAvailable();
       } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + businessId + " not found");
       }
    }
 
@@ -155,11 +159,16 @@ public class BusinessService {
    public Job createJobForBusinessId(Long businessId, Job jobObject) {
       Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId());
       if (business.isPresent()) {
+         if(jobObject.getTitle() == null || jobObject.getTitle() == "") {
+            throw new BadRequestException("Job title is required");
+         }
+         if(jobObject.getLocation() == null || jobObject.getLocation() == "") {
+            throw new BadRequestException("Job location is required");
+         }
          jobObject.setBusiness(business.get());
          business.get().getListOfJobsAvailable().add(jobObject);
          return jobRepository.save(jobObject);
-      } else {
-         throw new NotFoundException("Business not found");
       }
+      throw new NotFoundException("Business with id " + businessId + " not found");
    }
 }

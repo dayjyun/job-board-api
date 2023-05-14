@@ -69,7 +69,7 @@ public class JobService {
       if (job.isPresent()) {
          return job;
       } else {
-         throw new NotFoundException("Job listing not found");
+         throw new NotFoundException("Job with id " + jobId + " not found");
       }
    }
 
@@ -99,10 +99,18 @@ public class JobService {
             if (jobListForBusiness.size() > 0) {
                for (Job job : jobListForBusiness) {
                   if (job.getId().equals(jobId)) {
+                     if(jobBody.getTitle() != null && !jobBody.getTitle().isEmpty()) {
                      job.setTitle(jobBody.getTitle());
-                     job.setDescription(jobBody.getDescription());
-                     job.setLocation(jobBody.getLocation());
-                     job.setSalary(jobBody.getSalary());
+                     }
+                     if(jobBody.getDescription() != null && !jobBody.getDescription().isEmpty()) {
+                        job.setDescription(jobBody.getDescription());
+                     }
+                     if(jobBody.getLocation() != null && !jobBody.getLocation().isEmpty()) {
+                        job.setLocation(jobBody.getLocation());
+                     }
+                     if(jobBody.getSalary() != null && jobBody.getSalary() > 0) {
+                        job.setSalary(jobBody.getSalary());
+                     }
                      return jobRepository.save(job);
                   }
                }
