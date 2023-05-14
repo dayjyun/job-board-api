@@ -1,11 +1,13 @@
 package jobboardapi.controller;
 
+import jobboardapi.models.Job;
 import jobboardapi.models.User;
 import jobboardapi.service.MyProfileService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,5 +31,8 @@ public class MyProfileController {
       return myProfileService.deleteMyProfile();
    }
 
-//   @GetMapping(path = "/jobs")
+   @GetMapping(path = "/jobs")
+   public List<Job> getJobsIAppliedFor() {
+      return myProfileService.getJobsIAppliedFor();
+   }
 }

@@ -3,6 +3,7 @@ package jobboardapi.service;
 import jobboardapi.exceptions.BadRequestException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.exceptions.UnauthorizedException;
+import jobboardapi.models.Job;
 import jobboardapi.models.User;
 import jobboardapi.repository.UserRepository;
 import jobboardapi.security.MyUserDetails;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,6 +62,7 @@ public class MyProfileService {
          if (updatedBody.getEmail() != null && !updatedBody.getEmail().isEmpty()) {
             user.get().setEmail(updatedBody.getEmail());
          }
+         // If the value of the resume is an empty string, it will delete the resume from the profile
          if (updatedBody.getResume() != null) {
             user.get().setResume(updatedBody.getResume());
          }
@@ -78,6 +81,20 @@ public class MyProfileService {
          return returnMessage;
       } else {
          throw new NotFoundException("Odd. That wasn't supposed to happen.");
+      }
+   }
+
+   public List<Job> getJobsIAppliedFor() {
+      Optional<User> myProfile = userRepository.findById(getLoggedInUser().getId());
+      if(myProfile.isPresent()) {
+         List<Job> listOfJobsIAppliedTo = myProfile.get().getListOfJobsAppliedTo();;
+         if(listOfJobsIAppliedTo.size() > 0) {
+            return listOfJobsIAppliedTo;
+         } else {
+            throw new NotFoundException("No jobs applied to");
+         }
+      } else {
+         throw new NotFoundException("Profile not found");
       }
    }
 }
