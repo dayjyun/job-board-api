@@ -91,16 +91,19 @@ public class BusinessService {
       if (business.isPresent()) {
          Business updatedBusiness = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId()).get();
          for (Business b : allBusinesses) {
-            if (b.getName()
-                 .equals(businessBody.getName())) {
+            if (b.getName().equals(businessBody.getName())) {
                throw new AlreadyExistsException("Business name already exists");
             }
          }
-         updatedBusiness.setName(businessBody.getName());
-         updatedBusiness.setHeadquarters(businessBody.getHeadquarters());
+         if(businessBody.getName() != null && !businessBody.getName().isEmpty()) {
+            updatedBusiness.setName(businessBody.getName());
+         }
+         if(businessBody.getHeadquarters() != null && !businessBody.getHeadquarters().isEmpty()) {
+            updatedBusiness.setHeadquarters(businessBody.getHeadquarters());
+         }
          return businessRepository.save(updatedBusiness);
       } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + businessId + " not found");
       }
    }
 
