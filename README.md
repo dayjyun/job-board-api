@@ -72,14 +72,15 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 
 # User Stories
 ## Users Stories
-| Functionality                                       | User Stories                                                |
-|-----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| User creates account                                | As an unregistered user, I want to create an account so that I can apply for jobs or create job postings.                                                                              |
-| User logs into account                              | As a registered user, I want to log into my account so that I can apply for jobs and create job postings.                                                                             |
-| Returns user account details                        | As a registered user, I want to view my account details so that I can see information businesses have access to.                                                                      |
-| Edit user account                                   | As a registered user, I want to edit my account details so that I can keep my information up-to-date.                                                                                 |
-| Delete user account                                 | As a registered user, I want to delete my account when I no longer need it, so that businesses do not have access to my information.                                                   |
-| Returns a list of jobs the user applied for         | As a registered user, I want to see all the jobs I’ve applied for so that I can keep track of my applications.                                                                        |
+| Functionality                               | User Stories                                                                                                                         |
+|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| User creates account                        | As an unregistered user, I want to create an account so that I can apply for jobs or create job postings.                            |
+| User logs into account                      | As a registered user, I want to log into my account so that I can apply for jobs and create job postings.                            |
+| Returns user account details                | As a registered user or unregistered user, I want to view other user profiles so that I can view more information about other users. |
+| Returns logged-in user's details            | As a registered user, I want to view my account details so that I can see information businesses have access to.                     |
+| Edit user account                           | As a registered user, I want to edit my account details so that I can keep my information up-to-date.                                |
+| Delete user account                         | As a registered user, I want to delete my account when I no longer need it, so that businesses do not have access to my information. |
+| Returns a list of jobs the user applied for | As a registered user, I want to see all the jobs I’ve applied for so that I can keep track of my applications.                       |
 
 ## Business Stories
  | Functionality                                       | User Stories                                                                                                                                                                          |
