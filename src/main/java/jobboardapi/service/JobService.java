@@ -8,6 +8,7 @@ import jobboardapi.models.User;
 import jobboardapi.repository.BusinessRepository;
 import jobboardapi.repository.JobRepository;
 import jobboardapi.repository.UserRepository;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -123,37 +124,36 @@ public class JobService {
    }
 
    /**
-    * )    * deleteJobListing checks if a job id is present in the job database. Next, it checks if the businesses has a list of jobs
+    * deleteJobListing checks if a job id is present in the job database. Next, it checks if the businesses has a list of jobs
     * available. Following that, it checks if any of the job's business id matches the business id for the business owned by the user Once
     * it passes the check, the listing gets updated If any of the checks fail, a NotFoundException is thrown
     *
     * @param jobId is the id for the job the user wants to delete
     * @return the deleted job's details
     */
-   public Job deleteJobListing(Long jobId) {
+   public JSONObject deleteJobListing(Long jobId) {
       // Find the targeted job listing
       Optional<Job> jobListing = jobRepository.findById(jobId);
       // When the job listing is found
       if (jobListing.isPresent()) {
-         Optional<Business> loggedInUserBusiness = businessRepository.findBusinessByIdAndUserId(jobListing.get()
-                                                                                                          .getBusiness()
-                                                                                                          .getId(),
-                 UserService.getLoggedInUser()
-                            .getId());
+         Optional<Business> loggedInUserBusiness = businessRepository.findBusinessByIdAndUserId(
+                                                                        jobListing.get().getBusiness().getId(),
+                                                                        UserService.getLoggedInUser().getId());
          if (loggedInUserBusiness.isPresent()) {
             List<Job> jobListForBusiness = loggedInUserBusiness.get().getListOfJobsAvailable();
             for (Job job : jobListForBusiness) {
                if (Objects.equals(job.getId(), jobId)) {
                   jobRepository.deleteById(jobId);
-                  return jobListing.get();
+                  JSONObject returnMessage = new JSONObject();
+                  returnMessage.put("message", "Job listing with id " + jobId + " successfully deleted");
+                  return returnMessage;
                }
             }
-            throw new NotFoundException("Job listing with id" + jobId + " not found");
+            throw new NotFoundException("Job listing with id " + jobId + " not found");
          }
-         throw new NotFoundException("Business with id " + jobRepository.findById(jobId).get().getBusiness()
-                                                                        .getId() + " does not belong to user");
+         throw new NotFoundException("Job listing with id " + jobRepository.findById(jobId).get().getBusiness().getId() + " does not belong to user");
       }
-      throw new NotFoundException("Job listing with id" + jobId + " not found");
+      throw new NotFoundException("Job listing with id " + jobId + " not found");
    }
 
    /**
