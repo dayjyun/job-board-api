@@ -54,7 +54,7 @@ public class UserService {
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
             return userRepository.save(userObject);
         } else {
-            throw new AlreadyExistsException("user with email address " + userObject.getEmail() +
+            throw new AlreadyExistsException("Eser with email address " + userObject.getEmail() +
                     " already exists");
         }
     }
@@ -88,7 +88,7 @@ public class UserService {
         if(user.isPresent()) {
             return user;
         } else {
-            throw new NotFoundException("User not found");
+            throw new NotFoundException("User with id " + userId + " not found");
         }
     }
 }
