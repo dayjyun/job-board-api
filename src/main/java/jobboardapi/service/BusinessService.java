@@ -74,7 +74,7 @@ public class BusinessService {
       if (business.isPresent()) {
          return business;
       } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + businessId + " not found");
       }
    }
 
