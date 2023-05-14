@@ -63,7 +63,7 @@ public class Job {
    public Job() {
    }
 
-   public Job(Long id, String title, String description, String location, double salary, boolean applied) {
+   public Job(Long id, String title, String description, String location, double salary) {
       this.id = id;
       this.title = title;
       this.description = description;
@@ -138,13 +138,13 @@ public class Job {
       this.business = business;
    }
 
-//   public List<User> getApplicantsList() {
-//      return applicantsList;
-//   }
-//
-//   public void setApplicantsList(List<User> applicantsList) {
-//      this.applicantsList = applicantsList;
-//   }
+   public List<User> getApplicantsList() {
+      return applicantsList;
+   }
+
+   public void setApplicantsList(List<User> applicantsList) {
+      this.applicantsList = applicantsList;
+   }
 
    @Override
    public String toString() {
@@ -156,13 +156,5 @@ public class Job {
               ", salary=" + salary +
 //              ", applied=" + applied +
               '}';
-   }
-
-   public List<User> getApplicantsList() {
-      return applicantsList;
-   }
-
-   public void setApplicantsList(List<User> applicantsList) {
-      this.applicantsList = applicantsList;
    }
 }
