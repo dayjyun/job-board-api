@@ -198,7 +198,6 @@ public class JobBoardDefinitions {
    public void aListOfJobsIsAvailableForABusiness() {
       responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
       list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
-      System.out.println(list);
    }
 
    @When("I search for job listings for a business")
@@ -403,7 +402,6 @@ public class JobBoardDefinitions {
    @When("I delete a business from my Business list")
    public void iDeleteBusinessFromMyBusinessList() throws Exception {
       RestAssured.baseURI = BASE_URL;
-//      request.header("Content-Type", "application/json");
       request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
 
       response = request.delete(BASE_URL + port + "/api/businesses/1");
@@ -443,7 +441,7 @@ public class JobBoardDefinitions {
 
    /**
     * Scenario: User is able to edit their account details
-    * Path: GET http://localhost:8080/api/myProfile
+    * Path: PUT http://localhost:8080/api/myProfile
     * Reuses GIVEN aMyAccountIsAvailable gets the current logged-in user's object
     * iEditMyProfile updates the logged-in user's details
     * iSeeMyProfileIsUpdated confirms a successful update for the logged-in user's details
@@ -464,4 +462,46 @@ public class JobBoardDefinitions {
    public void iSeeMyProfileIsUpdated() {
       Assert.assertEquals(200, response.getStatusCode());
    }
+
+   /**
+    *
+    */
+   @Given("I have a list of jobs I have applied to")
+   public void iHaveAListOfJobsIHaveAppliedTo() throws Exception {
+      HttpHeaders headers = new HttpHeaders();
+      headers.setBearerAuth(getSecurityKey());
+      HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/myProfile/jobs", HttpMethod.GET, entity, String.class);
+      list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+   }
+
+   @When("I search for list of jobs I applied to")
+   public void iSearchForListOfJobsIAppliedTo() {
+      Assert.assertTrue(list.size() > 0);
+   }
+
+   @Then("I can see a list of jobs I applied to")
+   public void iCanSeeAListOfJobsIAppliedTo() {
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+   }
+
+
+//   /**
+//    * Scenario: User is able to delete their account
+//    * Path: DELETE http://localhost:8080/api/myProfile
+//    */
+//
+//   @When("I delete my profile")
+//   public void iDeleteMyProfile() throws Exception {
+////      RestAssured.baseURI = BASE_URL;
+////      request = RestAssured.given().header("Authorization", "Bearer", getSecurityKey());
+//      request.header("Content-Type", "application/json");
+//      response = request.delete(BASE_URL + port + "/api/myProfile");
+//   }
+//
+//   @Then("I can delete my account")
+//   public void iCanDeleteMyAccount() {
+//      Assert.assertEquals(200, response.getStatusCode());
+//   }
 }

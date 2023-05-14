@@ -103,15 +103,15 @@ Feature: Job Board API functionalities
     Given my account is available
     When I edit my profile
     Then I see my profile is updated
-#
+
 #  Scenario: User is able to delete their account
 #    Given my account is available
-#    When I go to my profile
+#    When I delete my profile
 #    Then I can delete my account
-#
-#  Scenario: User is able to see all jobs applied for
-#    Given A user account is available
-#    When I search by my user id
-#    Then I can see a list of jobs
-#    When No jobs have been applied for
-#    Then I see a message saying no jobs have been applied for
+
+  Scenario: User is able to see all jobs applied for
+    Given I have a list of jobs I have applied to
+    When I search for list of jobs I applied to
+    Then I can see a list of jobs I applied to
+
+
