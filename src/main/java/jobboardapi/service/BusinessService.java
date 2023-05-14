@@ -143,7 +143,7 @@ public class BusinessService {
          return business.get()
                         .getListOfJobsAvailable();
       } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + businessId + " not found");
       }
    }
 
