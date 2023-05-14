@@ -33,24 +33,14 @@ public class User {
    private String resume;
 
    // one user can have many businesses
-   @OneToMany(mappedBy = "user") // orphanRemoval removes the business from database if we deleted it from a user
+   @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the business from database if we deleted it from a user
    @LazyCollection(LazyCollectionOption.FALSE) // all businesses will be eagerly loaded (business data is retrieved together from the database)
-//   @JsonIgnore
+   @JsonIgnore
    private List<Business> businessList;
 
-   // one user can apply to jobs
-   // Current logged-in user can see the list of jobs they applied for
-   @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the job from database if we deleted it from a user
-   @LazyCollection(LazyCollectionOption.FALSE) // all jobs will be eagerly loaded (job data is retrieved together from the database)on
+   @ManyToMany(mappedBy = "applicantsList")
    @JsonIgnore
    private List<Job> listOfJobsAppliedTo;
-
-
-   // many users (applicants) applied to one job
-   @ManyToOne
-   @JoinColumn(name = "job_id")
-   @JsonIgnore
-   private Job job;
 
    public User() {}
 
@@ -110,28 +100,12 @@ public class User {
       this.businessList = businessList;
    }
 
-//   public List<Job> getJobList() {
-//      return appliedJobs;
-//   }
-//
-//   public void setJobList(List<Job> appliedJobs) {
-//      this.appliedJobs = appliedJobs;
-//   }
-
    public List<Job> getListOfJobsAppliedTo() {
       return listOfJobsAppliedTo;
    }
 
    public void setListOfJobsAppliedTo(List<Job> listOfJobsAppliedTo) {
       this.listOfJobsAppliedTo = listOfJobsAppliedTo;
-   }
-
-   public Job getJob() {
-      return job;
-   }
-
-   public void setJob(Job job) {
-      this.job = job;
    }
 
    @Override

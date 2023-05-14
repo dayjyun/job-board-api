@@ -82,11 +82,19 @@ Feature: Rest API functionalities
     When I edit my job details
     Then I see the job is updated
 
+
+
+
+
     # FAIL
-#  Scenario: User is able to see a list of all applicants for their job
-#    Given A list of applicants is available
-#    When I view the list of applicants
-#    Then I can see the list of applicants
+  Scenario: User is able to see a list of all applicants for their job
+    Given A list of applicants is available
+    When I view the list of applicants
+    Then I can see the list of applicants
+
+
+
+
 
   # PASS (PRIVATE)
   Scenario: User is able to apply for a job
@@ -94,20 +102,14 @@ Feature: Rest API functionalities
     When I apply for the job
     Then I see a message saying I have applied for the job
 
-
-
-
-
     # PASS (PUBLIC)
   Scenario: User with business is able to delete job listing
     Given A job listing is available
     When I delete a job from my Job list
     Then I can see my job listing is deleted
 
-
-
     # PASS (PRIVATE) NOW FAIL?
-#  Scenario: User is able to delete business
-#    Given A business is available
-#    When I delete a business from my Business list
-#    Then I can see my business is deleted
+  Scenario: User is able to delete business
+    Given A business is available
+    When I delete a business from my Business list
+    Then I can see my business is deleted

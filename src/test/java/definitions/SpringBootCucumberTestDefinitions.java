@@ -3,8 +3,6 @@ package definitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import jobboardapi.security.JWTRequestFilter;
-import org.json.JSONException;
 import org.json.JSONObject;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
@@ -21,7 +19,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,15 +32,8 @@ public class SpringBootCucumberTestDefinitions {
    private static List<?> list;
    private static RequestSpecification request;
 
-   private Business newBusiness;
    private static final String newBusinessName = "New Business Name";
    private static final String newJobNameForBusiness = "New Job Name For Business";
-//   private String jwtToken;
-
-//   public void iHaveAValidJWTToken() {
-//        JWTRequestFilter jwtRequestFilter = new JWTRequestFilter();
-//        jwtToken = jwtRequestFilter.getJwtToken();
-//   }
 
    public String getSecurityKey() throws Exception {
       RequestSpecification request = RestAssured.given();
@@ -61,117 +51,110 @@ public class SpringBootCucumberTestDefinitions {
    @LocalServerPort
    String port;
 
-     /**
-     * Test Scenario: User is able to view another user's account details
-     * Path: GET http://localhost:8080/api/users/{userId}
-     * aUserAccountIsAvailable gets the user object from the specified endpoint
-     * iSearchForAnotherUserSId checks that the user object is not null
-     * iCanSeeTheUserSAccountDetails makes sure that the HTTP status is 200 when we successfully find the user object
-     */
-    @Given("A user account is available")
-    public void aUserAccountIsAvailable() {
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
-        response = request.get(BASE_URL + port + "/api/users/1");
-    }
+   /**
+    * Test Scenario: User is able to view another user's account details
+    * Path: GET http://localhost:8080/api/users/{userId}
+    * aUserAccountIsAvailable gets the user object from the specified endpoint
+    * iSearchForAnotherUserSId checks that the user object is not null
+    * iCanSeeTheUserSAccountDetails makes sure that the HTTP status is 200 when we successfully find the user object
+    */
+   @Given("A user account is available")
+   public void aUserAccountIsAvailable() {
+      RestAssured.baseURI = BASE_URL;
+      RequestSpecification request = RestAssured.given();
+      response = request.get(BASE_URL + port + "/api/users/1");
+   }
 
-    @When("I search for another user's id")
-    public void iSearchForAnotherUserSId() {
-        Assert.assertNotNull(String.valueOf(response));
-    }
+   @When("I search for another user's id")
+   public void iSearchForAnotherUserSId() {
+      Assert.assertNotNull(String.valueOf(response));
+   }
 
-    @Then("I can see the user's account details")
-    public void iCanSeeTheUserSAccountDetails() {
-        Assert.assertEquals(200, response.getStatusCode());
-    }
+   @Then("I can see the user's account details")
+   public void iCanSeeTheUserSAccountDetails() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 
-    /**
-     * Test Scenario: User is able to see a list of all businesses
-     * Path: GET http://localhost:8080/api/businesses
-     * aListOfBusinessesAreAvailable gets the list of all businesses from the database referenced by the endpoint
-     * iSearchForBusinesses checks that there is a list of businesses containing at least one business
-     * iCanSeeAListOfBusinesses makes sure that the HTTP status is 200 when we successfully find the list of businesses
-     */
-    @Given("A list of businesses are available")
-    public void aListOfBusinessesAreAvailable() {
-        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses", HttpMethod.GET, null, String.class);
-        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
-    }
+   /**
+    * Test Scenario: User is able to see a list of all businesses
+    * Path: GET http://localhost:8080/api/businesses
+    * aListOfBusinessesAreAvailable gets the list of all businesses from the database referenced by the endpoint
+    * iSearchForBusinesses checks that there is a list of businesses containing at least one business
+    * iCanSeeAListOfBusinesses makes sure that the HTTP status is 200 when we successfully find the list of businesses
+    */
+   @Given("A list of businesses are available")
+   public void aListOfBusinessesAreAvailable() {
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses", HttpMethod.GET, null, String.class);
+      list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+   }
 
-    @When("I search for businesses")
-    public void iSearchForBusinesses() {
-        Assert.assertTrue(list.size() > 0);
-    }
+   @When("I search for businesses")
+   public void iSearchForBusinesses() {
+      Assert.assertTrue(list.size() > 0);
+   }
 
-    @Then("I can see a list of businesses")
-    public void iCanSeeAListOfBusinesses() {
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
-  
-    /**
-     * Test Scenario: User is able to create a business
-     * Path: POST http://localhost:8080/api/businesses
-     * aBusinessNameDoesNotExistYet checks the business database to see if the business name exists yet
-     * iCreateABusinessWithThatName creates the business JSON object and posts it to the endpoint
-     * iCanSeeMyNewBusinessSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
-     */
-    @Given("A business name does not exist yet")
-    public void aBusinessNameDoesNotExistYet() {
-        Optional<Business> existingBusiness = businessRepository.findByName(newBusinessName);
-        Assert.assertTrue(existingBusiness.isEmpty());
-    }
+   @Then("I can see a list of businesses")
+   public void iCanSeeAListOfBusinesses() {
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+   }
 
-//    @Given("I have a valid JWT token")
-//    public void iHaveAValidJWTToken() {
-//        JWTRequestFilter jwtRequestFilter = new JWTRequestFilter();
-//        jwtToken = jwtRequestFilter.getJwtToken();
-//    }
+   /**
+    * Test Scenario: User is able to create a business
+    * Path: POST http://localhost:8080/api/businesses
+    * aBusinessNameDoesNotExistYet checks the business database to see if the business name exists yet
+    * iCreateABusinessWithThatName creates the business JSON object and posts it to the endpoint
+    * iCanSeeMyNewBusinessSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
+    */
+   @Given("A business name does not exist yet")
+   public void aBusinessNameDoesNotExistYet() {
+      Optional<Business> existingBusiness = businessRepository.findByName(newBusinessName);
+      Assert.assertTrue(existingBusiness.isEmpty());
+   }
 
-    @When("I create a business with that name")
-    public void iCreateABusinessWithThatName() throws Exception {
-        RestAssured.baseURI = BASE_URL;
-//        RequestSpecification request = RestAssured.given();
-       RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("name", newBusinessName);
-        requestBody.put("headquarters", "New Business Headquarters");
+   @When("I create a business with that name")
+   public void iCreateABusinessWithThatName() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+      RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("name", newBusinessName);
+      requestBody.put("headquarters", "New Business Headquarters");
 //        request.header("Authorization", "Bearer " + getSecurityKey());
-        request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses");
-    }
+      request.header("Content-Type", "application/json");
+      response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses");
+   }
 
-    @Then("I can see my new business's details")
-    public void iCanSeeMyNewBusinessSDetails() {
-        Assert.assertEquals(201, response.getStatusCode());
-    }
+   @Then("I can see my new business's details")
+   public void iCanSeeMyNewBusinessSDetails() {
+      Assert.assertEquals(201, response.getStatusCode());
+   }
 
-    /**
-     * Testing for Scenario: User is able to view business details
-     * This is the GET request at the endpoint http://localhost:8080/api/businesses/{businessId}
-     * aBusinessIsAvailable gets the business object from the specified endpoint
-     * iSearchByBusinessId checks that the business object is not null
-     * iCanSeeABusinessSDetails makes sure that the HTTP status is 200 when we successfully find the business object
-     */
-    @Given("A business is available")
-    public void aBusinessIsAvailable() {
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
-        response = request.get(BASE_URL + port + "/api/businesses/1");
-    }
+   /**
+    * Testing for Scenario: User is able to view business details
+    * This is the GET request at the endpoint http://localhost:8080/api/businesses/{businessId}
+    * aBusinessIsAvailable gets the business object from the specified endpoint
+    * iSearchByBusinessId checks that the business object is not null
+    * iCanSeeABusinessSDetails makes sure that the HTTP status is 200 when we successfully find the business object
+    */
+   @Given("A business is available")
+   public void aBusinessIsAvailable() {
+      RestAssured.baseURI = BASE_URL;
+      RequestSpecification request = RestAssured.given();
+      response = request.get(BASE_URL + port + "/api/businesses/1");
+   }
 
-    @When("I search by business id")
-    public void iSearchByBusinessId() {
-        Assert.assertNotNull(String.valueOf(response));
-    }
+   @When("I search by business id")
+   public void iSearchByBusinessId() {
+      Assert.assertNotNull(String.valueOf(response));
+   }
 
-    @Then("I can see a business's details")
-    public void iCanSeeABusinessSDetails() {
-        Assert.assertEquals(200, response.getStatusCode());
-    }
-  
-    /**
+   @Then("I can see a business's details")
+   public void iCanSeeABusinessSDetails() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
     * Test Scenario: User is able to edit business details
-      * Path: PUT http://localhost:8080/api/businesses/{businessId}
+    * Path: PUT http://localhost:8080/api/businesses/{businessId}
     * aBusinessIsAvailable sets request URL path for the business
     * iSearchByBusinessId updates the business details
     * iCanEditMyBusinessDetails confirms a successful update for the business
@@ -197,89 +180,87 @@ public class SpringBootCucumberTestDefinitions {
    public void iCanEditMyBusinessDetailsPUT() {
       Assert.assertEquals(200, response.getStatusCode());
    }
-  
-  /**
-     * Testing for Scenario: User is able to delete business
-     * This is the DELETE request at the endpoint http://localhost:8080/api/businesses/{businessId}
-     * iDeleteBusinessFromMyBusinessList gets the business from the specified endpoint and sends the delete request to delete the business
-     * iCanSeeMyBusinessIsDeleted makes sure that the HTTP status is 200 when we successfully delete the business object
-     */
-    @When("I delete a business from my Business list")
-    public void iDeleteBusinessFromMyBusinessList() throws Exception {
-        RestAssured.baseURI = BASE_URL;
-       request.header("Content-Type", "application/json");
-        request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
 
-        response = request.delete(BASE_URL + port + "/api/businesses/1");
+   /**
+    * Testing for Scenario: User is able to delete business
+    * This is the DELETE request at the endpoint http://localhost:8080/api/businesses/{businessId}
+    * iDeleteBusinessFromMyBusinessList gets the business from the specified endpoint and sends the delete request to delete the business
+    * iCanSeeMyBusinessIsDeleted makes sure that the HTTP status is 200 when we successfully delete the business object
+    */
+   @When("I delete a business from my Business list")
+   public void iDeleteBusinessFromMyBusinessList() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+//      request.header("Content-Type", "application/json");
+      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
 
-       System.out.println("response"+response);
-       System.out.println("request"+request);
-    }
+      response = request.delete(BASE_URL + port + "/api/businesses/1");
 
-    @Then("I can see my business is deleted")
-    public void iCanSeeMyBusinessIsDeleted() {
-        Assert.assertEquals(200, response.getStatusCode());
-    }
-  
-      /**
-     * Test Scenario: User is able to see a list of job listings for a business
-     * Path: GET http://localhost:8080/api/businesses/{businessId}/jobs
-     * aListOfJobsIsAvailableForABusiness gets the list of all jobs from the business id = 1, as referenced by the endpoint
-     * iSearchForJobListingsForABusiness checks that there is a list of jobs containing at least one job
-     * iCanSeeAListOfJobsForABusiness makes sure that the HTTP status is 200 when we successfully find the list of jobs
-     */
-    @Given("A list of jobs is available for a business")
-    public void aListOfJobsIsAvailableForABusiness() {
-        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
-        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
-        System.out.println(list);
-    }
+      System.out.println("response"+response);
+      System.out.println("request"+request);
+   }
 
-    @When("I search for job listings for a business")
-    public void iSearchForJobListingsForABusiness() {
-        Assert.assertTrue(list.size() > 0);
-    }
+   @Then("I can see my business is deleted")
+   public void iCanSeeMyBusinessIsDeleted() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 
-    @Then("I can see a list of jobs for a business")
-    public void iCanSeeAListOfJobsForABusiness() {
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
+   /**
+    * Test Scenario: User is able to see a list of job listings for a business
+    * Path: GET http://localhost:8080/api/businesses/{businessId}/jobs
+    * aListOfJobsIsAvailableForABusiness gets the list of all jobs from the business id = 1, as referenced by the endpoint
+    * iSearchForJobListingsForABusiness checks that there is a list of jobs containing at least one job
+    * iCanSeeAListOfJobsForABusiness makes sure that the HTTP status is 200 when we successfully find the list of jobs
+    */
+   @Given("A list of jobs is available for a business")
+   public void aListOfJobsIsAvailableForABusiness() {
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
+      list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+      System.out.println(list);
+   }
 
-    /**
-     * Test Scenario: User with business is able to create a job listing
-     * Path: POST http://localhost:8080/api/businesses/{1}/jobs
-     * aBusinessIsAvailableToCreateAJob gets the business object from the specified endpoint
-     * iCreateAJobListing creates the job JSON object and posts it to the endpoint
-     * iCanSeeTheNewJobListingSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
-     */
-    @Given("A business is available to create a job")
-    public void aBusinessIsAvailableToCreateAJob() throws Exception {
-        RestAssured.baseURI = BASE_URL;
-//        RequestSpecification request = RestAssured.given();
-//        request.header("Authorization", "Bearer " + getSecurityKey());
-       request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
-        response = request.get(BASE_URL + port + "/api/businesses/1/jobs");
-    }
+   @When("I search for job listings for a business")
+   public void iSearchForJobListingsForABusiness() {
+      Assert.assertTrue(list.size() > 0);
+   }
 
-    @When("I create a job listing")
-    public void iCreateAJobListing() throws Exception {
-        RestAssured.baseURI = BASE_URL;
-        request = RestAssured.given();
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("title", newJobNameForBusiness);
-        requestBody.put("description", "New Job Description");
-        requestBody.put("location", "New Job Location");
-        requestBody.put("salary", 120000.00);
-        request.header("Content-Type", "application/json");
-        request.header("Authorization", "Bearer " + getSecurityKey());
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses/1/jobs");
-        System.out.println(requestBody);
-    }
+   @Then("I can see a list of jobs for a business")
+   public void iCanSeeAListOfJobsForABusiness() {
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+   }
 
-    @Then("I can see the new job listing's details")
-    public void iCanSeeTheNewJobListingSDetails() {
-        Assert.assertEquals(201, response.getStatusCode());
-    }
+   /**
+    * Test Scenario: User with business is able to create a job listing
+    * Path: POST http://localhost:8080/api/businesses/{1}/jobs
+    * aBusinessIsAvailableToCreateAJob gets the business object from the specified endpoint
+    * iCreateAJobListing creates the job JSON object and posts it to the endpoint
+    * iCanSeeTheNewJobListingSDetails makes sure that the HTTP status is 201 when we successfully create the businesses
+    */
+   @Given("A business is available to create a job")
+   public void aBusinessIsAvailableToCreateAJob() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+      response = request.get(BASE_URL + port + "/api/businesses/1/jobs");
+   }
+
+   @When("I create a job listing")
+   public void iCreateAJobListing() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given();
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("title", newJobNameForBusiness);
+      requestBody.put("description", "New Job Description");
+      requestBody.put("location", "New Job Location");
+      requestBody.put("salary", 120000.00);
+      request.header("Content-Type", "application/json");
+      request.header("Authorization", "Bearer " + getSecurityKey());
+      response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses/1/jobs");
+      System.out.println(requestBody);
+   }
+
+   @Then("I can see the new job listing's details")
+   public void iCanSeeTheNewJobListingSDetails() {
+      Assert.assertEquals(201, response.getStatusCode());
+   }
 
    /**
     * Test Scenario: User is able to see a list of all jobs
@@ -397,13 +378,11 @@ public class SpringBootCucumberTestDefinitions {
 
    @When("I view the list of applicants")
    public void iViewTheListOfApplicants() {
-//      Assert.assertEquals(0, list.size());
       Assert.assertTrue(list.size() > 0);
    }
 
    @Then("I can see the list of applicants")
    public void iCanSeeTheListOfApplicants() {
-//      Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
       Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
 
@@ -417,7 +396,6 @@ public class SpringBootCucumberTestDefinitions {
    @When("I apply for the job")
    public void iApplyForTheJob() throws Exception {
       RestAssured.baseURI = BASE_URL;
-//      request = RestAssured.given();
       request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
       JSONObject requestBody = new JSONObject();
       requestBody.put("id", 1L);
@@ -432,6 +410,4 @@ public class SpringBootCucumberTestDefinitions {
    public void iSeeAMessageSayingIHaveAppliedForTheJob() {
       Assert.assertEquals(200, response.getStatusCode());
    }
-
-
 }
