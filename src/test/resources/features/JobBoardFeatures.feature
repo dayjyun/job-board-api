@@ -1,4 +1,4 @@
-Feature: Rest API functionalities
+Feature: Job Board API functionalities
 
 #  Scenario: User is able to register
 #    Given the user enters the proper information

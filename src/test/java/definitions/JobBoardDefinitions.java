@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = JobBoardApiApplication.class)
-public class SpringBootCucumberTestDefinitions {
+public class JobBoardDefinitions {
 
    private static final String BASE_URL = "http://localhost:";
    private static Response response;
