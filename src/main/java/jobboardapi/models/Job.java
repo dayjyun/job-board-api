@@ -23,7 +23,7 @@ public class Job {
    private String location;
 
    @Column
-   private double salary;
+   private Double salary;
 
    // many job listings can belong to one business
    @ManyToOne
@@ -41,7 +41,7 @@ public class Job {
    public Job() {
    }
 
-   public Job(Long id, String title, String description, String location, double salary) {
+   public Job(Long id, String title, String description, String location, Double salary) {
       this.id = id;
       this.title = title;
       this.description = description;
@@ -81,11 +81,11 @@ public class Job {
       this.location = location;
    }
 
-   public double getSalary() {
+   public Double getSalary() {
       return salary;
    }
 
-   public void setSalary(double salary) {
+   public void setSalary(Double salary) {
       this.salary = salary;
    }
 
