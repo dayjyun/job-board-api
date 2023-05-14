@@ -328,7 +328,7 @@ public class JobBoardDefinitions {
     * Path: GET http://localhost:8080/api/jobs/1/applicants
     * aListOfApplicantsIsAvailable gets the list of all Users from the database referenced by the endpoint
     * iViewTheListOfApplicants checks that there is a list of jobs containing at least on job
-    * iCanSeeTheListOfApplicants makes sure the HTTP status is 200 when we successfully find the list of jobs
+    * iCanSeeTheListOfApplicants makes sure the HTTP status code is 200 when we successfully find the list of jobs
     */
    @Given("A list of applicants is available")
    public void aListOfApplicantsIsAvailable() throws Exception {
@@ -464,7 +464,12 @@ public class JobBoardDefinitions {
    }
 
    /**
-    *
+    * Scenario: User is able to see all jobs applied for
+    * Path: GET http://localhost:8080/api/myProfile/jobs
+    * iHaveAListOfJobsIHaveAppliedTo gets the list of all Jobs the logged-in user has applied to
+    * iSearchForListOfJobsIAppliedTo checks that there is a list of jobs the logged-in user has applied to
+    * iCanSeeAListOfJobsIAppliedTo makes sure the HTTP status code is 200 when we successfully find the list of jobs the logged-in user
+    * has applied to
     */
    @Given("I have a list of jobs I have applied to")
    public void iHaveAListOfJobsIHaveAppliedTo() throws Exception {
