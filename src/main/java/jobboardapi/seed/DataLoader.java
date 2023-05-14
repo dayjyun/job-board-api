@@ -46,28 +46,33 @@ public class DataLoader implements CommandLineRunner {
 
             // create businesses
             Business dBusiness = new Business(1L, "DeShe's Business", "Michigan");
+//            Business dBusiness2 = new Business(4L, "D's 2nd Bus", "Mich");
             Business kevBusiness = new Business(2L, "Kevin's Business", "Illinois");
             Business kimBusiness = new Business(3L, "Kim's Business", "Illinois");
 
             // for business, show the user that created it
             // assign an owner (user) for each business
             dBusiness.setUser(deshe);
+//            dBusiness2.setUser(deshe);
             kevBusiness.setUser(kevin);
             kimBusiness.setUser(kim);
 
             // for user, show a list of businesses they own
             // assign a business list for each owner (user)
-            ArrayList<Business> businessListDeShe = new ArrayList<>();
-            ArrayList<Business> businessListKevin = new ArrayList<>();
-            ArrayList<Business> businessListKim = new ArrayList<>();
-            businessListDeShe.add(dBusiness);
-            businessListKevin.add(kevBusiness);
-            businessListKim.add(kimBusiness);
-            deshe.setBusinessList(businessListDeShe);
-            kevin.setBusinessList(businessListKevin);
-            kim.setBusinessList(businessListKim);
+//            ArrayList<Business> businessListDeShe = new ArrayList<>();
+//            ArrayList<Business> businessListKevin = new ArrayList<>();
+//            ArrayList<Business> businessListKim = new ArrayList<>();
+//            businessListDeShe.add(dBusiness);
+//            businessListKevin.add(kevBusiness);
+//            businessListKim.add(kimBusiness);
+//            deshe.setBusinessList(businessListDeShe);
+//            kevin.setBusinessList(businessListKevin);
+//            kim.setBusinessList(businessListKim);
+
+
 
             businessRepository.save(dBusiness);
+//            businessRepository.save(dBusiness2);
             businessRepository.save(kevBusiness);
             businessRepository.save(kimBusiness);
 

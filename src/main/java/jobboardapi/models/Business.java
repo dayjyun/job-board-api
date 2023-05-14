@@ -35,7 +35,7 @@ public class Business {
    // many businesses can belong to one user
    @ManyToOne
    @JoinColumn(name = "user_id")
-    @JsonIgnore // excludes user details when displaying business details
+   @JsonIgnore // excludes user details when displaying business details
    private User user;
 
    public Business() {}

@@ -33,9 +33,9 @@ public class User {
    private String resume;
 
    // one user can have many businesses
-   @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the business from database if we deleted it from a user
+   @OneToMany(mappedBy = "user") // orphanRemoval removes the business from database if we deleted it from a user
    @LazyCollection(LazyCollectionOption.FALSE) // all businesses will be eagerly loaded (business data is retrieved together from the database)
-   @JsonIgnore
+//   @JsonIgnore
    private List<Business> businessList;
 
    // one user can apply to jobs
