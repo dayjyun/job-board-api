@@ -16,8 +16,10 @@ public class MyProfileController {
       return MyProfileService.getLoggedInUser();
    }
 
-//   @PutMapping(path = "")
-
+   @PutMapping(path = "")
+   public User updateMyProfile(@RequestBody User updatedBody) {
+      return myProfileService.updateMyProfile(updatedBody);
+   }
 
 //   @DeleteMapping(path = "")
 
