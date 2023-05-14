@@ -39,7 +39,7 @@ public class BusinessService {
       if (allBusinesses.size() > 0) {
          return allBusinesses;
       } else {
-         throw new NotFoundException("Not businesses found");
+         throw new NotFoundException("No businesses found");
       }
    }
 
@@ -118,7 +118,7 @@ public class BusinessService {
          businessRepository.deleteById(businessId);
          return business.get();
       } else {
-         throw new NotFoundException("Business not found");
+         throw new NotFoundException("Business with id " + businessId + " not found for user");
       }
    }
 
