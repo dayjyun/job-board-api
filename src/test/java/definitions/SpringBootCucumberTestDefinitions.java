@@ -3,8 +3,6 @@ package definitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import jobboardapi.security.JWTRequestFilter;
-import org.json.JSONException;
 import org.json.JSONObject;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
@@ -21,7 +19,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,15 +32,8 @@ public class SpringBootCucumberTestDefinitions {
    private static List<?> list;
    private static RequestSpecification request;
 
-   private Business newBusiness;
    private static final String newBusinessName = "New Business Name";
    private static final String newJobNameForBusiness = "New Job Name For Business";
-//   private String jwtToken;
-
-//   public void iHaveAValidJWTToken() {
-//        JWTRequestFilter jwtRequestFilter = new JWTRequestFilter();
-//        jwtToken = jwtRequestFilter.getJwtToken();
-//   }
 
    public String getSecurityKey() throws Exception {
       RequestSpecification request = RestAssured.given();
@@ -121,16 +111,9 @@ public class SpringBootCucumberTestDefinitions {
       Assert.assertTrue(existingBusiness.isEmpty());
    }
 
-//    @Given("I have a valid JWT token")
-//    public void iHaveAValidJWTToken() {
-//        JWTRequestFilter jwtRequestFilter = new JWTRequestFilter();
-//        jwtToken = jwtRequestFilter.getJwtToken();
-//    }
-
    @When("I create a business with that name")
    public void iCreateABusinessWithThatName() throws Exception {
       RestAssured.baseURI = BASE_URL;
-//        RequestSpecification request = RestAssured.given();
       RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
       JSONObject requestBody = new JSONObject();
       requestBody.put("name", newBusinessName);
