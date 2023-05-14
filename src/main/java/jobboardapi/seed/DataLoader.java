@@ -50,9 +50,9 @@ public class DataLoader implements CommandLineRunner {
          Business kimBusiness = new Business(3L, "Kim's Business", "Illinois");
 
          // create jobs
-         Job dJob = new Job(1L, "DeShe's Job", "Job 1 description", "Michigan", 100000.00, false);
-         Job kevJob = new Job(2L, "Kevin's Job", "Job 2 description", "Illinois", 100000.00, false);
-         Job kimJob = new Job(3L, "Kim's Job", "Job 3 description", "Illinois", 100000.00, false);
+         Job dJob = new Job(1L, "DeShe's Job", "Job 1 description", "Michigan", 100000.00);
+         Job kevJob = new Job(2L, "Kevin's Job", "Job 2 description", "Illinois", 100000.00);
+         Job kimJob = new Job(3L, "Kim's Job", "Job 3 description", "Illinois", 100000.00);
 
          // for business, assign the owner (user) for each business
          dBusiness.setUser(deshe);

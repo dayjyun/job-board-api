@@ -157,24 +157,24 @@ public class JobService {
      * @param jobId is the id for the job the user wants to check the applicants for
      * @return a list of applicants for the targeted job
      */
-    public List<User> getListOfApplicants(Long jobId) {
-        Optional<Job> jobListing = jobRepository.findById(jobId);
-        User user = UserService.getLoggedInUser();
-        if (jobListing.isPresent()) {
-            if (jobListing.get().getUser().getId().equals(user.getId())) {
-                List<User> applicantsList = jobListing.get().getApplicantsList();
-                if (applicantsList.size() > 0) {
-                    return jobListing.get().getApplicantsList();
-                } else {
-                    throw new NotFoundException("No applicants found");
-                }
-            } else {
-                throw new NotFoundException("Job with id " + jobId + " not found for user");
-            }
-        } else {
-            throw new NotFoundException("Job with id " + jobId + " not found");
-        }
-    }
+//    public List<User> getListOfApplicants(Long jobId) {
+//        Optional<Job> jobListing = jobRepository.findById(jobId);
+//        User user = UserService.getLoggedInUser();
+//        if (jobListing.isPresent()) {
+//            if (jobListing.get().getUser().getId().equals(user.getId())) {
+//                List<User> applicantsList = jobListing.get().getApplicantsList();
+//                if (applicantsList.size() > 0) {
+//                    return jobListing.get().getApplicantsList();
+//                } else {
+//                    throw new NotFoundException("No applicants found");
+//                }
+//            } else {
+//                throw new NotFoundException("Job with id " + jobId + " not found for user");
+//            }
+//        } else {
+//            throw new NotFoundException("Job with id " + jobId + " not found");
+//        }
+//    }
 
 //    public Optional<Job> applyForJobListing(Long jobId) {
 //        Optional<Job> jobListing = jobRepository.findById(jobId);
