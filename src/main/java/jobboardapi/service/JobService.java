@@ -176,10 +176,10 @@ public class JobService {
                throw new NotFoundException("No applicants found");
             }
          } else {
-            throw new NotFoundException("Business not found");
+            throw new NotFoundException("Business with id " + business.get().getId() + " does not belong to user");
          }
       } else {
-         throw new NotFoundException("Job not found");
+         throw new NotFoundException("Job with id " + jobId + " not found for user");
       }
    }
 
