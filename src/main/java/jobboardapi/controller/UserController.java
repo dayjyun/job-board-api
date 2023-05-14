@@ -14,27 +14,27 @@ import java.util.Optional;
 @RequestMapping(path = "/api/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+   @Autowired
+   private UserService userService;
 
-    // Functionality: User creates account
-    // http://localhost:8080/auth/users/register
-    @PostMapping("/register")
-    public User createUser(@RequestBody @Valid User userObject) {
-        return userService.createUser(userObject);
-    }
+   // Functionality: User creates account
+   // http://localhost:8080/auth/users/register
+   @PostMapping("/register")
+   public User createUser(@RequestBody @Valid User userObject) {
+      return userService.createUser(userObject);
+   }
 
-    // Functionality: User logs into account
-    // http://localhost:8080/auth/users/login
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
-        return userService.loginUser(loginRequest);
-    }
+   // Functionality: User logs into account
+   // http://localhost:8080/auth/users/login
+   @PostMapping("/login")
+   public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+      return userService.loginUser(loginRequest);
+   }
 
-    // Functionality: Returns user account details
-    // http://localhost:8080/api/users/{userId}
-    @GetMapping(path = "/{userId}")
-    public Optional<User> getUserById(@PathVariable Long userId) {
-        return userService.getUserById(userId);
-    }
+   // Functionality: Returns user account details
+   // http://localhost:8080/api/users/{userId}
+   @GetMapping(path = "/{userId}")
+   public Optional<User> getUserById(@PathVariable Long userId) {
+      return userService.getUserById(userId);
+   }
 }
