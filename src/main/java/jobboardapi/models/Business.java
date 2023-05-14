@@ -17,7 +17,6 @@ public class Business {
    private Long id;
 
    @Column(unique = true)
-   @NotNull(message = "Business name may not be null")
    private String name;
 
    @Column

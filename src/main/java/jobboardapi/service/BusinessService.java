@@ -1,6 +1,7 @@
 package jobboardapi.service;
 
 import jobboardapi.exceptions.AlreadyExistsException;
+import jobboardapi.exceptions.BadRequestException;
 import jobboardapi.exceptions.NotFoundException;
 import jobboardapi.models.Business;
 import jobboardapi.models.Job;
@@ -55,7 +56,7 @@ public class BusinessService {
       } else {
          if (businessObject.getName()
                            .isEmpty() || businessObject.getName() == null) {
-            throw new NotFoundException("Business name may not be null");
+            throw new BadRequestException("Business name may not be null");
          } else {
             businessObject.setUser(UserService.getLoggedInUser());
             return businessRepository.save(businessObject);
