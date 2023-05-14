@@ -14,14 +14,12 @@ public class Job {
    private Long id;
 
    @Column
-   @NotNull(message = "Job title may not be null")
    private String title;
 
    @Column
    private String description;
 
    @Column
-   @NotNull(message = "Job location may not be null")
    private String location;
 
    @Column

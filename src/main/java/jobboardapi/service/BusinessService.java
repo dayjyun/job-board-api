@@ -159,11 +159,16 @@ public class BusinessService {
    public Job createJobForBusinessId(Long businessId, Job jobObject) {
       Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId());
       if (business.isPresent()) {
+         if(jobObject.getTitle() == null || jobObject.getTitle() == "") {
+            throw new BadRequestException("Job title is required");
+         }
+         if(jobObject.getLocation() == null || jobObject.getLocation() == "") {
+            throw new BadRequestException("Job location is required");
+         }
          jobObject.setBusiness(business.get());
          business.get().getListOfJobsAvailable().add(jobObject);
          return jobRepository.save(jobObject);
-      } else {
-         throw new NotFoundException("Business not found");
       }
+      throw new NotFoundException("Business with id " + businessId + " not found");
    }
 }
