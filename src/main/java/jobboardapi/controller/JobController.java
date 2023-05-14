@@ -53,8 +53,8 @@ public class JobController {
         return jobService.getListOfApplicants(jobId);
     }
 
-//    @PostMapping(path = "/{jobId}/applicants")
-//    public Optional<Job> applyForJobListing(@PathVariable Long jobId, @RequestBody User userBody) throws AlreadyBoundException {
-//        return jobService.applyForJobListing(jobId, userBody);
-//    }
+    @PostMapping(path = "/{jobId}/applicants")
+    public Optional<Job> applyForJobListing(@PathVariable Long jobId) throws AlreadyBoundException {
+        return jobService.applyForJobListing(jobId);
+    }
 }
