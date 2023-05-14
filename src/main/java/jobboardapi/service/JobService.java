@@ -188,20 +188,23 @@ public class JobService {
     * @param jobId is the id for the job the user wants to apply for
     * @return job listing details after submitting user's information
     */
-   public Optional<Job> applyForJobListing(Long jobId) {
-      Optional<Job> jobListing = jobRepository.findById(jobId);
+   public JSONObject applyForJobListing(Long jobId) {
       User applicant = UserService.getLoggedInUser();
+      Optional<Job> jobListing = jobRepository.findById(jobId);
+
       if (jobListing.isPresent()) {
-         List<User> applicantsList = jobListing.get().getApplicantsList();
-         if (!applicantsList.contains(applicant)) {
-            List<User> applicantList = jobListing.get().getApplicantsList();
-            applicantList.add(applicant);
-            jobListing.get().setApplicantsList(applicantsList);
+         List<User> jobListingApplicants = jobListing.get().getApplicantsList();
+         if (!jobListingApplicants.stream().anyMatch(a -> a.getId().equals(applicant.getId()))) {
+            jobListingApplicants.add(applicant);
+            jobListing.get().setApplicantsList(jobListingApplicants);
             jobRepository.save(jobListing.get());
-            return jobListing;
+
+            JSONObject returnMessage = new JSONObject();
+            returnMessage.put("message", "Successfully applied to job with id " + jobId);
+            return returnMessage;
          }
-         throw new AlreadyExistsException("Application already submitted");
+         throw new AlreadyExistsException("Application already submitted for job with id " + jobId);
       }
-      throw new NotFoundException("Job listing not found");
+      throw new NotFoundException("Job listing with id " + jobId + " not found");
    }
 }
