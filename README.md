@@ -168,15 +168,6 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 ![](https://i.postimg.cc/NjxZ1X11/Screenshot-25.png)
 
 # Continued Development
-
-- Test Scenario for `GET` returns loggin-in user account details
-- Test Scenario for `PUT` edits user account
-- Test Scenario for `DELETE` deletes user account
-- Test Scenario for `GET` returns a list of jobs the user applied for 
-- `GET` returns loggin-in user account details
-- `PUT` edits user account
-- `DELETE` deletes user account
-- `GET` returns a list of jobs the user applied for 
 - Display jobs based on salary ranges
 - Display jobs based on role seniority
 
