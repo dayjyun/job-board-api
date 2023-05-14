@@ -19,11 +19,9 @@ public class User {
    private Long id;
 
    @Column
-   @NotNull(message = "User name may not be null")
    private String name;
 
    @Column(unique = true)
-   @NotNull(message = "User email may not be null")
    private String email;
 
    @Column
