@@ -53,7 +53,7 @@ public class User {
 
    @ManyToMany(mappedBy = "applicantsList")
    @JsonIgnore
-   private List<Job> jobList;
+   private List<Job> listOfJobsAppliedTo;
 
    public User() {}
 
@@ -114,13 +114,6 @@ public class User {
       this.businessList = businessList;
    }
 
-//   public List<Job> getJobList() {
-//      return jobList;
-//   }
-//
-//   public void setJobList(List<Job> jobList) {
-//      this.jobList = jobList;
-//   }
 //
 //   public Job getJob() {
 //      return job;
@@ -129,6 +122,14 @@ public class User {
 //   public void setJob(Job job) {
 //      this.job = job;
 //   }
+
+   public List<Job> getListOfJobsAppliedTo() {
+      return listOfJobsAppliedTo;
+   }
+
+   public void setListOfJobsAppliedTo(List<Job> listOfJobsAppliedTo) {
+      this.listOfJobsAppliedTo = listOfJobsAppliedTo;
+   }
 
    @Override
    public String toString() {
@@ -141,11 +142,4 @@ public class User {
               '}';
    }
 
-   public List<Job> getJobList() {
-      return jobList;
-   }
-
-   public void setJobList(List<Job> jobList) {
-      this.jobList = jobList;
-   }
 }

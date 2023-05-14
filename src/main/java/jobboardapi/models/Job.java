@@ -145,7 +145,7 @@ public class Job {
    public void setApplicantsList(List<User> applicantsList) {
       this.applicantsList = applicantsList;
    }
- 
+
    @Override
    public String toString() {
       return "Job{" +
