@@ -445,6 +445,8 @@ public class JobBoardDefinitions {
     * Scenario: User is able to edit their account details
     * Path: GET http://localhost:8080/api/myProfile
     * Reuses GIVEN aMyAccountIsAvailable gets the current logged-in user's object
+    * iEditMyProfile updates the logged-in user's details
+    * iSeeMyProfileIsUpdated confirms a successful update for the logged-in user's details
     */
    @When("I edit my profile")
    public void iEditMyProfile() throws Exception {
