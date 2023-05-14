@@ -130,8 +130,7 @@ public class BusinessService {
    public List<Job> getJobByBusinessId(Long businessId) {
       Optional<Business> business = businessRepository.findById(businessId);
       if (business.isPresent()) {
-         List<Job> jobList = business.get()
-                                     .getListOfJobsAvailable();
+         List<Job> jobList = business.get().getListOfJobsAvailable();
          if(jobList.size() == 0) {
             throw new NotFoundException("No jobs posted for " + business.get().getName());
          }
