@@ -415,4 +415,22 @@ public class JobBoardDefinitions {
    public void iCanSeeMyBusinessIsDeleted() {
       Assert.assertEquals(200, response.getStatusCode());
    }
+
+
+   @Given("my account is available")
+   public void aMyAccountIsAvailable() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+      response = request.get(BASE_URL + port + "/api/myProfile");
+   }
+
+   @When("I go to my profile")
+   public void iGoToMyProfile() {
+      Assert.assertNotNull(String.valueOf(response));
+   }
+
+   @Then("I can see my account details")
+   public void iCanSeeMyAccountDetails() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 }
