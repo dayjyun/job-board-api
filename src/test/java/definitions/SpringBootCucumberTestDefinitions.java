@@ -207,7 +207,7 @@ public class SpringBootCucumberTestDefinitions {
    @When("I delete a business from my Business list")
    public void iDeleteBusinessFromMyBusinessList() throws Exception {
       RestAssured.baseURI = BASE_URL;
-      request.header("Content-Type", "application/json");
+//      request.header("Content-Type", "application/json");
       request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
 
       response = request.delete(BASE_URL + port + "/api/businesses/1");
