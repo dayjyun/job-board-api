@@ -238,8 +238,6 @@ public class SpringBootCucumberTestDefinitions {
    @Given("A business is available to create a job")
    public void aBusinessIsAvailableToCreateAJob() throws Exception {
       RestAssured.baseURI = BASE_URL;
-//        RequestSpecification request = RestAssured.given();
-//        request.header("Authorization", "Bearer " + getSecurityKey());
       request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
       response = request.get(BASE_URL + port + "/api/businesses/1/jobs");
    }
@@ -380,13 +378,11 @@ public class SpringBootCucumberTestDefinitions {
 
    @When("I view the list of applicants")
    public void iViewTheListOfApplicants() {
-//      Assert.assertEquals(0, list.size());
       Assert.assertTrue(list.size() > 0);
    }
 
    @Then("I can see the list of applicants")
    public void iCanSeeTheListOfApplicants() {
-//      Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
       Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
 
@@ -400,7 +396,6 @@ public class SpringBootCucumberTestDefinitions {
    @When("I apply for the job")
    public void iApplyForTheJob() throws Exception {
       RestAssured.baseURI = BASE_URL;
-//      request = RestAssured.given();
       request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
       JSONObject requestBody = new JSONObject();
       requestBody.put("id", 1L);
