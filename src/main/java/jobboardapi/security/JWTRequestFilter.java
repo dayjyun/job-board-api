@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-
     // logger allows us to save information in server's memory, but not hard drive
     Logger logger = Logger.getLogger(JWTRequestFilter.class.getName());
 
@@ -28,8 +27,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
     @Autowired
     private JWTUtils jwtUtils;
-
-    private String jwtToken;
 
     /**
      * parseJwt authenticates the json web token.
@@ -45,18 +42,12 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         return null;
     }
 
-    public String getJwtToken() {
-        return jwtToken;
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
             // check if the jwt key is valid and not null
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) { // .validateJwtToken is the method we made earlier in the JWTUtils class
-                //Store the JWT token in the class variable
-                jwtToken = jwt;
                 // grab email address from jwt payload
                 // if valid get user email from the key
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
