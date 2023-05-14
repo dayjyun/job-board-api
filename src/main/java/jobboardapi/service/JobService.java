@@ -127,7 +127,6 @@ public class JobService {
       Optional<Job> jobListing = jobRepository.findById(jobId);
       // When the job listing is found
       if (jobListing.isPresent()) {
-         //
          Optional<Business> loggedInUserBusiness = businessRepository.findBusinessByIdAndUserId(jobListing.get()
                                                                                                           .getBusiness()
                                                                                                           .getId(),
@@ -154,27 +153,9 @@ public class JobService {
     * NotFoundException is thrown If the user list is empty, a NotFoundException is thrown A user is only able to see a list of applicants
     * for a business they own.
     *
-    * @param jobId is the id for the job the user wants to check the applicants for
+    * @param jobId is the id for the job the user (business owner) wants to check the applicants for
     * @return a list of applicants for the targeted job
     */
-//    public List<User> getListOfApplicants(Long jobId) {
-//        Optional<Job> jobListing = jobRepository.findById(jobId);
-//        User user = UserService.getLoggedInUser();
-//        if (jobListing.isPresent()) {
-//            if (jobListing.get().getUser().getId().equals(user.getId())) {
-//                List<User> applicantsList = jobListing.get().getApplicantsList();
-//                if (applicantsList.size() > 0) {
-//                    return jobListing.get().getApplicantsList();
-//                } else {
-//                    throw new NotFoundException("No applicants found");
-//                }
-//            } else {
-//                throw new NotFoundException("Job with id " + jobId + " not found for user");
-//            }
-//        } else {
-//            throw new NotFoundException("Job with id " + jobId + " not found");
-//        }
-//    }
    public List<User> getListOfApplicants(Long jobId) {
       Optional<Job> job = jobRepository.findById(jobId);
       if(job.isPresent()) {
@@ -195,7 +176,9 @@ public class JobService {
    }
 
    /**
-
+    *
+    * @param jobId is the id for the job the user wants to apply for
+    * @return job listing details after submitting user's information
     */
    public Optional<Job> applyForJobListing(Long jobId) {
       Optional<Job> jobListing = jobRepository.findById(jobId);
