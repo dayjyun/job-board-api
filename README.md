@@ -162,10 +162,10 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 
 ![](https://i.postimg.cc/fWG4ZDz0/Screenshot-22.png)
 
-![](https://i.postimg.cc/W1VQF8JN/Screenshot-27.png)
+![](https://i.postimg.cc/mkmVWQsY/Screenshot-31.png)
 
 - Refresh the Maven project and the dependencies should be added to your project
-![](https://i.postimg.cc/NjxZ1X11/Screenshot-25.png)
+![](https://i.postimg.cc/BbSNzmdZ/Screenshot-30.png)
 
 # Continued Development
 - Display jobs based on salary ranges
