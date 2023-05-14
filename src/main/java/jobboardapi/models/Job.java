@@ -31,8 +31,8 @@ public class Job {
    @Column
    private double salary;
 
-   @Column
-   private boolean applied;
+//   @Column
+//   private boolean applied;
 
 //   // many job applications can belong to one user
 //   // Current logged-in user can see the list of jobs they applied for
@@ -55,8 +55,9 @@ public class Job {
 
    @ManyToMany
    @JoinTable(name = "user_jobs",
-           joinColumns = @JoinColumn(name = "user_id"),
-           inverseJoinColumns = @JoinColumn(name = "job_id"))
+           joinColumns = @JoinColumn(name = "job_id"),
+           inverseJoinColumns = @JoinColumn(name = "user_id"))
+   @JsonIgnore
    private List<User> applicantsList;
 
    public Job() {
@@ -68,7 +69,7 @@ public class Job {
       this.description = description;
       this.location = location;
       this.salary = salary;
-      this.applied = applied;
+//      this.applied = applied;
 //      this.applicantsList = new ArrayList<>();
    }
 
@@ -112,13 +113,13 @@ public class Job {
       this.salary = salary;
    }
 
-   public boolean isApplied() {
-      return applied;
-   }
-
-   public void setApplied(boolean applied) {
-      this.applied = applied;
-   }
+//   public boolean isApplied() {
+//      return applied;
+//   }
+//
+//   public void setApplied(boolean applied) {
+//      this.applied = applied;
+//   }
 
 
 //   public User getUser() {
@@ -153,7 +154,7 @@ public class Job {
               ", description='" + description + '\'' +
               ", location='" + location + '\'' +
               ", salary=" + salary +
-              ", applied=" + applied +
+//              ", applied=" + applied +
               '}';
    }
 
