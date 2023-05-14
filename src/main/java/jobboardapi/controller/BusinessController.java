@@ -3,6 +3,7 @@ package jobboardapi.controller;
 import jobboardapi.models.Business;
 import jobboardapi.models.Job;
 import jobboardapi.service.BusinessService;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class BusinessController {
    // Functionality: Delete a business
    // Path: http://localhost:8080/api/businesses/{businessId}
    @DeleteMapping(path = "/{businessId}")
-   public Business deleteBusiness(@PathVariable Long businessId) {
+   public JSONObject deleteBusiness(@PathVariable Long businessId) {
       return businessService.deleteBusiness(businessId);
    }
 

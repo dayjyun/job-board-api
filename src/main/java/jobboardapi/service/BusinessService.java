@@ -7,6 +7,7 @@ import jobboardapi.models.Business;
 import jobboardapi.models.Job;
 import jobboardapi.repository.BusinessRepository;
 import jobboardapi.repository.JobRepository;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -114,11 +115,13 @@ public class BusinessService {
     * @param businessId is the id for business the user wants to delete
     * @return the deleted business's details
     */
-   public Business deleteBusiness(Long businessId) {
+   public JSONObject deleteBusiness(Long businessId) {
       Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId());
+      JSONObject returnMessage = new JSONObject();
+      returnMessage.put("message", "Business successfully deleted");
       if (business.isPresent()) {
          businessRepository.deleteById(businessId);
-         return business.get();
+         return returnMessage;
       } else {
          throw new NotFoundException("Business with id " + businessId + " not found for user");
       }
