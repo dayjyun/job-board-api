@@ -19,8 +19,6 @@
 - [Continued Development](#continued-development)
 - [Acknowledgment](#acknowledgment)
   
-
-
 ## Description
 The Job Board API provides a platform for users to interact with job listings and businesses. It offers a range of features to meet the needs of job seekers and businesses looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job listings and track their applications. Businesses can view applicants for their job listings and manage their business information.
 
@@ -108,6 +106,7 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 
 # Endpoints
 ## Users
+
 | Request Type | URL                 | Functionality                               | Access  |
 |--------------|---------------------|---------------------------------------------|---------|
 | POST         | /api/auth/register  | User creates account                        | Public  |
@@ -119,6 +118,7 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | GET          | /api/myProfile/jobs | Returns a list of jobs the user applied for | Private |
 
 ## Business
+
 | Request Type | URL                               | Functionality                                       | Access  |
 |--------------|-----------------------------------|-----------------------------------------------------|---------|
 | GET          | /api/businesses                   | Returns a list of all businesses                    | Public  |
@@ -130,6 +130,7 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | POST         | /api/businesses/{businessId}/jobs | Create a new job listing for the business           | Private |
 
 ## Jobs
+
 | Request Type | URL                          | Functionality                                | Access  |
 |--------------|------------------------------|----------------------------------------------|---------|
 | GET          | /api/jobs                    | Returns all jobs in the job board            | Public  |

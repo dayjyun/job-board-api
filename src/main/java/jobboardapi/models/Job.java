@@ -1,17 +1,15 @@
 package jobboardapi.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.annotations.CreationTimestamp;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
-@Table(name = "jobs")
+@Table(name = "jobs") // name of table in H2 database
 public class Job {
    @Column
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.IDENTITY) // this is the primary key
    private Long id;
 
    @Column
@@ -24,28 +22,36 @@ public class Job {
    private String location;
 
    @Column
-   private double salary;
+   private Double salary;
 
-   @Column
-   private boolean applied;
+   // many job listings can belong to one business
+   @ManyToOne
+   @JoinColumn(name = "business_id")
+   @JsonIgnore // excludes data from JSON object viewed by client
+   private Business business;
 
-   @Column
-   @CreationTimestamp
-   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH-mm-ss")
-   private Timestamp createdAt;
+   // many jobs can be included in the job application list of many applicants
+   @ManyToMany
+   @JoinTable(name = "user_jobs",
+           joinColumns = @JoinColumn(name = "job_id"),
+           inverseJoinColumns = @JoinColumn(name = "user_id"))
+   @JsonIgnore // excludes data from JSON object viewed by client
+   private List<User> applicantsList;
 
-   public Job() {}
+   // no-args constructor
+   public Job() {
+   }
 
-   public Job(Long id, String title, String description, String location, double salary, boolean applied, Timestamp createdAt) {
+   // parameterized constructor
+   public Job(Long id, String title, String description, String location, Double salary) {
       this.id = id;
       this.title = title;
       this.description = description;
       this.location = location;
       this.salary = salary;
-      this.applied = applied;
-      this.createdAt = createdAt;
    }
 
+   // getters and setters
    public Long getId() {
       return id;
    }
@@ -78,28 +84,28 @@ public class Job {
       this.location = location;
    }
 
-   public double getSalary() {
+   public Double getSalary() {
       return salary;
    }
 
-   public void setSalary(double salary) {
+   public void setSalary(Double salary) {
       this.salary = salary;
    }
 
-   public boolean isApplied() {
-      return applied;
+   public Business getBusiness() {
+      return business;
    }
 
-   public void setApplied(boolean applied) {
-      this.applied = applied;
+   public void setBusiness(Business business) {
+      this.business = business;
    }
 
-   public Timestamp getCreatedAt() {
-      return createdAt;
+   public List<User> getApplicantsList() {
+      return applicantsList;
    }
 
-   public void setCreatedAt(Timestamp createdAt) {
-      this.createdAt = createdAt;
+   public void setApplicantsList(List<User> applicantsList) {
+      this.applicantsList = applicantsList;
    }
 
    @Override
@@ -110,8 +116,6 @@ public class Job {
               ", description='" + description + '\'' +
               ", location='" + location + '\'' +
               ", salary=" + salary +
-              ", applied=" + applied +
-              ", createdAt=" + createdAt +
               '}';
    }
 }
