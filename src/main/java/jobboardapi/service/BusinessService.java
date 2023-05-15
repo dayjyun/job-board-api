@@ -39,6 +39,7 @@ public class BusinessService {
       List<Business> allBusinesses = businessRepository.findAll();
       // Check there is a list of businesses
       if (allBusinesses.size() > 0) {
+         // Returns all the businesses in the database
          return allBusinesses;
       } else {
          // Throws an error when there are no businesses in the database
