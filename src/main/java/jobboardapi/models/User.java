@@ -6,26 +6,24 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users") // name of table in H2 database
 public class User {
    @Column
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.IDENTITY) // this is the primary key
    private Long id;
 
    @Column
    private String name;
 
-   @Column(unique = true)
+   @Column(unique = true) // each user's email is unique
    private String email;
 
    @Column
-   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // users can send password data to server, but it is not sent back for the user to view in the JSON object
    private String password;
 
    @Column
@@ -33,16 +31,19 @@ public class User {
 
    // one user can have many businesses
    @OneToMany(mappedBy = "user", orphanRemoval = true) // orphanRemoval removes the business from database if we deleted it from a user
-   @LazyCollection(LazyCollectionOption.FALSE) // all businesses will be eagerly loaded (business data is retrieved together from the database)
-   @JsonIgnore
+   @LazyCollection(LazyCollectionOption.FALSE) // all businesses will be eagerly loaded (business data is retrieved together with user from the database)
+   @JsonIgnore // excludes data from JSON object viewed by client
    private List<Business> businessList;
 
+   // many users can a list of many jobs they applied to
    @ManyToMany(mappedBy = "applicantsList")
-   @JsonIgnore
+   @JsonIgnore // excludes data from JSON object viewed by client
    private List<Job> listOfJobsAppliedTo;
 
+   // no-args constructor
    public User() {}
 
+   // parameterized constructor
    public User(Long id, String name, String email, String password, String resume) {
       this.id = id;
       this.name = name;
@@ -51,6 +52,7 @@ public class User {
       this.resume = resume;
    }
 
+   // getters and setters
    public Long getId() {
       return id;
    }

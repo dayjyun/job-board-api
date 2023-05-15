@@ -3,10 +3,9 @@ package jobboardapi.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "jobs")
+@Table(name = "jobs") // name of table in H2 database
 public class Job {
    @Column
    @Id
