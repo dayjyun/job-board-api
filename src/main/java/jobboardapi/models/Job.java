@@ -9,7 +9,7 @@ import java.util.List;
 public class Job {
    @Column
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.IDENTITY) // this is the primary key
    private Long id;
 
    @Column
@@ -27,19 +27,22 @@ public class Job {
    // many job listings can belong to one business
    @ManyToOne
    @JoinColumn(name = "business_id")
-   @JsonIgnore // excludes business details when displaying job details
+   @JsonIgnore // excludes data from JSON object viewed by client
    private Business business;
 
+   // many jobs can be included in the job application list of many applicants
    @ManyToMany
    @JoinTable(name = "user_jobs",
            joinColumns = @JoinColumn(name = "job_id"),
            inverseJoinColumns = @JoinColumn(name = "user_id"))
-   @JsonIgnore
+   @JsonIgnore // excludes data from JSON object viewed by client
    private List<User> applicantsList;
 
+   // no-args constructor
    public Job() {
    }
 
+   // parameterized constructor
    public Job(Long id, String title, String description, String location, Double salary) {
       this.id = id;
       this.title = title;
@@ -48,6 +51,7 @@ public class Job {
       this.salary = salary;
    }
 
+   // getters and setters
    public Long getId() {
       return id;
    }
