@@ -3,6 +3,7 @@ package jobboardapi.controller;
 import jobboardapi.models.Job;
 import jobboardapi.models.User;
 import jobboardapi.service.JobService;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +43,7 @@ public class JobController {
    // Functionality: Delete job listing
    // Path: http://localhost:8080/api/jobs/{jobId}
    @DeleteMapping(path = "/{jobId}")
-   public Job deleteJobListing(@PathVariable Long jobId) {
+   public JSONObject deleteJobListing(@PathVariable Long jobId) {
       return jobService.deleteJobListing(jobId);
    }
 
@@ -56,7 +57,7 @@ public class JobController {
    // Functionality: User applies for job
    // Path: http://localhost:8080/api/jobs/{jobId}/applicants
    @PostMapping(path = "/{jobId}/applicants")
-   public Optional<Job> applyForJobListing(@PathVariable Long jobId) {
+   public JSONObject applyForJobListing(@PathVariable Long jobId) {
       return jobService.applyForJobListing(jobId);
    }
 }
