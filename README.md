@@ -7,12 +7,15 @@
   - [Documentation](#documentation)
   - [Installation Instructions](#installation-instructions)
 - [General Approach](#general-approach)
-- [Hurdles](#hurdles) 
 - [User Stories](#user-stories)
--  [Endpoints](#endpoints)
+- [Entity Relationship Diagram](#entity-relationship-diagram)
+- [Endpoints](#endpoints)
     -  [Users](#users)
     -  [Business](#business)
     -  [Jobs](#jobs)
+- [H2 Database](#h2-database)
+- [Postman](#postman)
+- [Hurdles](#hurdles)
 - [Continuous Development](#continuous-development)
 - [Acknowledgments](#acknowledgments)
 
@@ -30,10 +33,11 @@ The Job Board API provides a platform for users to interact with job listings an
 
 ## Technologies Used
 
-The Job Board API is built using the following technologies:
+The Job Board API is a monolithic backend built using the following technologies:
   - **IDE**: IntelliJ is the integrated development environment for software development.
   - **Programming Language**: The API is developed using Java 17.
   - **Framework**: The API is built on Spring Boot version 2.7.8.
+    - **Server**: The application runs on the Tomcat server.
   - **Project Management**: [GitHub Projects](https://github.com/users/dayjyun/projects/7/views/1) is utilized for project management and tracking progress.
   - **Documentation Tool**: Google Docs is used for documenting daily stand-ups and stand-downs.
   - **Version Control**: GitHub is used for version control. The codebase can be found at [GitHub Repository](https://github.com/dayjyun/job-board-api/commits/main).
@@ -53,41 +57,48 @@ The documentation provides detailed explanations, usage examples, and external r
   - **Spring Framework Documentation**: The documentation for the Spring Framework can be found at [Spring Framework Reference Documentation](https://docs.spring.io/spring-framework/docs/current/reference/html/).
   - **Cucumber with Rest Assured**: Cucumber is used as a behavior-driven testing framework, integrating with Rest Assured for API testing. Information about Gherkin language and usage can be found in the [Gherkin Documentation](https://cucumber.io/docs/gherkin/reference/#:~:text=Data%20Tables.-,Doc%20Strings,-Doc%20Strings%20are).
   - **JWT and Cucumber Integration**: Information on integrating JWT (JSON Web Tokens) with Cucumber for testing purposes is available in the [Spring Cucumber Rest API repository](https://github.com/RedFroggy/spring-cucumber-rest-api/blob/master/README.md?plain=1).
-  - **Spring Security and H2 Database Access**: Stack Overflow provides a solution to allow access to the H2 Database Console when using Spring Security. The code snippet and explanation can be found at [Stack Overflow Answer](https://stackoverflow.com/questions/43794721/spring-boot-h2-console-throws-403-with-spring-security-1-5-2).
+  - **Spring Security and H2 Database Access**: Stack Overflow provides a solution to allow access to the H2 Database Console when using Spring Security. The following code snippet used and explanation can be found at [Stack Overflow Answer](https://stackoverflow.com/questions/43794721/spring-boot-h2-console-throws-403-with-spring-security-1-5-2):
+    ```
+      @Bean
+        public WebSecurityCustomizer webSecurityCustomizer() {
+            return (web) -> web.ignoring().antMatchers("/h2-console/**");
+        }
+    ```
 
 # Installation Instructions
 - Use the following links provided below to access the Maven Central repository.
 
 <details>
-<summary>List of Dependencies Used</summary>summary>
+<summary>List of Dependencies Used</summary>
 
+- [h2](https://mvnrepository.com/artifact/com.h2database/h2)
 - [spring-boot-starter-data-rest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest)
 - [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
-- [h2](https://mvnrepository.com/artifact/com.h2database/h2)
 - [spring-boot-starter-jdbc](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc)
 - [spring-boot-starter-test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)
 - [spring-boot-starter-data-jpa](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa)
 - [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)
+- [spring-boot-starter-validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.6)
 - [junit](https://mvnrepository.com/artifact/junit/junit)
 - [cucumber-java](https://mvnrepository.com/artifact/io.cucumber/cucumber-java)
 - [cucumber-junit](https://mvnrepository.com/artifact/io.cucumber/cucumber-junit)
 - [cucumber-spring](https://mvnrepository.com/artifact/io.cucumber/cucumber-spring)
 - [rest-assured](https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0)
-- [spring-boot-starter-validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.6)
 - [jjwt-api](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api/0.11.5)
 - [jjwt-impl](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl/0.11.5)
 - [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)
 
 </details>
 
-Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
+- Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
 
 ![](https://i.postimg.cc/fWG4ZDz0/Screenshot-22.png)
 
 ![](https://i.postimg.cc/mkmVWQsY/Screenshot-31.png)
 
 - Refresh the Maven project and the dependencies should be added to your project
-  ![](https://i.postimg.cc/BbSNzmdZ/Screenshot-30.png)
+
+![](https://i.postimg.cc/BbSNzmdZ/Screenshot-30.png)
 
 ---
 
@@ -106,22 +117,31 @@ collaboration, they used a [Kanban board](https://github.com/users/dayjyun/proje
 Progress has been documented in the README file, including project overview, tools used, and links to user stories, the ERD diagram, and planning documentation. Documentation 
 was also provided for the REST API endpoints and provided installation instructions for dependencies. The team focused on iterative development, TDD, and adherence to best practices. With efficient teamwork and project management techniques, the team successfully delivered a job board API.
 
----
+Kanban board at thestart of development:
+![Kanban_start.png](images%2FKanban_start.png)
 
-# Hurdles
-During the development process, the team encountered a few hurdles that challenged the progress of the API. Some of the specific issues that were faced include:
- - Testing for `PUT` and `POST` requests: Objects were being created even when certain columns didn't exist. This required debugging and refining of code to ensure data integrity and proper handling of requests.
- - Adding a list to our seed data: There was difficulty incorporating a list of items into our seed data, which affected the accuracy of the tests. The team revisited a data setup and found a solution to include the required list data.
- - Testing private APIs with Cucumber: Cucumber needed to be set up to test private APIs, which required more configuration and understanding of Cucumber. Different approaches were explored and refactoring of tests were made.
- - Resolving merge conflicts: As the team utilized branching, there were a few merge conflicts. Resolving these conflicts required effective communication and collaboration to 
-   ensure a smooth branch merging process.
-
-Despite these hurdles, the team remained proactive and motivated to solving them, and ultimately overcame those hurdles to continue the development process.
+Kanban board by the end of development:
+![Kanban_end.png](images%2FKanban_end.png)
 
 ---
 
 # User Stories
 The [User Stories](https://github.com/dayjyun/job-board-api/wiki) highlight an excellent representation of the thinking process and ideas of what the application should accomplish.
+
+By using a customer-first mindset, we were able to develop a comprehensive list of use cases which set the project up for success. 
+Having a grasp on the user stories allowed for smooth development of the ERD, endpoints, and BDD scenarios.
+
+---
+# Entity Relationship Diagram
+
+The ERD provides a high-level overview of the structure of the API. 
+Establishing the ERD early on in the process was crucial in developing the foundation of the application.
+
+Diagram from [Dbdiagram.io](https://dbdiagram.io/d/644ad886dca9fb07c42b4c62): A high-level overview of the model relationships outlined early-on in development.
+![dbdiagram_ERD.png](images%2Fdbdiagram_ERD.png)
+
+Diagram from IntelliJ IDEA: An in-depth view of the models and their relationships by the end of development.
+![models.png](images%2Fmodels.png)
 
 ---
 
@@ -164,8 +184,50 @@ The [User Stories](https://github.com/dayjyun/job-board-api/wiki) highlight an e
 
 ---
 
+# H2 Database
+The H2 database has seeded data from this API for each model. Below are the tables for each model as depicted in the H2 database.
+
+### USERS Table
+![H2 Database USERS.png](images%2FH2%20Database%20USERS.png)
+
+### BUSINESS Table
+![H2 Database BUSINESSES.png](images%2FH2%20Database%20BUSINESSES.png)
+
+### JOBS Table
+![H2 Database JOBS.png](images%2FH2%20Database%20JOBS.png)
+
+### USER_JOBS Table
+![H2 Database USER_JOBS.png](images%2FH2%20Database%20USER_JOBS.png)
+
+---
+
+
+# Postman
+
+Leveraging Postman Workspaces allowed us to collaboratively test individual endpoints and keep track of successful exception handling. Below are all the endpoints tested in Postman, as well as snapshots of the exceptions handled at each request.
+
+| Users | Business | Jobs |
+| :---: | :------: | :--: |
+| ![postman_users.png](images%2Fpostman_users.png) | ![postman_business.png](images%2Fpostman_business.png) | ![postman_jobs.png](images%2Fpostman_jobs.png) |
+
+---
+
+# Hurdles
+During the development process, the team encountered a few hurdles that challenged the progress of the API. Some of the specific issues that were faced include:
+- Testing for `PUT` and `POST` requests: Objects were being created even when certain columns didn't exist. This required debugging and refining of code to ensure data integrity and proper handling of requests.
+- Adding a list to our seed data: There was difficulty incorporating a list of items into our seed data, which affected the accuracy of the tests. The team revisited a data setup and found a solution to include the required list data.
+- Testing private APIs with Cucumber: Cucumber needed to be set up to test private APIs, which required more configuration and understanding of Cucumber. Different approaches were explored and refactoring of tests were made.
+- Resolving merge conflicts: As the team utilized branching, there were a few merge conflicts. Resolving these conflicts required effective communication and collaboration to
+  ensure a smooth branch merging process.
+
+Despite these hurdles, the team remained proactive and motivated to solving them, and ultimately overcame those hurdles to continue the development process.
+
+---
+
 # Continuous Development
 Just as professionals develop within their career, especially software engineers, so should the platform which helps level-up your career, too.
+- [ ] Create test for user registration
+- [ ] Create test for user log in
 - [ ] Display jobs based on salary ranges
 - [ ] Display jobs based on role seniority
 - [ ] Search through different job types
