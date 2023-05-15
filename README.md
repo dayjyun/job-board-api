@@ -122,6 +122,7 @@ Kanban board at thestart of development:
 
 Kanban board by the end of development:
 ![Kanban_end.png](images%2FKanban_end.png)
+
 ---
 
 # User Stories
