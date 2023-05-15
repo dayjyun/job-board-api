@@ -7,7 +7,6 @@ import jobboardapi.models.Job;
 import jobboardapi.models.User;
 import jobboardapi.repository.UserRepository;
 import jobboardapi.security.MyUserDetails;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -79,13 +78,11 @@ public class MyProfileService {
       }
    }
 
-   public JSONObject deleteMyProfile() {
-      JSONObject returnMessage = new JSONObject();
-      returnMessage.put("message", "Account successfully deleted");
+   public User deleteMyProfile() {
       Optional<User> myProfile = userRepository.findById(getLoggedInUser().getId());
-      if (myProfile.isPresent()) {
+      if(myProfile.isPresent()) {
          userRepository.deleteById(getLoggedInUser().getId());
-         return returnMessage;
+         return myProfile.get();
       } else {
          throw new NotFoundException("Odd. That wasn't supposed to happen.");
       }

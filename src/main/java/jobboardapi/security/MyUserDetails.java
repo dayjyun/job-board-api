@@ -24,8 +24,6 @@ public class MyUserDetails implements UserDetails {
         return user;
     }
 
-
-
     // methods implemented from UserDetails interface
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
