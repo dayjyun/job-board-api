@@ -14,9 +14,6 @@ looking for employees. The API allows users to create accounts, log in and manag
 - [General Approach](#general-approach)
 - [API Hurdles](#api-hurdles) 
 - [User Stories](#user-stories)
-  - [Users Stories](#users-stories)
-  - [Business Stories](#business-stories)
-  - [Jobs Stories ](#jobs-stories)
 -  [Endpoints](#endpoints)
     -  [Users](#users)
     -  [Business](#business)
@@ -36,16 +33,12 @@ The Job Board API is built using the following technologies:
   - **Documentation Tool**: Google Docs is used for documenting daily stand-ups and stand-downs.
   - **Version Control**: GitHub is used for version control. The codebase can be found at [GitHub Repository](https://github.com/dayjyun/job-board-api/commits/main).
   - **Documentation**: The API documentation is maintained in the GitHub Wiki, providing additional resources and information.
-  - 
-  - **Web Browser**: The API is compatible with Google Chrome Browser.
-  - 
   - **Entity Relationship Diagram (ERD)**: [Dbdiagram.io](https://dbdiagram.io/d/644ad886dca9fb07c42b4c62) is used to create the ERD for the database design.
-  - **Database**: H2 database is used during development, accessible at [H2 Database Console](http://localhost:8080/h2-console/login.jsp).
+  - **Database**: The [H2 Database Engine](https://www.geeksforgeeks.org/spring-boot-h2-database/) is used during development.
+  - **Web Browser**: Google Chrome Browser was used to access the H2 Database Engine.
   - **Secret Key Generation**: The secret key generator provided by [GRC](https://www.grc.com/passwords.htm) is used to generate secure secret keys.
   - **Application Generator**: [Spring Initializer](https://start.spring.io/) is used to boostrap the project structure. The project is built using Maven.
-  - 
-  - **Packaging**: The API is packaged as a JAR file.
-  - 
+     - **Packaging**: The spring boot application uses Jar packaging.
   - **API Testing**: [Postman](https://www.postman.com/) is used to test the API endpoints and manage the workspace.
   - **Markdown Table Generator**: The Markdown table generator available at [Tables Generator](https://www.tablesgenerator.com/markdown_tables) is used to create Markdown tables.
 
@@ -117,40 +110,7 @@ During the development process, the team encountered a few hurdles that challeng
 Despite these hurdles, the team remained proactive and motivated to solving them, and ultimately overcame those hurdles to continue the development process.
 
 # User Stories
-## Users Stories
-| Functionality                               | User Stories                                                                                                                         |
-|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| User creates account                        | As an unregistered user, I want to create an account so that I can apply for jobs or create job postings.                            |
-| User logs into account                      | As a registered user, I want to log into my account so that I can apply for jobs and create job postings.                            |
-| Returns user account details                | As a registered user or unregistered user, I want to view other user profiles so that I can view more information about other users. |
-| Returns logged-in user's details            | As a registered user, I want to view my account details so that I can see information businesses have access to.                     |
-| Edit user account                           | As a registered user, I want to edit my account details so that I can keep my information up-to-date.                                |
-| Delete user account                         | As a registered user, I want to delete my account when I no longer need it, so that businesses do not have access to my information. |
-| Returns a list of jobs the user applied for | As a registered user, I want to see all the jobs I’ve applied for so that I can keep track of my applications.                       |
-
-## Business Stories
- | Functionality                                       | User Stories                                                                                                                                                                          |
-|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Returns a list of all businesses                    | As a registered user or unregistered user, I want to see a list of all businesses so that I can find details about the business and jobs related to that business.                    |
-| Create a business                                   | As a registered user, I want to create a business so that I can post that I can post job listings for my business.                                                                    |
-| Returns business details                            | As a registered user or unregistered user, I want to view business details so that I can find more information on a specific business.                                                |
-| Update business details                             | As a registered user with a business, I want to update my business’s details so that I can keep my business’s information up-to-date.                                                 |
-| Delete a business                                   | As a registered user with a business, I want to delete my business so that other users cannot access information on my business.                                                      |
-| Returns a list of all job listings for the business | As a registered or unregistered user, I want to see a list of all job listings for a specific business so that I can find a job listing for that business and apply for any open jobs |
-| Create a new job listing for the business           | As a registered user with a business, I want to be able to create a job listing so that I can get applicants to apply for those roles.                                                |
-| Shows job listing from the business                 | As a registered or unregistered user, I want to see a specific job listing so that I can assess whether or not I am interested in the job.                                            |
-| Update job listing from the business                | As a registered user with a business, I want to update my job listing so that the information for the role is up-to-date.                                                             |
-| Delete job listing from the business                | As a registered user with a business, I want to delete a job listing from the job board so that candidates can no longer apply for that role.                                         |
-
-## Jobs Stories
-| Functionality                                | User Stories                                                                                                                                               |
-|----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Returns all jobs in the job board            | As a registered user or unregistered user, I want to see a list of all jobs available so that I can see what opportunities are open to apply for.          |
-| Return job listing details                   | As a registered user or unregistered user, I want to view job details so that I can find more information on the job listing.                              |
-| Update job listing                           | As a registered user with a job listing, I want to update my job listing details so that I can keep my job listing up-to-date.                             |
-| Delete job listing                           | As a registered user with a job listing, I want to delete my job listing so that applicants can no longer apply for that job.                              |
-| Returns a list of all applicants for the job | As a registered user with a business, I want to see a list of applicants that applied for my job listing so that I may choose the most suitable candidate. |
-| User applies for job                         | As a registered user, I want to apply for a job, so that a business will consider me as a candidate for their business.                                    |
+The [User Stories](https://github.com/dayjyun/job-board-api/wiki) highlight an excellent representation of the thinking process and ideas of what the application should accomplish.
 
 # Endpoints
 ## Users
