@@ -31,7 +31,6 @@ public class JobBoardDefinitions {
    private static ResponseEntity<String> responseEntity;
    private static List<?> list;
    private static RequestSpecification request;
-   private String jwtToken;
 
    private static final String newBusinessName = "New Business Name";
    private static final String newJobNameForBusiness = "New Job Name For Business";
@@ -51,11 +50,6 @@ public class JobBoardDefinitions {
 
    @LocalServerPort
    String port;
-
-   // Scenario: User is able to register
-
-
-   // Scenario: User is able to log in
 
    /**
     * Test Scenario: User is able to view another user's account details
@@ -488,38 +482,6 @@ public class JobBoardDefinitions {
 
    @Then("I see my profile is updated")
    public void iSeeMyProfileIsUpdated() {
-      Assert.assertEquals(200, response.getStatusCode());
-   }
-
-   /**
-    * Scenario: User is able to delete their account Path: DELETE http://localhost:8080/api/myProfile
-    *
-    * @return
-    */
-
-   @Given("I am logged in")
-   public void iAmLoggedIn() throws Exception {
-      RequestSpecification request = RestAssured.given();
-      JSONObject requestBody = new JSONObject();
-      requestBody.put("email", "kevin@gmail.com");
-      requestBody.put("password", "pw");
-      request.header("Content-Type", "application/json");
-      response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/users/login");
-//      return response.jsonPath().getString("message");
-//      request = RestAssured.given();
-//      request.header("Content-Type", "application/json");
-   }
-
-   @When("I delete my profile")
-   public void iDeleteMyProfile() throws Exception {
-      RestAssured.baseURI = BASE_URL;
-      request = RestAssured.given().header("Authorization", "Bearer", response.getBody().asString());
-      request.header("Content-Type", "application/json");
-      response = request.delete(BASE_URL + port + "/api/myProfile");
-   }
-
-   @Then("I can delete my account")
-   public void iCanDeleteMyAccount() {
       Assert.assertEquals(200, response.getStatusCode());
    }
 }

@@ -118,7 +118,7 @@ public class BusinessService {
    public JSONObject deleteBusiness(Long businessId) {
       Optional<Business> business = businessRepository.findBusinessByIdAndUserId(businessId, UserService.getLoggedInUser().getId());
       JSONObject returnMessage = new JSONObject();
-      returnMessage.put("message", "Business successfully deleted");
+      returnMessage.put("message", "Business with id " + businessId + " successfully deleted");
       if (business.isPresent()) {
          businessRepository.deleteById(businessId);
          return returnMessage;
