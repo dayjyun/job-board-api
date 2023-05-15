@@ -3,7 +3,6 @@ package jobboardapi.controller;
 import jobboardapi.models.Job;
 import jobboardapi.models.User;
 import jobboardapi.service.MyProfileService;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
