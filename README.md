@@ -1,4 +1,8 @@
 # Job Board API
+
+## Description
+The Job Board API provides a platform for users to interact with job listings and businesses. It offers a range of features to meet the needs of job seekers and businesses looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job listings and track their applications. Businesses can view applicants for their job listings and manage their business information.
+
 ## Table of Contents
 
 - [Description](#description)
@@ -16,12 +20,9 @@
     -  [Business](#business)
     -  [Jobs](#jobs)
 - [Dependency Installation Instructions](#dependency-installation-instructions)
-- [Continued Development](#continued-development)
+- [Continuous Development](#continuous-development)
 - [Acknowledgment](#acknowledgment)
   
-## Description
-The Job Board API provides a platform for users to interact with job listings and businesses. It offers a range of features to meet the needs of job seekers and businesses looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job listings and track their applications. Businesses can view applicants for their job listings and manage their business information.
-
 # Technologies
 
 ## Technologies Used
@@ -50,12 +51,17 @@ The documentation provides detailed explanations, usage examples, and external r
   - **JWT and Cucumber Integration**: Information on integrating JWT (JSON Web Tokens) with Cucumber for testing purposes is available in the [Spring Cucumber Rest API repository](https://github.com/RedFroggy/spring-cucumber-rest-api/blob/master/README.md?plain=1).
   - **Spring Security and H2 Database Access**: Stack Overflow provides a solution to allow access to the H2 Database Console when using Spring Security. The code snippet and explanation can be found at [Stack Overflow Answer](https://stackoverflow.com/questions/43794721/spring-boot-h2-console-throws-403-with-spring-security-1-5-2).
 
-# General Approach 
-To develop this API, the development team started by reviewing user stories and creating an ERD to visualize the database structure. The team followed a Test-Driven Development (TDD) approach using Cucumber with Rest Assured, writing tests for each endpoint and implementing the minimum code required to make them pass. This helped to ensure that the API worked as expected and met the acceptance criteria.
+# General Approach
+To develop this API, the development team started by reviewing user stories and creating an ERD to visualize the database structure. The team followed a Behavioral-Driven 
+Development (BDD) approach using Cucumber with Rest Assured, writing tests for each endpoint and implementing the minimum code required to make them pass. This helped to ensure 
+that the API worked as expected and met the acceptance criteria.
 
-The team utilized branching in Git with branches like Main, Dev, and Test. This allowed them to work on seperate features and merge them into the appropriate branches. The team maintained seperate controllers and services, following the MVC design pattern, to ensure code organization and modularity. They also focused on handling exceptions gracefully and providing clear error messages to users. 
+The team utilized branching in Git with branches like Main, Dev, and other feature branches. This allowed them to work on seperate features and merge them into the appropriate 
+branches. The team maintained seperate controllers and services, following the MVC design pattern, to ensure code organization and modularity. They also focused on handling exceptions gracefully and providing clear error messages to users. 
 
-The API offers CRUD operations for users, businesses, and jobs. The development team used Spring Security and JWT tokens for authentications and personalized access to endpoints. Most routes required authentication, except for user registration, login, and publicly accessible business and job information. To facilitate collaboration, they used a Kanban board to track tasks and assigned roles like driver, navigator, tester, and pull request approver.
+The API offers CRUD operations for **Users**, **Businesses**, and **Jobs** models. The development team used Spring Security and JWT tokens for authentications and personalized 
+access to endpoints. Most routes required authentication, except for a few such as user registration, login, and publicly accessible business and job information. To facilitate 
+collaboration, they used a [Kanban board](https://github.com/users/dayjyun/projects/7) to track tasks and assigned roles like driver, navigator, tester, and approving pull requests.
 
 Progress has been documented in the README file, including project overview, tools used, and links to user stories, the ERD diagram, and planning documentation. Documentation was also provided for the REST API endpoints and provided installation instructions for dependencies. The team focused on iteratve development, TDD, and adherence to best practices. With efficient teamwork and project management techniques, the team successfully delivered a job board API.
 
@@ -143,26 +149,25 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 # Dependency Installation Instructions
 - Use the following links provided below to access the Maven Central repository.
 
-| Dependency                     | Maven Central Link             |
-|--------------------------------|--------------------------------|
-| spring-boot-starter-data-rest  | [spring-boot-starter-data-rest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest) |
-| spring-boot-devtools           | [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)           |
-| h2                             | [h2](https://mvnrepository.com/artifact/com.h2database/h2)                             |
-| spring-boot-starter-jdbc       | [spring-boot-starter-jdbc](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc)       |
-| spring-boot-starter-test       | [spring-boot-starter-test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)       |
-| spring-boot-starter-data-jpa   | [spring-boot-starter-data-jpa](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa)   |
-| spring-boot-starter-security   | [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)   |
-| junit                          | [junit](https://mvnrepository.com/artifact/junit/junit)                          |
-| cucumber-java                  | [cucumber-java](https://mvnrepository.com/artifact/io.cucumber/cucumber-java)                  |
-| cucumber-junit                 | [cucumber-junit](https://mvnrepository.com/artifact/io.cucumber/cucumber-junit)                 |
-| cucumber-spring                | [cucumber-spring](https://mvnrepository.com/artifact/io.cucumber/cucumber-spring)                |
-| rest-assured                   | [rest-assured](https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0)                   |
-| spring-boot-starter-validation | [spring-boot-starter-validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.6) |
-| jjwt-api                       | [jjwt-api](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api/0.11.5)                       |
-| jjwt-impl                      | [jjwt-impl](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl/0.11.5)                      |
-| jjwt-jackson                   | [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)                   |
+
+- [spring-boot-starter-data-rest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest)
+- [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
+- [h2](https://mvnrepository.com/artifact/com.h2database/h2) 
+- [spring-boot-starter-jdbc](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc)
+- [spring-boot-starter-test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)
+- [spring-boot-starter-data-jpa](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa) 
+- [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security) 
+- [junit](https://mvnrepository.com/artifact/junit/junit)                         
+- [cucumber-java](https://mvnrepository.com/artifact/io.cucumber/cucumber-java)                 
+- [cucumber-junit](https://mvnrepository.com/artifact/io.cucumber/cucumber-junit)                 
+- [cucumber-spring](https://mvnrepository.com/artifact/io.cucumber/cucumber-spring)                
+- [rest-assured](https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0)                   
+- [spring-boot-starter-validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.6)
+- [jjwt-api](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api/0.11.5)                       
+- [jjwt-impl](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl/0.11.5)                      
+- [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)                   
    
-- Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
+Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
 
 ![](https://i.postimg.cc/fWG4ZDz0/Screenshot-22.png)
 
@@ -171,20 +176,25 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 - Refresh the Maven project and the dependencies should be added to your project
 ![](https://i.postimg.cc/BbSNzmdZ/Screenshot-30.png)
 
-# Continued Development
-- Display jobs based on salary ranges
-- Display jobs based on role seniority
+# Continuous Development
+Just as professionals develop within their career, especially software engineers, so should the platform which helps level-up your career, too.
+- [ ] Display jobs based on salary ranges
+- [ ] Display jobs based on role seniority
+- [ ] Search through different job types
+- [ ] Develop the frontend portion
+   - [ ] User images
+   - [ ] Connecting with users by having a _Friends_ or _Connections_ table
 
 # Acknowledgment
-Development team that helped to build this API:
-- **Kevin Barrios**: [Github Profile](**Insert Github Profile link here**)
-- **Kim Nguyen**: [Github Profile](**Insert Github Profile link here**)
-- **DeShe Woods**: [Github Profile](https://github.com/woodsdeshe)
+Development team
+- **Kevin Barrios**: [Github Profile](https://github.com/dayjyun) | [LinkedIn Profile](https://www.linkedin.com/in/kevinbarrios12/)
+- **Kim Nguyen**: [Github Profile](https://github.com/knnguyen2410) | [LinkedIn Profile](https://www.linkedin.com/in/knnguyen2410/)
+- **DeShe Woods**: [Github Profile](https://github.com/woodsdeshe) | [LinkedIn Profile](https://www.linkedin.com/in/deshe-woods-tech-elevator/)
 
 Helped development team in creating seed data
-- **Maksym Zinchenko**: [Github profile](**Insert Github Profile link here**)
+- **Maksym Zinchenko**: [Github profile](https://github.com/maklaut007)
 
 Helped development team with debugging code
-- **Suresh Sigera**: [Github profile](**Insert Github Profile link here**)
+- **Suresh Sigera**: [Github profile](https://github.com/sureshmelvinsigera)
 
 [Go to top](#job-board-api)
