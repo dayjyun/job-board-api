@@ -33,6 +33,7 @@ public class BusinessService {
    /**
     * getAllBusinesses retrieves the list of all businesses from the business repository. If there are no businesses in the database, a
     * NotFoundException is thrown.
+    *
     * @return a list of businesses.
     */
    public List<Business> getAllBusinesses() {
@@ -50,6 +51,7 @@ public class BusinessService {
    /**
     * createBusiness checks for the business name in the business database. If the name already exists, then the AlreadyExistsException is
     * thrown. If the name does not exist, the business objects gets saved to the database.
+    *
     * @param businessObject is the new business the user is creating.
     * @return the details of the new business.
     */
@@ -75,6 +77,7 @@ public class BusinessService {
    /**
     * getBusinessById retrieves the business by the business id, if the business id exists. If the business id does not exist, a
     * NotFoundException is thrown.
+    *
     * @param businessId is what we're searching by.
     * @return the optional of the business.
     */
@@ -93,7 +96,8 @@ public class BusinessService {
    /**
     * updateBusiness updates the business by searching for a business's ID If the business id does not exist, a NotFoundException is thrown
     * If the business name after the update matches any existing businesses, an AlreadyExistsException is thrown.
-    * @param businessId is our target business ID.
+    *
+    * @param businessId   is our target business ID.
     * @param businessBody updated business details.
     * @return the updated Business object.
     */
@@ -105,7 +109,8 @@ public class BusinessService {
       // If our target business is found
       if (business.isPresent()) {
          // Obtain the business's data
-         Business updatedBusiness = businessRepository.findBusinessByIdAndUserId(businessId, MyProfileService.getLoggedInUser().getId()).get();
+         Business updatedBusiness = businessRepository.findBusinessByIdAndUserId(businessId, MyProfileService.getLoggedInUser().getId())
+                                                      .get();
          // Search through the list of all businesses
          for (Business b : allBusinesses) {
             // If any business matches the name we're attempting to update our business to, throw an error
@@ -114,11 +119,11 @@ public class BusinessService {
             }
          }
          // Check that the name field is not empty when updating the name
-         if(businessBody.getName() != null && !businessBody.getName().isEmpty()) {
+         if (businessBody.getName() != null && !businessBody.getName().isEmpty()) {
             updatedBusiness.setName(businessBody.getName());
          }
          // Check that the headquarters field is not empty when updating the headquarters
-         if(businessBody.getHeadquarters() != null && !businessBody.getHeadquarters().isEmpty()) {
+         if (businessBody.getHeadquarters() != null && !businessBody.getHeadquarters().isEmpty()) {
             updatedBusiness.setHeadquarters(businessBody.getHeadquarters());
          }
          // Save the business with the updated data
@@ -130,9 +135,10 @@ public class BusinessService {
    }
 
    /**
-    * deleteBusiness checks if a business id is present in the business database for the logged-in user. If the business id does not
-    * exist, a NotFoundException is
-    * thrown. If the business id exists, the business is deleted from the database, and the deleted business's details are returned.
+    * deleteBusiness checks if a business id is present in the business database for the logged-in user. If the business id does not exist,
+    * a NotFoundException is thrown. If the business id exists, the business is deleted from the database, and the deleted business's
+    * details are returned.
+    *
     * @param businessId is the id for business the user wants to delete.
     * @return the deleted business's details.
     */
@@ -156,8 +162,9 @@ public class BusinessService {
    }
 
    /**
-    * getJobByBusinessId retrieves a list of jobs by the business id. If the business id does not exist, a NotFoundException is thrown.
-    * If the business has no jobs, a NotFoundException is thrown.
+    * getJobByBusinessId retrieves a list of jobs by the business id. If the business id does not exist, a NotFoundException is thrown. If
+    * the business has no jobs, a NotFoundException is thrown.
+    *
     * @param businessId is what we're searching by.
     * @return a list of jobs for the business.
     */
@@ -169,7 +176,7 @@ public class BusinessService {
          // Return a list of all jobs pertaining to the targeted business
          List<Job> jobList = business.get().getListOfJobsAvailable();
          // If the targeted business has no jobs available, throw an error
-         if(jobList.size() == 0) {
+         if (jobList.size() == 0) {
             throw new NotFoundException("No jobs posted for " + business.get().getName());
          }
          // Return the list of jobs from our targeted business
@@ -186,6 +193,7 @@ public class BusinessService {
     * is thrown. If the business id exists, then it checks to see if the job title exists in the business's job list. If the job title
     * exists, the AlreadyExistsException is thrown. If the job title does not exist, the job object is added to the business's job list, and
     * the user sees the new job's details.
+    *
     * @param businessId is the business the user is creating a job for.
     * @param jobObject  is the new job the user is creating.
     * @return the job object's information.
@@ -196,10 +204,10 @@ public class BusinessService {
       // Check if the targeted business is found
       if (business.isPresent()) {
          // Check that the title field is not empty when updating the title
-         if(jobObject.getTitle() == null || jobObject.getTitle() == "") {
+         if (jobObject.getTitle() == null || jobObject.getTitle() == "") {
             throw new BadRequestException("Job title is required");
          } // Check that the location field is not empty when updating the location
-         if(jobObject.getLocation() == null || jobObject.getLocation() == "") {
+         if (jobObject.getLocation() == null || jobObject.getLocation() == "") {
             throw new BadRequestException("Job location is required");
          }
          // Assign the job to the correspoding business
