@@ -146,7 +146,6 @@ public class JobBoardDefinitions {
       JSONObject requestBody = new JSONObject();
       requestBody.put("name", newBusinessName);
       requestBody.put("headquarters", "New Business Headquarters");
-//        request.header("Authorization", "Bearer " + getSecurityKey());
       request.header("Content-Type", "application/json");
       response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/businesses");
    }
