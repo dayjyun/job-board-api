@@ -3,7 +3,6 @@ package jobboardapi.controller;
 import jobboardapi.models.Job;
 import jobboardapi.models.User;
 import jobboardapi.service.MyProfileService;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +31,7 @@ public class MyProfileController {
    // Functionality: Delete user account
    // Path: http://localhost:8080//api/myProfile
    @DeleteMapping(path = "")
-   public JSONObject deleteMyProfile() {
+   public User deleteMyProfile() {
       return myProfileService.deleteMyProfile();
    }
 

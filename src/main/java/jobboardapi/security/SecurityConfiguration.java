@@ -71,11 +71,6 @@ public class SecurityConfiguration {
                     "/api/jobs",
                     "/api/jobs/{jobId}",
                     "/api/users/{userId}"
-
-//                        "/api/users/{userId}",
-//                        "/api/myProfile",
-//                        "/api/myProfile/jobs",
-//                        "/api/jobs/{jobId}/applicants"
             ).permitAll()// these are all public urls
             .anyRequest().authenticated() // other urls need authentication
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // when you log into a server, you need to maintain a session. add this session so that our java springboot knows we're logged in

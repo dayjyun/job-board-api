@@ -70,15 +70,16 @@ public class DataLoader implements CommandLineRunner {
          ArrayList<User> kevinJobListOfApplicants = new ArrayList<>();
          ArrayList<User> kimJobListOfApplicants = new ArrayList<>();
 
-         desheJobListOfApplicants.add(kim); // Kim applied for DeShe's Job
-         desheJobListOfApplicants.add(kevin);
+         desheJobListOfApplicants.add(kim); // Kim applied for DeShe's job
+         desheJobListOfApplicants.add(kevin); // Kevin applied for Deshe's job
 
-         kevinJobListOfApplicants.add(kim);
-         kevinJobListOfApplicants.add(kevin);
+         kevinJobListOfApplicants.add(kim); // Kim applied for Kevin's job
+         kevinJobListOfApplicants.add(kevin); // Kevin applied for Kevin's job
 
-         kimJobListOfApplicants.add(kevin); // Kevin applied for Kim's Job
-         kimJobListOfApplicants.add(deshe);
+         kimJobListOfApplicants.add(kevin); // Kevin applied for Kim's job
+         kimJobListOfApplicants.add(deshe); // Deshe applied for Kim's job
 
+         // for each job, assign the list of applicants
          dJob.setApplicantsList(desheJobListOfApplicants);
          kevJob.setApplicantsList(kevinJobListOfApplicants);
          kimJob.setApplicantsList(kimJobListOfApplicants);
