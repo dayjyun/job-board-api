@@ -1,7 +1,8 @@
 # Job Board API
 
 ## Description
-The Job Board API provides a platform for users to interact with job listings and businesses. It offers a range of features to meet the needs of job seekers and businesses looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job listings and track their applications. Businesses can view applicants for their job listings and manage their business information.
+The Job Board API provides a platform for users to interact with job listings and businesses. It offers a range of features to meet the needs of job-seekers and businesses 
+looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job listings and track their applications. Businesses can view applicants for their job listings and manage their business information.
 
 ## Table of Contents
 
@@ -28,19 +29,24 @@ The Job Board API provides a platform for users to interact with job listings an
 ## Technologies Used
 
 The Job Board API is built using the following technologies:
-  - **Version Control**: Github is used for version control. The codebase can be found at [GitHub Repository](https://github.com/dayjyun/job-board-api/commits/main).
-  - **Project Management**: [Github Projects](https://github.com/users/dayjyun/projects/7/views/1) is utlilized for project management and tracking progress.
-  - **Documentation**: The API documentation is maintained in the GitHub Wiki, providing additional resources and information.
-  - **Web Browser**: The API is compatible with Google Chrome Browser.
+  - **IntelliJ**: Integrated development environment for software development.
+  - **Programming Language**: The API is developed using Java 17.
+  - **Framework**: The API is built on Spring Boot version 2.7.8.
+  - **Project Management**: [GitHub Projects](https://github.com/users/dayjyun/projects/7/views/1) is utilized for project management and tracking progress.
   - **Documentation Tool**: Google Docs is used for documenting daily stand-ups and stand-downs.
+  - **Version Control**: GitHub is used for version control. The codebase can be found at [GitHub Repository](https://github.com/dayjyun/job-board-api/commits/main).
+  - **Documentation**: The API documentation is maintained in the GitHub Wiki, providing additional resources and information.
+  - 
+  - **Web Browser**: The API is compatible with Google Chrome Browser.
+  - 
   - **Entity Relationship Diagram (ERD)**: [Dbdiagram.io](https://dbdiagram.io/d/644ad886dca9fb07c42b4c62) is used to create the ERD for the database design.
   - **Database**: H2 database is used during development, accessible at [H2 Database Console](http://localhost:8080/h2-console/login.jsp).
   - **Secret Key Generation**: The secret key generator provided by [GRC](https://www.grc.com/passwords.htm) is used to generate secure secret keys.
   - **Application Generator**: [Spring Initializer](https://start.spring.io/) is used to boostrap the project structure. The project is built using Maven.
-  - **Programming Language**: The API is developed using Java 17.
-  - **Framework**: The API is built on Spring Boot version 2.7.11.
+  - 
   - **Packaging**: The API is packaged as a JAR file.
-  - **API Testing**: Postman is used to test the API endpoints and manage the workspace.
+  - 
+  - **API Testing**: [Postman](https://www.postman.com/) is used to test the API endpoints and manage the workspace.
   - **Markdown Table Generator**: The Markdown table generator available at [Tables Generator](https://www.tablesgenerator.com/markdown_tables) is used to create Markdown tables.
 
 ## Documentation
@@ -90,21 +96,23 @@ To develop this API, the development team started by reviewing user stories and 
 Development (BDD) approach using Cucumber with Rest Assured, writing tests for each endpoint and implementing the minimum code required to make them pass. This helped to ensure 
 that the API worked as expected and met the acceptance criteria.
 
-The team utilized branching in Git with branches like Main, Dev, and other feature branches. This allowed them to work on seperate features and merge them into the appropriate 
-branches. The team maintained seperate controllers and services, following the MVC design pattern, to ensure code organization and modularity. They also focused on handling exceptions gracefully and providing clear error messages to users. 
+The team utilized branching in Git with branches like Main, Dev, and other feature branches. This allowed them to work on separate features and merge them into the appropriate 
+branches. The team maintained separate controllers and services, following the MVC design pattern, to ensure code organization and modularity. They also focused on handling exceptions gracefully and providing clear error messages to users. 
 
 The API offers CRUD operations for **Users**, **Businesses**, and **Jobs** models. The development team used Spring Security and JWT tokens for authentications and personalized 
 access to endpoints. Most routes required authentication, except for a few such as user registration, login, and publicly accessible business and job information. To facilitate 
 collaboration, they used a [Kanban board](https://github.com/users/dayjyun/projects/7) to track tasks and assigned roles like driver, navigator, tester, and approving pull requests.
 
-Progress has been documented in the README file, including project overview, tools used, and links to user stories, the ERD diagram, and planning documentation. Documentation was also provided for the REST API endpoints and provided installation instructions for dependencies. The team focused on iteratve development, TDD, and adherence to best practices. With efficient teamwork and project management techniques, the team successfully delivered a job board API.
+Progress has been documented in the README file, including project overview, tools used, and links to user stories, the ERD diagram, and planning documentation. Documentation 
+was also provided for the REST API endpoints and provided installation instructions for dependencies. The team focused on iterative development, TDD, and adherence to best practices. With efficient teamwork and project management techniques, the team successfully delivered a job board API.
 
 # API Hurdles
 During the development process, the team encountered a few hurdles that challenged the progress of the API. Some of the specific issues that were faced include:
  - Testing for `PUT` and `POST` requests: Objects were being created even when certain columns didn't exist. This required debugging and refining of code to ensure data integrity and proper handling of requests.
  - Adding a list to our seed data: There was difficulty incorporating a list of items into our seed data, which affected the accuracy of the tests. The team revisited a data setup and found a solution to include the required list data.
- - Testing private APIs with Cucumber: Cucumber needed to be set up to test private API's, which required more configuration and understanding of Cucumber. Different approaches were explored and refactoring of tests were made.
- - Resolving merge conflicts: As the team utlized branching, there were a few merge conflicts. Resolving these conflicts required effective communication and collaboration to ensure a smooth branch merging process.
+ - Testing private APIs with Cucumber: Cucumber needed to be set up to test private APIs, which required more configuration and understanding of Cucumber. Different approaches were explored and refactoring of tests were made.
+ - Resolving merge conflicts: As the team utilized branching, there were a few merge conflicts. Resolving these conflicts required effective communication and collaboration to 
+   ensure a smooth branch merging process.
 
 Despite these hurdles, the team remained proactive and motivated to solving them, and ultimately overcame those hurdles to continue the development process.
 
@@ -192,14 +200,14 @@ Just as professionals develop within their career, especially software engineers
 
 # Acknowledgment
 Development team
-- **Kevin Barrios**: [Github Profile](https://github.com/dayjyun) | [LinkedIn Profile](https://www.linkedin.com/in/kevinbarrios12/)
-- **Kim Nguyen**: [Github Profile](https://github.com/knnguyen2410) | [LinkedIn Profile](https://www.linkedin.com/in/knnguyen2410/)
-- **DeShe Woods**: [Github Profile](https://github.com/woodsdeshe) | [LinkedIn Profile](https://www.linkedin.com/in/deshe-woods-tech-elevator/)
+- **Kevin Barrios**: [GitHub Profile](https://github.com/dayjyun) | [LinkedIn Profile](https://www.linkedin.com/in/kevinbarrios12/)
+- **Kim Nguyen**: [GitHub Profile](https://github.com/knnguyen2410) | [LinkedIn Profile](https://www.linkedin.com/in/knnguyen2410/)
+- **DeShe Woods**: [GitHub Profile](https://github.com/woodsdeshe) | [LinkedIn Profile](https://www.linkedin.com/in/deshe-woods-tech-elevator/)
 
 Helped development team in creating seed data
-- **Maksym Zinchenko**: [Github profile](https://github.com/maklaut007)
+- **Maksym Zinchenko**: [GitHub profile](https://github.com/maklaut007)
 
 Helped development team with debugging code
-- **Suresh Sigera**: [Github profile](https://github.com/sureshmelvinsigera)
+- **Suresh Sigera**: [GitHub profile](https://github.com/sureshmelvinsigera)
 
 [Go to top](#job-board-api)
