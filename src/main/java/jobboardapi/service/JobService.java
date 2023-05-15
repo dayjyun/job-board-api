@@ -99,19 +99,19 @@ public class JobService {
                   // Check if any IDs of the existing jobs match the input ID
                   if (job.getId().equals(jobId)) {
                      // Check that the title field is not empty when updating the title
-                     if(jobBody.getTitle() != null && !jobBody.getTitle().isEmpty()) {
-                     job.setTitle(jobBody.getTitle());
+                     if (jobBody.getTitle() != null && !jobBody.getTitle().isEmpty()) {
+                        job.setTitle(jobBody.getTitle());
                      }
                      // Check that the description field is not empty when updating the description
-                     if(jobBody.getDescription() != null && !jobBody.getDescription().isEmpty()) {
+                     if (jobBody.getDescription() != null && !jobBody.getDescription().isEmpty()) {
                         job.setDescription(jobBody.getDescription());
                      }
                      // Check that the location field is not empty when updating the location
-                     if(jobBody.getLocation() != null && !jobBody.getLocation().isEmpty()) {
+                     if (jobBody.getLocation() != null && !jobBody.getLocation().isEmpty()) {
                         job.setLocation(jobBody.getLocation());
                      }
                      // Check that the salary field is not empty and is greater than 0 when updating the salary
-                     if(jobBody.getSalary() != null && jobBody.getSalary() > 0) {
+                     if (jobBody.getSalary() != null && jobBody.getSalary() > 0) {
                         job.setSalary(jobBody.getSalary());
                      }
                      // Update the targeted job
@@ -130,9 +130,9 @@ public class JobService {
    }
 
    /**
-    * deleteJobListing checks if a job id is present in the job database. Next, it checks if the businesses has a list of jobs
-    * available. Following that, it checks if any of the job's business id matches the business id for the business owned by the user Once
-    * it passes the check, the listing gets updated If any of the checks fail, a NotFoundException is thrown
+    * deleteJobListing checks if a job id is present in the job database. Next, it checks if the businesses has a list of jobs available.
+    * Following that, it checks if any of the job's business id matches the business id for the business owned by the user Once it passes
+    * the check, the listing gets updated If any of the checks fail, a NotFoundException is thrown
     *
     * @param jobId is the id for the job the user wants to delete.
     * @return the deleted job's details.
@@ -144,7 +144,7 @@ public class JobService {
       if (jobListing.isPresent()) {
          // Check that the logged-in user has a business where the id for the business matches the business_id in relation to the job's id
          Optional<Business> loggedInUserBusiness = businessRepository.findBusinessByIdAndUserId(
-                                                                        jobListing.get().getBusiness().getId(),
+                 jobListing.get().getBusiness().getId(),
                  MyProfileService.getLoggedInUser().getId());
          // If the business is found for the logged-in user
          if (loggedInUserBusiness.isPresent()) {
@@ -168,7 +168,8 @@ public class JobService {
             throw new NotFoundException("Job listing with id " + jobId + " not found");
          }
          // Throw an error if the targeted job does not belong to the logged-in user
-         throw new NotFoundException("Job listing with id " + jobRepository.findById(jobId).get().getBusiness().getId() + " does not belong to user");
+         throw new NotFoundException("Job listing with id " + jobRepository.findById(jobId).get().getBusiness()
+                                                                           .getId() + " does not belong to user");
       }
       // Throw an error if the targeted job is not found by its ID
       throw new NotFoundException("Job listing with id " + jobId + " not found");
@@ -186,11 +187,11 @@ public class JobService {
       // Find the targeted job by its ID
       Optional<Job> job = jobRepository.findById(jobId);
       // Check that the job is found
-      if(job.isPresent()) {
+      if (job.isPresent()) {
          // Obtain the information for the business that the targeted job belongs to
          Optional<Business> business = Optional.ofNullable(job.get().getBusiness());
          // Check that the business is found, and the owner of the business is the logged-in user
-         if(business.isPresent() && business.get().getUser().getId().equals(MyProfileService.getLoggedInUser().getId())) {
+         if (business.isPresent() && business.get().getUser().getId().equals(MyProfileService.getLoggedInUser().getId())) {
             // Find the list of applicants for the targeted job
             List<User> applicantsList = jobRepository.findById(jobId).get().getApplicantsList();
             // Make sure that the list is not empty
@@ -212,7 +213,6 @@ public class JobService {
    }
 
    /**
-    *
     * @param jobId is the id for the job the user wants to apply for
     * @return job listing details after submitting user's information
     */
