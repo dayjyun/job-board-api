@@ -9,6 +9,7 @@ The Job Board API provides a platform for users to interact with job listings an
 - [Technologies](#technologies)
   - [Technologies Used](#technologies-used)
   - [Documentation](#documentation)
+  - [Installation Instructions](#installation-instructions)
 - [General Approach](#general-approach)
 - [API Hurdles](#api-hurdles) 
 - [User Stories](#user-stories)
@@ -19,7 +20,6 @@ The Job Board API provides a platform for users to interact with job listings an
     -  [Users](#users)
     -  [Business](#business)
     -  [Jobs](#jobs)
-- [Dependency Installation Instructions](#dependency-installation-instructions)
 - [Continuous Development](#continuous-development)
 - [Acknowledgment](#acknowledgment)
   
@@ -50,6 +50,40 @@ The documentation provides detailed explanations, usage examples, and external r
   - **Cucumber with Rest Assured**: Cucumber is used as a behavior-driven testing framework, integrating with Rest Assured for API testing. Information about Gherkin language and usage can be found in the [Gherkin Documentation](https://cucumber.io/docs/gherkin/reference/#:~:text=Data%20Tables.-,Doc%20Strings,-Doc%20Strings%20are).
   - **JWT and Cucumber Integration**: Information on integrating JWT (JSON Web Tokens) with Cucumber for testing purposes is available in the [Spring Cucumber Rest API repository](https://github.com/RedFroggy/spring-cucumber-rest-api/blob/master/README.md?plain=1).
   - **Spring Security and H2 Database Access**: Stack Overflow provides a solution to allow access to the H2 Database Console when using Spring Security. The code snippet and explanation can be found at [Stack Overflow Answer](https://stackoverflow.com/questions/43794721/spring-boot-h2-console-throws-403-with-spring-security-1-5-2).
+
+# Installation Instructions
+- Use the following links provided below to access the Maven Central repository.
+
+<details>
+<summary>List of Dependencies Used</summary>summary>
+
+- [spring-boot-starter-data-rest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest)
+- [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
+- [h2](https://mvnrepository.com/artifact/com.h2database/h2)
+- [spring-boot-starter-jdbc](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc)
+- [spring-boot-starter-test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)
+- [spring-boot-starter-data-jpa](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa)
+- [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)
+- [junit](https://mvnrepository.com/artifact/junit/junit)
+- [cucumber-java](https://mvnrepository.com/artifact/io.cucumber/cucumber-java)
+- [cucumber-junit](https://mvnrepository.com/artifact/io.cucumber/cucumber-junit)
+- [cucumber-spring](https://mvnrepository.com/artifact/io.cucumber/cucumber-spring)
+- [rest-assured](https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0)
+- [spring-boot-starter-validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.6)
+- [jjwt-api](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api/0.11.5)
+- [jjwt-impl](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl/0.11.5)
+- [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)
+
+</details>
+
+Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
+
+![](https://i.postimg.cc/fWG4ZDz0/Screenshot-22.png)
+
+![](https://i.postimg.cc/mkmVWQsY/Screenshot-31.png)
+
+- Refresh the Maven project and the dependencies should be added to your project
+  ![](https://i.postimg.cc/BbSNzmdZ/Screenshot-30.png)
 
 # General Approach
 To develop this API, the development team started by reviewing user stories and creating an ERD to visualize the database structure. The team followed a Behavioral-Driven 
@@ -146,39 +180,6 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 | GET          | /api/jobs/{jobId}/applicants | Returns a list of all applicants for the job | Private |
 | POST         | /api/jobs/{jobId}/applicants | User applies for job                         | Private |
 
-# Dependency Installation Instructions
-- Use the following links provided below to access the Maven Central repository.
-
-<details>
-<summary>List of Dependencies Used</summary>summary>
-
-- [spring-boot-starter-data-rest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest)
-- [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
-- [h2](https://mvnrepository.com/artifact/com.h2database/h2) 
-- [spring-boot-starter-jdbc](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc)
-- [spring-boot-starter-test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)
-- [spring-boot-starter-data-jpa](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa) 
-- [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security) 
-- [junit](https://mvnrepository.com/artifact/junit/junit)                         
-- [cucumber-java](https://mvnrepository.com/artifact/io.cucumber/cucumber-java)                 
-- [cucumber-junit](https://mvnrepository.com/artifact/io.cucumber/cucumber-junit)                 
-- [cucumber-spring](https://mvnrepository.com/artifact/io.cucumber/cucumber-spring)                
-- [rest-assured](https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0)                   
-- [spring-boot-starter-validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.6)
-- [jjwt-api](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api/0.11.5)                       
-- [jjwt-impl](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl/0.11.5)                      
-- [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)   
-
-</details>
-   
-Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
-
-![](https://i.postimg.cc/fWG4ZDz0/Screenshot-22.png)
-
-![](https://i.postimg.cc/mkmVWQsY/Screenshot-31.png)
-
-- Refresh the Maven project and the dependencies should be added to your project
-![](https://i.postimg.cc/BbSNzmdZ/Screenshot-30.png)
 
 # Continuous Development
 Just as professionals develop within their career, especially software engineers, so should the platform which helps level-up your career, too.
