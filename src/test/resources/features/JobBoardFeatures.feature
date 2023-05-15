@@ -1,31 +1,25 @@
-Feature: Rest API functionalities
+Feature: Job Board API functionalities
+
+#  Scenario: User is able to register
+#    Given the user enters the proper information
+#    When the user submits their details
+#    Then the user can see their account details
+
+#  Scenario: User is able to log in
+#    Given the user enters their credentials
+#    When the user submits their credentials
+#    Then the user can see their JWT
+
   # PASS (PUBLIC)
   Scenario: User is able to view another user's account details
     Given A user account is available
     When I search for another user's id
     Then I can see the user's account details
 
-#  Scenario: User is able to view account details
-#    Given A user account is available
-#    When I go to my profile
-#    Then I can see my account details
-#
-#  Scenario: User is able to edit account details
-#    Given A user account is available
-#    When I go to my profile
-#    Then I can edit my account details
-#
-#  Scenario: User is able to delete account
-#    Given A user account is available
-#    When I go to my profile
-#    Then I can delete my account
-#
-#  Scenario: User is able to see all jobs applied for
-#    Given A user account is available
-#    When I search by my user id
-#    Then I can see a list of jobs
-#    When No jobs have been applied for
-#    Then I see a message saying no jobs have been applied for
+  Scenario: User is able to see all jobs applied for
+    Given I have a list of jobs I have applied to
+    When I search for list of jobs I applied to
+    Then I can see a list of jobs I applied to
 
   # PASS (PUBLIC)
   Scenario: User is able to see a list of all businesses
@@ -50,7 +44,6 @@ Feature: Rest API functionalities
     Given I can search for a business ID
     When I edit my business details
     Then I see the business is updated
-
 
     # PASS (PUBLIC)
   Scenario: User is able to see a list of job listings for a business
@@ -82,19 +75,11 @@ Feature: Rest API functionalities
     When I edit my job details
     Then I see the job is updated
 
-
-
-
-
-    # FAIL
+    # PASS (PRIVATE)
   Scenario: User is able to see a list of all applicants for their job
     Given A list of applicants is available
     When I view the list of applicants
     Then I can see the list of applicants
-
-
-
-
 
   # PASS (PRIVATE)
   Scenario: User is able to apply for a job
@@ -108,8 +93,24 @@ Feature: Rest API functionalities
     When I delete a job from my Job list
     Then I can see my job listing is deleted
 
-    # PASS (PRIVATE) NOW FAIL?
+    # PASS (PRIVATE)
   Scenario: User is able to delete business
     Given A business is available
     When I delete a business from my Business list
     Then I can see my business is deleted
+
+  Scenario: User is able to view their account details
+    Given my account is available
+    When I go to my profile
+    Then I can see my account details
+
+  Scenario: User is able to edit their account details
+    Given my account is available
+    When I edit my profile
+    Then I see my profile is updated
+
+  Scenario: User is able to delete their account
+    Given I am logged in
+    When I delete my profile
+    Then I can delete my account
+

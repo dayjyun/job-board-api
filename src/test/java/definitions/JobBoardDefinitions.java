@@ -24,13 +24,14 @@ import java.util.Optional;
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = JobBoardApiApplication.class)
-public class SpringBootCucumberTestDefinitions {
+public class JobBoardDefinitions {
 
    private static final String BASE_URL = "http://localhost:";
    private static Response response;
    private static ResponseEntity<String> responseEntity;
    private static List<?> list;
    private static RequestSpecification request;
+   private String jwtToken;
 
    private static final String newBusinessName = "New Business Name";
    private static final String newJobNameForBusiness = "New Job Name For Business";
@@ -50,6 +51,11 @@ public class SpringBootCucumberTestDefinitions {
 
    @LocalServerPort
    String port;
+
+   // Scenario: User is able to register
+
+
+   // Scenario: User is able to log in
 
    /**
     * Test Scenario: User is able to view another user's account details
@@ -73,6 +79,34 @@ public class SpringBootCucumberTestDefinitions {
    @Then("I can see the user's account details")
    public void iCanSeeTheUserSAccountDetails() {
       Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Scenario: User is able to see all jobs applied for
+    * Path: GET http://localhost:8080/api/myProfile/jobs
+    * iHaveAListOfJobsIHaveAppliedTo gets the list of all Jobs the logged-in user has applied to
+    * iSearchForListOfJobsIAppliedTo checks that there is a list of jobs the logged-in user has applied to
+    * iCanSeeAListOfJobsIAppliedTo makes sure the HTTP status code is 200 when we successfully find the list of jobs the logged-in user
+    * has applied to
+    */
+   @Given("I have a list of jobs I have applied to")
+   public void iHaveAListOfJobsIHaveAppliedTo() throws Exception {
+      HttpHeaders headers = new HttpHeaders();
+      headers.setBearerAuth(getSecurityKey());
+      HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/myProfile/jobs", HttpMethod.GET, entity, String.class);
+      list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+   }
+
+   @When("I search for list of jobs I applied to")
+   public void iSearchForListOfJobsIAppliedTo() {
+      Assert.assertTrue(list.size() > 0);
+   }
+
+   @Then("I can see a list of jobs I applied to")
+   public void iCanSeeAListOfJobsIAppliedTo() {
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
 
    /**
@@ -182,29 +216,6 @@ public class SpringBootCucumberTestDefinitions {
    }
 
    /**
-    * Testing for Scenario: User is able to delete business
-    * This is the DELETE request at the endpoint http://localhost:8080/api/businesses/{businessId}
-    * iDeleteBusinessFromMyBusinessList gets the business from the specified endpoint and sends the delete request to delete the business
-    * iCanSeeMyBusinessIsDeleted makes sure that the HTTP status is 200 when we successfully delete the business object
-    */
-   @When("I delete a business from my Business list")
-   public void iDeleteBusinessFromMyBusinessList() throws Exception {
-      RestAssured.baseURI = BASE_URL;
-//      request.header("Content-Type", "application/json");
-      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
-
-      response = request.delete(BASE_URL + port + "/api/businesses/1");
-
-      System.out.println("response"+response);
-      System.out.println("request"+request);
-   }
-
-   @Then("I can see my business is deleted")
-   public void iCanSeeMyBusinessIsDeleted() {
-      Assert.assertEquals(200, response.getStatusCode());
-   }
-
-   /**
     * Test Scenario: User is able to see a list of job listings for a business
     * Path: GET http://localhost:8080/api/businesses/{businessId}/jobs
     * aListOfJobsIsAvailableForABusiness gets the list of all jobs from the business id = 1, as referenced by the endpoint
@@ -215,7 +226,6 @@ public class SpringBootCucumberTestDefinitions {
    public void aListOfJobsIsAvailableForABusiness() {
       responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/businesses/1/jobs", HttpMethod.GET, null, String.class);
       list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
-      System.out.println(list);
    }
 
    @When("I search for job listings for a business")
@@ -342,29 +352,11 @@ public class SpringBootCucumberTestDefinitions {
    }
 
    /**
-    * Test Scenario: User with business is able to delete job listing
-    * Path: DELETE http://localhost:8080/api/jobs/{jobId}
-    * iDeleteAJobFromMyJobList gets the job from the specified endpoint and sends the delete request to delete the job
-    * iCanSeeMyJobListingIsDeleted makes sure that the HTTP status is 200 when we successfully delete the job object
-    */
-   @When("I delete a job from my Job list")
-   public void iDeleteAJobFromMyJobList() throws Exception {
-      request.header("Content-Type", "application/json");
-      request.header("Authorization", "Bearer " + getSecurityKey());
-      response = request.delete(BASE_URL + port + "/api/jobs/1");
-   }
-
-   @Then("I can see my job listing is deleted")
-   public void iCanSeeMyJobListingIsDeleted() {
-      Assert.assertEquals(200, response.getStatusCode());
-   }
-
-   /**
     * Test Scenario: User is able to see a list of all applicants for their job
     * Path: GET http://localhost:8080/api/jobs/1/applicants
     * aListOfApplicantsIsAvailable gets the list of all Users from the database referenced by the endpoint
     * iViewTheListOfApplicants checks that there is a list of jobs containing at least on job
-    * iCanSeeTheListOfApplicants makes sure the HTTP status is 200 when we successfully find the list of jobs
+    * iCanSeeTheListOfApplicants makes sure the HTTP status code is 200 when we successfully find the list of jobs
     */
    @Given("A list of applicants is available")
    public void aListOfApplicantsIsAvailable() throws Exception {
@@ -408,6 +400,126 @@ public class SpringBootCucumberTestDefinitions {
 
    @Then("I see a message saying I have applied for the job")
    public void iSeeAMessageSayingIHaveAppliedForTheJob() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Test Scenario: User with business is able to delete job listing
+    * Path: DELETE http://localhost:8080/api/jobs/{jobId}
+    * iDeleteAJobFromMyJobList gets the job from the specified endpoint and sends the delete request to delete the job
+    * iCanSeeMyJobListingIsDeleted makes sure that the HTTP status is 200 when we successfully delete the job object
+    */
+   @When("I delete a job from my Job list")
+   public void iDeleteAJobFromMyJobList() throws Exception {
+      request.header("Content-Type", "application/json");
+      request.header("Authorization", "Bearer " + getSecurityKey());
+      response = request.delete(BASE_URL + port + "/api/jobs/1");
+   }
+
+   @Then("I can see my job listing is deleted")
+   public void iCanSeeMyJobListingIsDeleted() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Testing for Scenario: User is able to delete business
+    * This is the DELETE request at the endpoint http://localhost:8080/api/businesses/{businessId}
+    * iDeleteBusinessFromMyBusinessList gets the business from the specified endpoint and sends the delete request to delete the business
+    * iCanSeeMyBusinessIsDeleted makes sure that the HTTP status is 200 when we successfully delete the business object
+    */
+   @When("I delete a business from my Business list")
+   public void iDeleteBusinessFromMyBusinessList() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+
+      response = request.delete(BASE_URL + port + "/api/businesses/1");
+
+      System.out.println("response"+response);
+      System.out.println("request"+request);
+   }
+
+   @Then("I can see my business is deleted")
+   public void iCanSeeMyBusinessIsDeleted() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Scenario: User is able to view their account details
+    * Path: GET http://localhost:8080/api/myProfile
+    * aMyAccountIsAvailable gets the current logged-in user's object
+    * iGoToMyProfile checks that the logged-in user's object is not null
+    * iCanSeeMyAccountDetails makes sure that the HTTP status code is 200 when successfully returning the logged-in user's object
+    */
+   @Given("my account is available")
+   public void aMyAccountIsAvailable() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+      response = request.get(BASE_URL + port + "/api/myProfile");
+   }
+
+   @When("I go to my profile")
+   public void iGoToMyProfile() {
+      Assert.assertNotNull(String.valueOf(response));
+   }
+
+   @Then("I can see my account details")
+   public void iCanSeeMyAccountDetails() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Scenario: User is able to edit their account details
+    * Path: PUT http://localhost:8080/api/myProfile
+    * Reuses GIVEN aMyAccountIsAvailable gets the current logged-in user's object
+    * iEditMyProfile updates the logged-in user's details
+    * iSeeMyProfileIsUpdated confirms a successful update for the logged-in user's details
+    */
+   @When("I edit my profile")
+   public void iEditMyProfile() throws Exception {
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("name", "Updated name");
+      requestBody.put("email", "Updated email");
+      requestBody.put("password", "Updated pw");
+      requestBody.put("resume", "Updated resume");
+      request.header("Content-Type", "application/json");
+      request.header("Authorization", "Bearer", getSecurityKey());
+      response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/myProfile");
+   }
+
+   @Then("I see my profile is updated")
+   public void iSeeMyProfileIsUpdated() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Scenario: User is able to delete their account Path: DELETE http://localhost:8080/api/myProfile
+    *
+    * @return
+    */
+
+   @Given("I am logged in")
+   public void iAmLoggedIn() throws Exception {
+      RequestSpecification request = RestAssured.given();
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("email", "kevin@gmail.com");
+      requestBody.put("password", "pw");
+      request.header("Content-Type", "application/json");
+      response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/users/login");
+//      return response.jsonPath().getString("message");
+//      request = RestAssured.given();
+//      request.header("Content-Type", "application/json");
+   }
+
+   @When("I delete my profile")
+   public void iDeleteMyProfile() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given().header("Authorization", "Bearer", response.getBody().asString());
+      request.header("Content-Type", "application/json");
+      response = request.delete(BASE_URL + port + "/api/myProfile");
+   }
+
+   @Then("I can delete my account")
+   public void iCanDeleteMyAccount() {
       Assert.assertEquals(200, response.getStatusCode());
    }
 }
