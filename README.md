@@ -1,32 +1,37 @@
 # Job Board API
 
-## Description
-The Job Board API provides a platform for users to interact with job listings and businesses. It offers a range of features to meet the needs of job-seekers and businesses 
-looking for employees. The API allows users to create accounts, log in and manage their profile information. Registered users can apply for jobs, create job listings and track their applications. Businesses can view applicants for their job listings and manage their business information.
-
 ## Table of Contents
-
 - [Description](#description)
 - [Technologies](#technologies)
   - [Technologies Used](#technologies-used)
   - [Documentation](#documentation)
   - [Installation Instructions](#installation-instructions)
 - [General Approach](#general-approach)
-- [API Hurdles](#api-hurdles) 
+- [Hurdles](#hurdles) 
 - [User Stories](#user-stories)
 -  [Endpoints](#endpoints)
     -  [Users](#users)
     -  [Business](#business)
     -  [Jobs](#jobs)
 - [Continuous Development](#continuous-development)
-- [Acknowledgment](#acknowledgment)
-  
+- [Acknowledgments](#acknowledgments)
+
+---
+
+# Description
+The Job Board API provides a platform for users to interact with job listings and businesses. It offers a range of features to meet the needs of job-seekers and businesses looking for employees. 
+* The API allows users to create accounts, log in, and manage their profile information. 
+* Registered users can apply for jobs, create job listings, and track their applications. 
+* Businesses can view applicants for their job listings and manage their business information.
+
+---
+
 # Technologies
 
 ## Technologies Used
 
 The Job Board API is built using the following technologies:
-  - **IntelliJ**: Integrated development environment for software development.
+  - **IDE**: IntelliJ is the integrated development environment for software development.
   - **Programming Language**: The API is developed using Java 17.
   - **Framework**: The API is built on Spring Boot version 2.7.8.
   - **Project Management**: [GitHub Projects](https://github.com/users/dayjyun/projects/7/views/1) is utilized for project management and tracking progress.
@@ -84,6 +89,8 @@ Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
 - Refresh the Maven project and the dependencies should be added to your project
   ![](https://i.postimg.cc/BbSNzmdZ/Screenshot-30.png)
 
+---
+
 # General Approach
 To develop this API, the development team started by reviewing user stories and creating an ERD to visualize the database structure. The team followed a Behavioral-Driven 
 Development (BDD) approach using Cucumber with Rest Assured, writing tests for each endpoint and implementing the minimum code required to make them pass. This helped to ensure 
@@ -99,7 +106,9 @@ collaboration, they used a [Kanban board](https://github.com/users/dayjyun/proje
 Progress has been documented in the README file, including project overview, tools used, and links to user stories, the ERD diagram, and planning documentation. Documentation 
 was also provided for the REST API endpoints and provided installation instructions for dependencies. The team focused on iterative development, TDD, and adherence to best practices. With efficient teamwork and project management techniques, the team successfully delivered a job board API.
 
-# API Hurdles
+---
+
+# Hurdles
 During the development process, the team encountered a few hurdles that challenged the progress of the API. Some of the specific issues that were faced include:
  - Testing for `PUT` and `POST` requests: Objects were being created even when certain columns didn't exist. This required debugging and refining of code to ensure data integrity and proper handling of requests.
  - Adding a list to our seed data: There was difficulty incorporating a list of items into our seed data, which affected the accuracy of the tests. The team revisited a data setup and found a solution to include the required list data.
@@ -109,10 +118,15 @@ During the development process, the team encountered a few hurdles that challeng
 
 Despite these hurdles, the team remained proactive and motivated to solving them, and ultimately overcame those hurdles to continue the development process.
 
+---
+
 # User Stories
 The [User Stories](https://github.com/dayjyun/job-board-api/wiki) highlight an excellent representation of the thinking process and ideas of what the application should accomplish.
 
+---
+
 # Endpoints
+
 ## Users
 
 | Request Type | URL                 | Functionality                               | Access  |
@@ -148,6 +162,7 @@ The [User Stories](https://github.com/dayjyun/job-board-api/wiki) highlight an e
 | GET          | /api/jobs/{jobId}/applicants | Returns a list of all applicants for the job | Private |
 | POST         | /api/jobs/{jobId}/applicants | User applies for job                         | Private |
 
+---
 
 # Continuous Development
 Just as professionals develop within their career, especially software engineers, so should the platform which helps level-up your career, too.
@@ -158,7 +173,9 @@ Just as professionals develop within their career, especially software engineers
    - [ ] User images
    - [ ] Connecting with users by having a _Friends_ or _Connections_ table
 
-# Acknowledgment
+---
+
+# Acknowledgments
 Development team
 - **Kevin Barrios**: [GitHub Profile](https://github.com/dayjyun) | [LinkedIn Profile](https://www.linkedin.com/in/kevinbarrios12/)
 - **Kim Nguyen**: [GitHub Profile](https://github.com/knnguyen2410) | [LinkedIn Profile](https://www.linkedin.com/in/knnguyen2410/)
