@@ -149,6 +149,8 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 # Dependency Installation Instructions
 - Use the following links provided below to access the Maven Central repository.
 
+<details>
+<summary>List of Dependencies Used</summary>summary>
 
 - [spring-boot-starter-data-rest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest)
 - [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
@@ -165,7 +167,9 @@ Despite these hurdles, the team remained proactive and motivated to solving them
 - [spring-boot-starter-validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.6)
 - [jjwt-api](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api/0.11.5)                       
 - [jjwt-impl](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl/0.11.5)                      
-- [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)                   
+- [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)   
+
+</details>
    
 Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
 
