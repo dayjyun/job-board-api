@@ -148,7 +148,7 @@ public class BusinessService {
       // Create an object to return a custom message
       JSONObject returnMessage = new JSONObject();
       // Create custom message and add it to our custom message object
-      returnMessage.put("message", "Business successfully deleted");
+      returnMessage.put("message", "Business with id " + businessId + " successfully deleted");
       // Check if the targeted business is found
       if (business.isPresent()) {
          // Delete the targeted business

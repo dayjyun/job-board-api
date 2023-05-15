@@ -208,7 +208,7 @@ public class JobService {
          }
       } else {
          // Throw an error if the job's ID is not found for the user
-         throw new NotFoundException("Job with id " + jobId + " not found for user");
+         throw new NotFoundException("Job with id " + jobId + " not found");
       }
    }
 
