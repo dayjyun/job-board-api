@@ -32,7 +32,7 @@ public class MyProfileController {
    // Functionality: Delete user account
    // Path: http://localhost:8080//api/myProfile
    @DeleteMapping(path = "")
-   public JSONObject deleteMyProfile() {
+   public User deleteMyProfile() {
       return myProfileService.deleteMyProfile();
    }
 
