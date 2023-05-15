@@ -3,7 +3,6 @@ package definitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.json.JSONException;
 import org.json.JSONObject;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
@@ -32,6 +31,7 @@ public class JobBoardDefinitions {
    private static ResponseEntity<String> responseEntity;
    private static List<?> list;
    private static RequestSpecification request;
+   private String jwtToken;
 
    private static final String newBusinessName = "New Business Name";
    private static final String newJobNameForBusiness = "New Job Name For Business";
@@ -79,6 +79,34 @@ public class JobBoardDefinitions {
    @Then("I can see the user's account details")
    public void iCanSeeTheUserSAccountDetails() {
       Assert.assertEquals(200, response.getStatusCode());
+   }
+
+   /**
+    * Scenario: User is able to see all jobs applied for
+    * Path: GET http://localhost:8080/api/myProfile/jobs
+    * iHaveAListOfJobsIHaveAppliedTo gets the list of all Jobs the logged-in user has applied to
+    * iSearchForListOfJobsIAppliedTo checks that there is a list of jobs the logged-in user has applied to
+    * iCanSeeAListOfJobsIAppliedTo makes sure the HTTP status code is 200 when we successfully find the list of jobs the logged-in user
+    * has applied to
+    */
+   @Given("I have a list of jobs I have applied to")
+   public void iHaveAListOfJobsIHaveAppliedTo() throws Exception {
+      HttpHeaders headers = new HttpHeaders();
+      headers.setBearerAuth(getSecurityKey());
+      HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/myProfile/jobs", HttpMethod.GET, entity, String.class);
+      list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
+   }
+
+   @When("I search for list of jobs I applied to")
+   public void iSearchForListOfJobsIAppliedTo() {
+      Assert.assertTrue(list.size() > 0);
+   }
+
+   @Then("I can see a list of jobs I applied to")
+   public void iCanSeeAListOfJobsIAppliedTo() {
+      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
    }
 
    /**
@@ -464,49 +492,34 @@ public class JobBoardDefinitions {
    }
 
    /**
-    * Scenario: User is able to see all jobs applied for
-    * Path: GET http://localhost:8080/api/myProfile/jobs
-    * iHaveAListOfJobsIHaveAppliedTo gets the list of all Jobs the logged-in user has applied to
-    * iSearchForListOfJobsIAppliedTo checks that there is a list of jobs the logged-in user has applied to
-    * iCanSeeAListOfJobsIAppliedTo makes sure the HTTP status code is 200 when we successfully find the list of jobs the logged-in user
-    * has applied to
+    * Scenario: User is able to delete their account Path: DELETE http://localhost:8080/api/myProfile
+    *
+    * @return
     */
-   @Given("I have a list of jobs I have applied to")
-   public void iHaveAListOfJobsIHaveAppliedTo() throws Exception {
-      HttpHeaders headers = new HttpHeaders();
-      headers.setBearerAuth(getSecurityKey());
-      HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
-      responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/myProfile/jobs", HttpMethod.GET, entity, String.class);
-      list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
-   }
-
-   @When("I search for list of jobs I applied to")
-   public void iSearchForListOfJobsIAppliedTo() {
-      Assert.assertTrue(list.size() > 0);
-   }
-
-   @Then("I can see a list of jobs I applied to")
-   public void iCanSeeAListOfJobsIAppliedTo() {
-      Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-   }
-
-
-//   /**
-//    * Scenario: User is able to delete their account
-//    * Path: DELETE http://localhost:8080/api/myProfile
-//    */
-//
-//   @When("I delete my profile")
-//   public void iDeleteMyProfile() throws Exception {
-////      RestAssured.baseURI = BASE_URL;
-////      request = RestAssured.given().header("Authorization", "Bearer", getSecurityKey());
+   @Given("I am logged in")
+   public void iAmLoggedIn() throws Exception {
+      RequestSpecification request = RestAssured.given();
+      JSONObject requestBody = new JSONObject();
+      requestBody.put("email", "kevin@gmail.com");
+      requestBody.put("password", "pw");
+      request.header("Content-Type", "application/json");
+      response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/users/login");
+//      return response.jsonPath().getString("message");
+//      request = RestAssured.given();
 //      request.header("Content-Type", "application/json");
-//      response = request.delete(BASE_URL + port + "/api/myProfile");
-//   }
-//
-//   @Then("I can delete my account")
-//   public void iCanDeleteMyAccount() {
-//      Assert.assertEquals(200, response.getStatusCode());
-//   }
+   }
+
+   @When("I delete my profile")
+   public void iDeleteMyProfile() throws Exception {
+      RestAssured.baseURI = BASE_URL;
+      request = RestAssured.given().header("Authorization", "Bearer", response.getBody().asString());
+      request.header("Content-Type", "application/json");
+      response = request.delete(BASE_URL + port + "/api/myProfile");
+   }
+
+   @Then("I can delete my account")
+   public void iCanDeleteMyAccount() {
+      Assert.assertEquals(200, response.getStatusCode());
+   }
 }

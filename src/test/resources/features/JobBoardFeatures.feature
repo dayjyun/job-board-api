@@ -16,6 +16,11 @@ Feature: Job Board API functionalities
     When I search for another user's id
     Then I can see the user's account details
 
+  Scenario: User is able to see all jobs applied for
+    Given I have a list of jobs I have applied to
+    When I search for list of jobs I applied to
+    Then I can see a list of jobs I applied to
+
   # PASS (PUBLIC)
   Scenario: User is able to see a list of all businesses
     Given A list of businesses are available
@@ -104,14 +109,8 @@ Feature: Job Board API functionalities
     When I edit my profile
     Then I see my profile is updated
 
-#  Scenario: User is able to delete their account
-#    Given my account is available
-#    When I delete my profile
-#    Then I can delete my account
-
-  Scenario: User is able to see all jobs applied for
-    Given I have a list of jobs I have applied to
-    When I search for list of jobs I applied to
-    Then I can see a list of jobs I applied to
-
+  Scenario: User is able to delete their account
+    Given I am logged in
+    When I delete my profile
+    Then I can delete my account
 
